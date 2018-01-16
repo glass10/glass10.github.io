@@ -1,0 +1,332 @@
+body{
+    background:#2f00ff;
+    -webkit-animation:colour 10s linear infinite;
+      -moz-animation:colour 10s linear infinite;
+    
+  }
+  @-webkit-keyframes colour{
+      0%{ background:#2f00ff}
+      40%{ background:#03a0ff}
+      80%{ background:#016afb}
+      100%{ background:#2f00ff}
+  
+  }
+  
+  @-moz-keyframes colour{
+    0%{ background:#2f00ff}
+    40%{ background:#03a0ff}
+    80%{ background:#016afb}
+    100%{ background:#2f00ff}
+  }
+
+  #logo{
+      height: 30%;
+      width: 30%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+  }
+h1{
+    font-family: 'Oswald';
+    text-align: center;
+    color: white;
+}
+h3{
+    font-family: 'Oswald';
+    text-align: left;
+}
+h3.hidden{
+    visibility: hidden;
+}
+h3.visible{
+    visibility: visible;
+}
+button.hidden{
+    visibility: hidden;
+}
+
+ul {
+    list-style-type: none;
+    font-family: 'Oswald';
+    margin: 0;
+    padding: 0;
+}
+img{
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+input{
+    font-family: 'Oswald' !important;
+}
+select{
+    font-family: 'Oswald';
+}
+button{
+    font-family: 'Oswald';
+}
+
+#loginArea{
+    /* background: linear-gradient( #2f00ff, #03a0ff); */
+    height: 100vh;
+}
+
+#committeeSelect, #memberSelect, #pinText, #enterButton{
+    border-radius: 25px;
+    background-color: transparent;
+    color: white;
+}
+
+#enterButton{
+    border-radius: 50px;
+    font-size: 1rem;
+    border: 2px solid white;
+}
+#memberArea{
+    /* background: linear-gradient(#016afb, #03a0ff); */
+    display: none;
+}
+
+#userHours, #userPoints, #currentMember{
+    padding: 0.25rem;
+    border-radius: 10px;
+    border: 2px solid white;
+}
+
+#dateInput, #eventInput, #hoursInput, #eventType, #hoursButton{
+    border-radius: 25px;
+    background-color: transparent;
+    color: white;
+}
+
+.memberStats{
+    font-family: 'Oswald';
+    color: #eeeeee;
+    text-align: center;
+    font-size: 2rem;
+    background: black !important;
+}
+
+#hoursButton{
+    border: 2px solid white;
+}
+
+#intercommitteeArea{
+    /* background: linear-gradient(#03a0ff, #00ecff); */
+    height: 100vh;
+}
+
+.barText{
+    letter-spacing: -3px;
+    opacity: 0.6;
+    font-size: 3vw;
+    color: white;
+    /* position: absolute; */
+    text-align: center;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    min-height: 1px;
+}
+
+
+.input-group-field:hover{
+    transition: all 0.30s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    border: 3px solid lightgreen;
+}
+select:hover{
+   transition: all 0.30s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    border: 3px solid blue; 
+}
+
+input:hover{
+    transition: all 0.30s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    border: 3px solid blue; 
+}
+
+/* .warning.button{
+    color: white !important;
+    background-color: gray !important;
+}
+.warning.button:hover{
+    background-color: gold !important;
+}
+.warning.button.select{
+    background-color: gold !important;
+    color: black !important;
+}
+
+.input-group-label{
+    width: 50%;
+    background:lightgray;
+}
+.input-group-label:hover{
+    transition: all 0.30s ease-in-out;
+    background:silver;
+} */
+
+/* #SearchH3{
+    float: left;
+}
+#searchButton{
+    background-color: orange !important;
+}
+#searchButton:hover{
+    transition: all 0.20s ease-in;
+    background-color: orangered !important;
+} */
+
+
+.bar-graph {
+    padding: 0 1rem;
+    /* width: 100%; */
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: flex-end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    height: 425px;
+    margin: 0;
+    position: center;
+  }
+  
+  .bar-graph li {
+    display: block;
+    padding: 1.5625rem 0;
+    position: relative;
+    text-align: center;
+    vertical-align: bottom;
+    border-radius: 4px 4px 0 0;
+    max-width: 20%;
+    height: 100%;
+    margin: 0 1.8% 0 0;
+    -webkit-flex: 1 1 15%;
+        -ms-flex: 1 1 15%;
+            flex: 1 1 15%;
+  }
+  
+  .bar-graph .bar-graph-axis {
+    -webkit-flex: 1 1 8%;
+        -ms-flex: 1 1 8%;
+            flex: 1 1 8%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  
+  @media print, screen and (min-width: 40em) {
+    .bar-graph .bar-graph-label:before, .bar-graph .bar-graph-label:after {
+      content: "";
+      position: absolute;
+      border-bottom: 1px dashed #8a8a8a;
+      top: 0;
+      left: 0;
+      height: 50%;
+      width: 20%;
+    }
+  }
+  
+  @media print, screen and (min-width: 40em) and (min-width: 64em) {
+    .bar-graph .bar-graph-label:before, .bar-graph .bar-graph-label:after {
+      width: 30%;
+    }
+  }
+  
+  @media print, screen and (min-width: 40em) {
+    .bar-graph .bar-graph-label:after {
+      left: auto;
+      right: 0;
+    }
+  }
+  
+  @media print, screen and (min-width: 40em) {
+    .bar-graph .percent {
+      font-size: 2rem;
+    }
+  }
+  
+  .bar-graph .description {
+    font-weight: 800;
+    opacity: 0.8;
+    color: white;
+    text-transform: uppercase;
+    width: 100%;
+    font-size: 14px;
+    bottom: 20px;
+    position: absolute;
+    font-size: 1rem;
+    overflow: hidden;
+  }
+  
+  .bar-graph .bar.primary {
+    border: 1px solid #1779ba;
+    background: linear-gradient(#2196e3, #1779ba 70%);
+  }
+  
+  .bar-graph .bar.secondary {
+    border: 1px solid #767676;
+    background: linear-gradient(#909090, #767676 70%);
+  }
+  
+  .bar-graph .bar.success {
+    border: 1px solid #3adb76;
+    background: linear-gradient(#65e394, #3adb76 70%);
+  }
+  
+  .bar-graph .bar.warning {
+    border: 1px solid #ffae00;
+    background: linear-gradient(#ffbe33, #ffae00 70%);
+  }
+  
+  .bar-graph .bar.alert {
+    border: 1px solid #cc4b37;
+    background: linear-gradient(#d67060, #cc4b37 70%);
+  }
+
+  .bar-graph .bar.extra{
+      border: 1px solid #621ea0;
+      background: linear-gradient(#6f22b6, #621ea0 70%);
+  }
+
+
+.table-expand {
+    margin-top: 5rem;
+    text-align: center;
+  }
+  
+  .table-expand .text-right {
+    padding-right: 3rem;
+  }
+  
+  .table-expand-row.is-active .expand-icon::after {
+    content: '-';
+  }
+  
+  .table-expand-row .expand-icon::after {
+    content: '+';
+    float: right;
+  }
+  
+  .table-expand-row-content {
+    display: none;
+  }
+  
+  
+  
+  
+
+
+

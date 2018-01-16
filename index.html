@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PSUB Portal</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css">
+        <link rel="stylesheet" href="app.css">
+        <link href="https://fonts.googleapis.com/css?family=Oswald|Permanent+Marker" rel="stylesheet">
+    </head>
+    <body onLoad="load()">
+    <!--<body>-->
+        <img src="Logo.png" id="logo">
+        <div class="row" id="loginArea">
+            <div class="medium-5 medium-centered column">
+                <form id="login-form">
+                    <select name="committee" id="committeeSelect" onChange="committeeChange();">
+                                <option value="" disabled selected>Select your Committee</option>
+                            <option value="ART" onclick="committeeChange('ART')">Arts And Culture</option>
+                            <option value="CUR">Current Events</option>
+                            <option value="ENT">Entertainment</option>
+                            <option value="PUB">Publicity</option>
+                            <option value="PAD">Purdue After Dark</option>
+                            <option value="SPI">Spirit And Traditions</option>
+                    </select>
+                    <select name="members" id="memberSelect">
+                                <option value="" disabled selected>Committee Not Selected</option>
+                            <!-- <option value="CG">Cameron Glass</option> -->
+                            <!-- <option value="MT">Molly Tieman</option> -->
+                    </select>
+                    <input type="text" name="PIN" placeholder="PIN" id="pinText">
+                    <button type="button" class="button expanded" id="enterButton" onclick="login()">ENTER</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row" id="memberArea">
+                <div class="medium-12 medium-centered column">
+                    <h1 id="currentMember">Member Name</h1>
+                    <div class="memberStats">
+                        <div class="medium-6 column" id="hoursFrame">
+                                <p><u>COMMITTEE HOURS</u><br><span id="userHours">##</span></p>
+                        </div>
+                        <div class="medium-6 column"  id="pointsFrame">
+                                <p><u>INTERCOMMITTEE POINTS</u><br><span id="userPoints">##</span></p>
+                        </div>
+                    </div>
+                    
+                    <form id="hours-form">
+                        <div class="medium-3 column">
+                                <input type="date" name="eventDate" id="dateInput">
+                        </div>
+                        <div class="medium-3 column">
+                                <input type="text" name="Event" placeholder="Event Name" id="eventInput">
+                        </div>
+                        <div class="medium-2 column">
+                                        <input type="number" name="Hours" placeholder="Hours" id="hoursInput">
+                                </div>
+                        <div class="medium-2 column">
+                                <select name="eventType" id="eventType">
+                                        <option value="0">My Committee</option>
+                                        <option value="2">Intercommittee</option>
+                                </select>
+                        </div>
+                        <div class="medium-2 column">
+                                <button type="button" class="button expanded" id="hoursButton" onclick="addHours()">ADD HOURS</button>
+                        </div>
+                    </form>
+                    <table class="table-expand" id="hoursTable">
+                            <thead>
+                              <tr class="table-expand-row">
+                                <th width="200">Date</th>
+                                <th>Event</th>
+                                <th width="150">Hours</th>
+                                <th width="150">Points</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="table-expand-row" data-open-details>
+                                <td>August 30</td>
+                                <td>Welcome Back Bash</td>
+                                <td>6</td>
+                                <td>0</td>
+                              </tr>
+                          
+                              <tr class="table-expand-row" data-open-details>
+                                <td>September 21</td>
+                                <td>Coffee and Canvas</td>
+                                <td>3</td>
+                                <td>6</td>
+                              </tr>
+
+                              <tr class="table-expand-row" data-open-details>
+                                    <td>August 30</td>
+                                    <td>Welcome Back Bash</td>
+                                    <td>6</td>
+                                    <td>0</td>
+                                  </tr>
+                              
+                            <tr class="table-expand-row" data-open-details>
+                                <td>September 21</td>
+                                <td>Coffee and Canvas</td>
+                                <td>3</td>
+                                <td>6</td>
+                            </tr>
+
+                            <tr class="table-expand-row" data-open-details>
+                                    <td style="visibility:hidden"></td>
+                                    <td style="visibility:hidden"></td>
+                                    <td><b>18</b></td>
+                                    <td><b>12</b></td>
+                                </tr>
+                          
+                            </tbody>
+                    </table>   
+                </div>
+        </div>
+        <div class="row" id="intercommitteeArea" onClick="intercommittee()">
+                <div class="medium-12 medium-centered column">
+                    <h1>Intercommittee Showdown</h1>
+                    <ul class="bar-graph">
+                            <li class="bar primary" style="height: 0%;" title="0" id="artsAndCultureLI">
+                              <!-- <div class="percent" id="!artsAndCultureTXT">90</div> -->
+                              <div class="description">Arts and Culture</div>
+                            </li>
+                            <li class="bar secondary" style="height: 0%;" title="0" id="currentEventsLI">
+                              <!-- <div class="percent" id="!currentEventsTXT">80</div> -->
+                              <div class="description">Current Events</div>
+                            </li>
+                            <li class="bar success" style="height: 0%;" title="0" id="entertainmentLI">
+                              <!-- <div class="percent" id="!entertainmentTXT">70</div> -->
+                              <div class="description">Entertainment</div>
+                            </li>
+                            <li class="bar warning" style="height: 0%;" title="0" id="publicityLI">
+                              <!-- <div class="percent" id="!publicityTXT">60</div> -->
+                              <div class="description">Publicity</div>
+                            </li>
+                            <li class="bar alert" style="height: 0%;" title="0" id="purdueAfterDarkLI">
+                              <!-- <div class="percent" id="!purdueAfterDarkTXT">50</div> -->
+                              <div class="description">Purdue After Dark</div>
+                            </li>
+                            <li class="bar extra" style="height: 0%;" title="0" id="spiritAndTraditionsLI">
+                                <!-- <div class="percent" id="!spiritAndTraditionsTXT">40</div> -->
+                                <div class="description">Spirit and Traditions</div>
+                            </li>
+                    </ul>
+                    <div class="medium-2 column barText" id="artsAndCultureTXT">##</div>    
+                    <div class="medium-2 column barText" id="currentEventsTXT">##</div>
+                    <div class="medium-2 column barText" id="entertainmentTXT">##</div>
+                    <div class="medium-2 column barText" id="publicityTXT">##</div>
+                    <div class="medium-2 column barText" id="purdueAfterDarkTXT">##</div>
+                    <div class="medium-2 column barText" id="spiritAndTraditionsTXT">##</div>
+                </div>
+                <div>&nbsp</div>
+        </div>
+        <!-- <script src="https://apis.google.com/js/api.js"></script> -->
+        <script src="app.js"></script>
+        <script src="jquery-3.2.1.min.js"></script>
+    </body>
+</html>
