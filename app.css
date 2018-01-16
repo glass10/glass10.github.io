@@ -265,6 +265,11 @@ input:hover{
       color: white;
     }
   }
+  .bar-graph .percent {
+    font-size: 1rem;
+    color: white;
+    opacity: 0.8;
+  }
   
   .bar-graph .description {
     font-weight: 800;
@@ -272,11 +277,11 @@ input:hover{
     color: white;
     text-transform: uppercase;
     width: 100%;
-    font-size: 14px;
+    font-size: 0.7rem;
     bottom: 20px;
     position: absolute;
-    font-size: 1rem;
     overflow: hidden;
+    word-wrap: break-word;
   }
   
   .bar-graph .bar.primary {
