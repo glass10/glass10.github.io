@@ -115,6 +115,13 @@ button{
     height: 100vh;
 }
 
+#barchart_material{
+    height: 100vh;
+    width: 100vw;
+    /* background-color: transparent; */
+
+}
+
 .barText{
     letter-spacing: -3px;
     opacity: 0.6;
@@ -254,7 +261,8 @@ input:hover{
   
   @media print, screen and (min-width: 40em) {
     .bar-graph .percent {
-      font-size: 2rem;
+      font-size: 1rem;
+      color: white;
     }
   }
   

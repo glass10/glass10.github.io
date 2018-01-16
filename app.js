@@ -41,6 +41,8 @@ function load(){
     for(var i = 0; i < committeeList.length; i++){
         data(committeeList[i]);
     }
+    // google.charts.load('current', {'packages':['bar']});
+    //   google.charts.setOnLoadCallback(drawChart);
 }
 
 function data(committee){
@@ -55,13 +57,6 @@ function data(committee){
         "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/1/public/full?alt=json-in-script',
         "method": "GET",
         "headers": {
-            // "id": CLIENT_ID,
-            // "secret": API_KEY,
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Credentials": "true",
-            // "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-            // "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-
         }
     }
           
@@ -160,7 +155,12 @@ function login(){
 }
 
 function successfulLogin(data, committee){
-    document.getElementById("memberArea").style.display = "block"
+
+    document.getElementById("memberArea").style.display = "block";
+    $('html, body').animate({
+        scrollTop: $("#memberArea").offset().top
+    }, 2000);
+
     //Populate Member Section 
     document.getElementById("currentMember").textContent = data.name;
     document.getElementById("userHours").textContent = data.hours;
@@ -284,4 +284,32 @@ function addHours(){
     });
     
 }
+
+function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Committee', "Points", { role: 'annotation' }],
+      ['Arts and Culture', 1000, 'Test'],
+      ['Current Events', 1170, 'Test'],
+      ['Entertainment', 660, 'Test'],
+      ['Purdue After Dark', 660, 'Test'],
+      ['Publicity', 1030, 'Test'],
+      ['Spirit and Traditions', 660, 'Test'],
+    ]);
+    var view = new google.visualization.DataView(data);
+    var options = {
+        backgroundColor: 'transparent',
+        // colors: ['#2196e3', '#909090', '#2196e3', '#2196e3', '#2196e3', '#2196e3'],
+        colors: ['white', 'black', 'black', 'black', 'green', 'red'],
+        legend: { position: 'none' },
+        bars: 'horizontal', // Required for Material Bar Charts.
+        vAxis: {title: 'Committees', 
+        titleTextStyle: {color: 'white'}},
+        
+        bar: { groupWidth: "90%" }
+      };
+
+    var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+  }
 
