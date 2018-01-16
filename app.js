@@ -52,15 +52,24 @@ function data(committee){
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/1/public/full?alt=json',
+        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/1/public/full?alt=json-in-script',
         "method": "GET",
         "headers": {
-            "id": CLIENT_ID,
-            "secret": API_KEY,
+            // "id": CLIENT_ID,
+            // "secret": API_KEY,
+            // "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Credentials": "true",
+            // "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+            // "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+
         }
     }
           
     $.ajax(settings).done(function (response) {
+        //console.log(response);
+        response = response.substring(response.indexOf("{"), response.length-2)
+        var response = JSON.parse(response);
+        console.log(response);
         for(var i = 0; i < response.feed.entry.length; i++){
             if(i !== response.feed.entry.length-1){
                 var tempName = response.feed.entry[i].gsx$name.$t;
@@ -170,16 +179,19 @@ function updateHoursSheet(data, committee){
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/' + data.number + '/public/full?alt=json',
+        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/' + data.number + '/public/full?alt=json-in-script',
         "method": "GET",
         "headers": {
-            "id": CLIENT_ID,
-            "secret": API_KEY,
+            // "id": CLIENT_ID,
+            // "secret": API_KEY,
         }
     }
           
     $.ajax(settings).done(function (response) {
+        response = response.substring(response.indexOf("{"), response.length-2)
+        var response = JSON.parse(response);
         console.log(response);
+
         var totalHours = 0;
         var totalPoints = 0;
         var tableHTML = `
