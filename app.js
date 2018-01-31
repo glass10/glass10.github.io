@@ -32,6 +32,14 @@ var points = {"artsAndCulture": 0,
                     "spiritAndTraditions": 0
     }
 
+var scripts = {"artsAndCulture": "https://script.google.com/macros/s/AKfycbwHZInpf-2XVeATHRFTi2s2KMFh5odvbvGvLYmdVah-Mc0j1ss/exec", 
+                "currentEvents": "https://script.google.com/macros/s/AKfycbxNNSZ-oIRBXZUm1I6isLwo0LpNQxpI-y6Gur_9-Jmu2Hcwo7E/exec",
+                "entertainment": "https://script.google.com/macros/s/AKfycbx5kmyOMiui5joHakz-RDs5AtHYI64I7BBZ_rkLBWVww5RClrw/exec", 
+                "publicity": "https://script.google.com/macros/s/AKfycbxsLiZpXYRBjCN2Eo5GYvxmv-BDoMu9JcX2CX2LSRldleYlxPM/exec",
+                "purdueAfterDark": "https://script.google.com/macros/s/AKfycbwsOqIWytba8oZvq9NaZ1bshNIkKPD2-jwrfOILRVcQVosB0j4/exec",
+                "spiritAndTraditions": "https://script.google.com/macros/s/AKfycbyCj7FY0DXRp1T_gTH6mM261puqhUGqIvIXdGo5Yp-FXJ5VUqk/exec"
+}
+
 //Current Information
 var currentCommittee = "";
 var currentName = "";
@@ -263,10 +271,12 @@ function addHours(){
     var intercommittee = intercommitteeOptions[multiplier];
     var points = hours * multiplier;
 
+    console.log(scripts[currentCommittee]);
+
     var settings = {
         // "async": true,
         // "crossDomain": true,
-        "url": 'https://script.google.com/macros/s/AKfycbxsLiZpXYRBjCN2Eo5GYvxmv-BDoMu9JcX2CX2LSRldleYlxPM/exec',
+        "url": scripts[currentCommittee],
         "type": "post",
         //"dataType": "json",
         "data":{
