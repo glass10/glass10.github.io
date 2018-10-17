@@ -290,6 +290,10 @@ function addHours(){
     }
           
     $.ajax(settings).done(function (response) {
+        document.getElementById("dateInput").value = "";
+        document.getElementById("eventInput").value = "";
+        document.getElementById("hoursInput").value = "";
+        document.getElementById("eventType").selectedIndex = 0;
         updateHoursSheet(currentData, currentCommittee); //called after POST made successfully
     });
     

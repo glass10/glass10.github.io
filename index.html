@@ -17,8 +17,8 @@
             <div class="medium-5 medium-centered column">
                 <form id="login-form">
                     <select name="committee" id="committeeSelect" onChange="committeeChange();">
-                                <option value="" disabled selected>Select your Committee</option>
-                            <option value="ART" onclick="committeeChange('ART')">Arts And Culture</option>
+                            <option value="" disabled selected>Select your Committee</option>
+                            <option value="ART">Arts And Culture</option>
                             <option value="CUR">Current Events</option>
                             <option value="ENT">Entertainment</option>
                             <option value="PUB">Publicity</option>
@@ -26,9 +26,7 @@
                             <option value="SPI">Spirit And Traditions</option>
                     </select>
                     <select name="members" id="memberSelect">
-                                <option value="" disabled selected>Committee Not Selected</option>
-                            <!-- <option value="CG">Cameron Glass</option> -->
-                            <!-- <option value="MT">Molly Tieman</option> -->
+                            <option value="" disabled selected>Committee Not Selected</option>
                     </select>
                     <input type="password" name="PIN" placeholder="PIN" id="pinText">
                     <button type="button" class="button expanded" id="enterButton" onclick="login()">ENTER</button>
