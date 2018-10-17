@@ -30,7 +30,7 @@
                             <!-- <option value="CG">Cameron Glass</option> -->
                             <!-- <option value="MT">Molly Tieman</option> -->
                     </select>
-                    <input type="text" name="PIN" placeholder="PIN" id="pinText">
+                    <input type="password" name="PIN" placeholder="PIN" id="pinText">
                     <button type="button" class="button expanded" id="enterButton" onclick="login()">ENTER</button>
                 </form>
             </div>
@@ -40,11 +40,11 @@
                 <div class="medium-12 medium-centered column">
                     <h1 id="currentMember">Member Name</h1>
                     <div class="memberStats">
-                        <div class="medium-6 column" id="hoursFrame">
-                                <p><u>COMMITTEE HOURS</u><br><span id="userHours">##</span></p>
+                        <div class="medium-5 column" id="hoursFrame">
+                                <p>COMMITTEE HOURS<br><span id="userHours">##</span></p>
                         </div>
-                        <div class="medium-6 column"  id="pointsFrame">
-                                <p><u>INTERCOMMITTEE POINTS</u><br><span id="userPoints">##</span></p>
+                        <div class="medium-5 column"  id="pointsFrame">
+                                <p>INTERCOMMITTEE POINTS<br><span id="userPoints">##</span></p>
                         </div>
                     </div>
                     
@@ -61,7 +61,8 @@
                         <div class="medium-2 column">
                                 <select name="eventType" id="eventType">
                                         <option value="0">My Committee</option>
-                                        <option value="2">Intercommittee</option>
+                                        <option value="1">Intercommittee - Singled</option>
+                                        <option value="2">Intercommittee - Doubled</option>
                                 </select>
                         </div>
                         <div class="medium-2 column">

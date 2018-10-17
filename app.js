@@ -267,7 +267,7 @@ function addHours(){
     var select = document.getElementById("eventType");
     var multiplier = select.options[select.selectedIndex].value; 
 
-    var intercommitteeOptions = ["No", "", "Yes"];
+    var intercommitteeOptions = ["No", "Yes", "Yes"];
     var intercommittee = intercommitteeOptions[multiplier];
     var points = hours * multiplier;
 
