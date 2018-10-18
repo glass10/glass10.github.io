@@ -73,7 +73,7 @@ button{
 #committeeSelect, #memberSelect, #pinText, #enterButton{
     border-radius: 25px;
     background-color: rgba(255, 255, 255, 0.5);
-    color: black;
+    color: white;
 }
 
 #enterButton{
@@ -311,32 +311,32 @@ input:hover{
   }
   
   .bar-graph .bar.primary {
-    border: 1px solid #1779ba;
+    border: 2px solid #1779ba;
     background: linear-gradient(#2196e3, #1779ba 70%);
   }
   
   .bar-graph .bar.secondary {
-    border: 1px solid #767676;
+    border: 2px solid #767676;
     background: linear-gradient(#909090, #767676 70%);
   }
   
   .bar-graph .bar.success {
-    border: 1px solid #3adb76;
+    border: 2px solid #3adb76;
     background: linear-gradient(#65e394, #3adb76 70%);
   }
   
   .bar-graph .bar.warning {
-    border: 1px solid #ffae00;
+    border: 2px solid #ffae00;
     background: linear-gradient(#ffbe33, #ffae00 70%);
   }
   
   .bar-graph .bar.alert {
-    border: 1px solid #cc4b37;
+    border: 2px solid #cc4b37;
     background: linear-gradient(#d67060, #cc4b37 70%);
   }
 
   .bar-graph .bar.extra{
-      border: 1px solid #621ea0;
+      border: 2px solid #621ea0;
       background: linear-gradient(#6f22b6, #621ea0 70%);
   }
 
@@ -344,6 +344,10 @@ input:hover{
 .table-expand {
     margin-top: 5rem;
     text-align: center;
+    text-transform: capitalize;
+    font-family: 'Oswald';
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
   }
   
   .table-expand .text-right {
@@ -377,9 +381,9 @@ input:hover{
   }
 
 #prizeprogress {
-    width: 100%;
+    height: 100%;
     align-content: center;
-    padding-left: 3rem;
+    padding-left: 3rem; /* not sure why, but this and the next line fixes left align */
     padding-right: 1rem;
     padding-top: 5rem;
     font-family: 'Oswald';
@@ -387,8 +391,8 @@ input:hover{
 }
 
 #prizeBar {
-    width: 1%;
     height: 30px;
+    height: 10%;
     background-color: white;
     color: white;
 }

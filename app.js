@@ -352,6 +352,6 @@ function drawProgressBar() {
   var barPercentage = currentPrizeScore/nextPrizeTeir*100;
     console.log(barPercentage);
   var elem = document.getElementById("prizeBar");   
-  elem.style.width = barPercentage + "%";
+  elem.style.height = barPercentage + "%";
 }
 
