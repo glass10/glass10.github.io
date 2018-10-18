@@ -44,6 +44,7 @@ var scripts = {"artsAndCulture": "https://script.google.com/macros/s/AKfycbwHZIn
 var currentCommittee = "";
 var currentName = "";
 var currentData = {};
+var currentHours = 0;
 
 function load(){
     for(var i = 0; i < committeeList.length; i++){
@@ -178,9 +179,11 @@ function successfulLogin(data, committee){
     currentCommittee = committee;
     currentName = data.name;
     currentData = data;
+    currentHours = data.hours;
 
     //Display Hour Sheet
     updateHoursSheet(data, committee);
+    drawProgressBar();
 }
 
 function updateHoursSheet(data, committee){
@@ -256,7 +259,7 @@ function updateHoursSheet(data, committee){
 
 function unsuccessfulLogin(reason){
     console.log("Unsuccessful Login");
-    alert("Login Unsuccessful: " + reason)
+    alert("Login Unsuccessful: " + reason);
 }
 
 function addHours(){
@@ -326,4 +329,29 @@ function drawChart() {
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
   }
+
+function drawProgressBar() {
+  var nextPrizeTeir = 50; //Next Prize Teir Point Value
+  var currentPrizeScore = currentHours; //Total Current Hours
+    
+  var previousPrize = "Previous"; //Previous Prize Teir
+  var nextPrize = "Hoodie"; //Next Prize Teir
+    
+  var previousPrizeLabel = document.getElementById("previousPrize");
+  var nextPrizeLabel = document.getElementById("nextPrize");
+    
+  previousPrizeLabel.innerHTML = "< " + previousPrize;
+  nextPrizeLabel.innerHTML = nextPrize + " >";
+    
+  var statusBox = document.getElementById("currentStatusBox");
+  statusBox.innerHTML = (nextPrizeTeir - currentPrizeScore) + " points to redeem the next prize!";
+  if(barPercentage >= 100){
+  	 statusBox.innerHTML = "You can redeem your prize!";
+  }  
+
+  var barPercentage = currentPrizeScore/nextPrizeTeir*100;
+    console.log(barPercentage);
+  var elem = document.getElementById("prizeBar");   
+  elem.style.width = barPercentage + "%";
+}
 

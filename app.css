@@ -375,6 +375,41 @@ input:hover{
   input::-moz-placeholder { /* Firefox 18- */
     color: black;
   }
+
+#prizeprogress {
+    width: 100%;
+    align-content: center;
+    padding-left: 3rem;
+    padding-right: 1rem;
+    padding-top: 5rem;
+    font-family: 'Oswald';
+    color: white;
+}
+
+#prizeBar {
+    width: 1%;
+    height: 30px;
+    background-color: white;
+    color: white;
+}
+
+#prizeTags {
+    font-size: 30px;
+}
+
+#previousPrize {
+    float: left;
+}
+
+#nextPrize {
+    text-align: right;
+}
+  
+#currentStatusBox {
+	text-align:center;
+    color: white;
+    font-size: 30px;
+    text-transform: uppercase
   
   
   
