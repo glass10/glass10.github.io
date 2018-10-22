@@ -44,13 +44,33 @@ var scripts = {"artsAndCulture": "https://script.google.com/macros/s/AKfycbwHZIn
 var currentCommittee = "";
 var currentName = "";
 var currentData = {};
+let heights = {};
+let dataCount = 0;
 
 function load(){
+    heights = {};
     for(var i = 0; i < committeeList.length; i++){
         data(committeeList[i]);
     }
-    // google.charts.load('current', {'packages':['bar']});
-    //   google.charts.setOnLoadCallback(drawChart);
+}
+
+function calculateHeight(){
+    // Dynamic Height
+    let maxHeight = 90;
+    let tallest = 0;
+    let heightValues = Object.values(heights);
+    for(let i = 0; i < heightValues.length; i++){
+        if(heightValues[i] - tallest > 0){
+            tallest = heightValues[i];
+        }
+    }
+    if(tallest > maxHeight){
+        // Recalculate heights
+        let factor = maxHeight / tallest;
+        for(var i = 0; i < committeeList.length; i++){
+            document.getElementById(committeeList[i] + "LI").style = "height: " + heights[committeeList[i]]*factor + "%";
+        }
+    }
 }
 
 function data(committee){
@@ -90,20 +110,21 @@ function data(committee){
                 
                 committees[committee].push({totalHours: tempHours, totalPoints: tempPoints});
 
-                if(tempPoints > 100){
-                    var height = 100;
-                }
-                else{
-                    var height = tempPoints;
-                }
+                var height = tempPoints;
 
                 points[committee] = tempPoints; //for intercommittee points
-                document.getElementById(committee + "LI").style = "height: " + height + "%"
+                document.getElementById(committee + "LI").style = "height: " + height + "%";
+                heights[committee] = height;
                 document.getElementById(committee + "LI").title = tempPoints;
                 document.getElementById(committee + "TXT").textContent = tempPoints;
             }
         }
         console.log(committees[committee]);
+
+        dataCount++;
+        if(dataCount === 6){
+            calculateHeight();
+        }
     });
     console.log("Data Loaded Successfully");
 }
@@ -171,8 +192,8 @@ function successfulLogin(data, committee){
 
     //Populate Member Section 
     document.getElementById("currentMember").textContent = data.name;
-    document.getElementById("userHours").textContent = data.hours;
-    document.getElementById("userPoints").textContent = data.points;
+    // document.getElementById("userHours").textContent = data.hours;
+    // document.getElementById("userPoints").textContent = data.points;
 
     //Setting Globals
     currentCommittee = committee;
@@ -184,6 +205,7 @@ function successfulLogin(data, committee){
 }
 
 function updateHoursSheet(data, committee){
+    document.getElementById("tableBody").innerHTML = "";
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -202,16 +224,6 @@ function updateHoursSheet(data, committee){
 
         var totalHours = 0;
         var totalPoints = 0;
-        var tableHTML = `
-            <thead>
-                <tr class="table-expand-row"> 
-                    <th width="200">Date</th>
-                    <th>Event</th>
-                    <th width="150">Hours</th>
-                    <th width="150">Points</th>
-                </tr>
-            </thead>
-        <tbody>`;
 
         for(var i = 0; i < response.feed.entry.length; i++){
             var data = response.feed.entry[i];
@@ -226,30 +238,60 @@ function updateHoursSheet(data, committee){
                 var hours = data.gsx$hours.$t;
                 var points = data.gsx$points.$t;
     
-                tableHTML += 
-                    `<tr class="table-expand-row" data-open-details>
-                        <td>` + date + `</td>
-                        <td>` + event + `</td>
-                        <td>` + hours + `</td>
-                        <td>` + points + `</td>
-                    </tr>`;
+                let args = {
+                    "date": date, 
+                    "event": event, 
+                    "hours": hours, 
+                    "points": points
+                };
+
+                let tempTR = document.createElement("tr");
+                tempTR.classList = "table-expand-row";
+                tempTR.addEventListener("click", function(){
+                    removeHours(args);
+                })
+
+                let dateTD = document.createElement("td");
+                dateTD.innerHTML = date;
+                let eventTD = document.createElement("td");
+                eventTD.innerHTML = event;
+                let hoursTD = document.createElement("td");
+                hoursTD.innerHTML = hours;
+                let pointsTD = document.createElement("td");
+                pointsTD.innerHTML = points;
+
+                tempTR.appendChild(dateTD);
+                tempTR.appendChild(eventTD);
+                tempTR.appendChild(hoursTD);
+                tempTR.appendChild(pointsTD);
+
+                document.getElementById("tableBody").appendChild(tempTR);
+
             }
         }
-            
 
-        tableHTML += 
-            `<tr class="table-expand-row" data-open-details>
-                <td style="visibility:hidden"></td>
-                <td style="visibility:hidden"></td>
-                <td><b>` + totalHours + `</b></td>
-                <td><b>` + totalPoints + `</b></td>
-             </tr>
-        </tbody>`;
+        let tempTR = document.createElement("tr");
+        tempTR.classList = "table-expand-row-bottom";
 
-        $('#hoursTable').html(tableHTML);
+        let dateTD = document.createElement("td");
+        dateTD.innerHTML = "";
+        dateTD.style = "visibility:hidden";
+        let eventTD = document.createElement("td");
+        eventTD.innerHTML = "";
+        eventTD.style = "visibility:hidden";
+        let hoursTD = document.createElement("td");
+        hoursTD.innerHTML = totalHours;
+        hoursTD.style = "font-weight: bold";
+        let pointsTD = document.createElement("td");
+        pointsTD.innerHTML = totalPoints;
+        pointsTD.style = "font-weight: bold";
 
-        document.getElementById("userHours").textContent = totalHours;
-        document.getElementById("userPoints").textContent = totalPoints;
+        tempTR.appendChild(dateTD);
+        tempTR.appendChild(eventTD);
+        tempTR.appendChild(hoursTD);
+        tempTR.appendChild(pointsTD);
+
+        document.getElementById("tableBody").appendChild(tempTR);
     });
     console.log("Member Hours Updated Successfully");
 }
@@ -264,39 +306,69 @@ function addHours(){
     var event = document.getElementById("eventInput").value;
     var hours = document.getElementById("hoursInput").value;
 
-    var select = document.getElementById("eventType");
-    var multiplier = select.options[select.selectedIndex].value; 
-
-    var intercommitteeOptions = ["No", "Yes", "Yes"];
-    var intercommittee = intercommitteeOptions[multiplier];
-    var points = hours * multiplier;
-
-    console.log(scripts[currentCommittee]);
-
-    var settings = {
-        // "async": true,
-        // "crossDomain": true,
-        "url": scripts[currentCommittee],
-        "type": "post",
-        //"dataType": "json",
-        "data":{
-            "Member": currentName,
-            "Date": date,
-            "Event": event,
-            "Hours": hours,
-            "Intercommittee": intercommittee,
-            "Points": points
-        }
+    if(date === "" || event === "" || hours === ""){
+        alert("Please provide values for all event details");
     }
-          
-    $.ajax(settings).done(function (response) {
-        document.getElementById("dateInput").value = "";
-        document.getElementById("eventInput").value = "";
-        document.getElementById("hoursInput").value = "";
-        document.getElementById("eventType").selectedIndex = 0;
-        updateHoursSheet(currentData, currentCommittee); //called after POST made successfully
-    });
+    else{
+        var select = document.getElementById("eventType");
+        var multiplier = select.options[select.selectedIndex].value; 
+
+        var intercommitteeOptions = ["No", "Yes", "Yes"];
+        var intercommittee = intercommitteeOptions[multiplier];
+        var points = hours * multiplier;
+
+        console.log(scripts[currentCommittee]);
+
+        var settings = {
+            "url": scripts[currentCommittee],
+            "type": "POST",
+            //"dataType": "json",
+            "data":{
+                "Member": currentName,
+                "Date": date,
+                "Event": event,
+                "Hours": hours,
+                "Intercommittee": intercommittee,
+                "Points": points
+            }
+        }
+            
+        $.ajax(settings).done(function (response) {
+            document.getElementById("dateInput").value = "";
+            document.getElementById("eventInput").value = "";
+            document.getElementById("hoursInput").value = "";
+            document.getElementById("eventType").selectedIndex = 0;
+
+            document.getElementById("confirmMessage").innerHTML = event + " Added Successfully";
+            
+            updateHoursSheet(currentData, currentCommittee); //called after POST made successfully
+        });
+    }
+}
+
+function removeHours(rowInfo){
+    let verify = confirm("Are you sure you want to remove " + rowInfo.event + "?");
+
+    if(verify){
+        var settings2 = {
+            "url": scripts[currentCommittee],
+            "type": "GET", // not actual GET
+            "data":{
+                "Member": currentName,
+                "Date": rowInfo.date,
+                "Event": rowInfo.event,
+                "Hours": rowInfo.hours,
+                // "Intercommittee": intercommittee,
+                "Points": rowInfo.points
+            }
+        }
     
+        $.ajax(settings2).done(function (response) {
+            document.getElementById("confirmMessage").innerHTML = rowInfo.event + " Removed Successfully";
+
+            updateHoursSheet(currentData, currentCommittee); //called after GET made successfully
+        });
+    }
 }
 
 function drawChart() {
