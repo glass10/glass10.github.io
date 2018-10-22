@@ -19,13 +19,13 @@ body{
     100%{ background:#2f00ff}
   }
 
-  #logo{
-      height: 30%;
-      width: 30%;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-  }
+#logo{
+    height: 30%;
+    width: 30%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 h1{
     font-family: 'Oswald';
     text-align: center;
@@ -65,6 +65,15 @@ button{
     font-family: 'Oswald';
 }
 
+table{
+    font-family: 'Oswald';
+    text-align: center;
+}
+
+table thead th{
+    text-align: center;
+}
+
 #loginArea{
     /* background: linear-gradient( #2f00ff, #03a0ff); */
     height: 100vh;
@@ -92,6 +101,7 @@ button{
     background: rgba(255, 255, 255, 0.5);
     border-radius: 25px;
     border: 2px solid white;
+    overflow: hidden;
 }
 
 #userHours, #userPoints {
@@ -108,11 +118,6 @@ button{
     margin-bottom: 1.5rem;
 }
 
-#currentMember {
-    border-bottom: 2px solid white;
-
-}
-
 #dateInput, #eventInput, #hoursInput, #eventType, #hoursButton{
     border-radius: 25px;
     background-color: rgba(255, 255, 255, 0.75);
@@ -121,10 +126,18 @@ button{
 
 .memberStats{
     font-family: 'Oswald';
-    color: #eeeeee;
     text-align: center;
     font-size: 2rem;
-    background: black !important;
+    width: 103vw;
+    border-bottom: 2px solid white;
+    margin-bottom: 1.5rem;
+    margin-left: -3vw;
+    /* padding-left: -1.5rem; */
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+#currentMember{
+    color: black;
 }
 
 #hoursButton{
@@ -183,6 +196,15 @@ input:hover{
     border: 2px solid blue; 
 }
 
+#confirmArea{
+    text-align: center;
+    color: white;
+}
+
+#confirmArea h5{
+    font-weight: bold;
+}
+
 /* .warning.button{
     color: white !important;
     background-color: gray !important;
@@ -228,11 +250,14 @@ input:hover{
     height: 425px;
     margin: 0;
     position: center;
+
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid white;
+    border-radius: 25px;
   }
   
   .bar-graph li {
     display: block;
-    padding: 1.5625rem 0;
     position: relative;
     text-align: center;
     vertical-align: bottom;
@@ -292,9 +317,10 @@ input:hover{
     }
   }
   .bar-graph .percent {
-    font-size: 1rem;
+    font-size: 3vw;
     color: white;
     opacity: 0.8;
+    margin-top: -4.5vw;
   }
   
   .bar-graph .description {
@@ -303,51 +329,56 @@ input:hover{
     color: white;
     text-transform: uppercase;
     width: 100%;
-    font-size: 0.7rem;
-    bottom: 20px;
+    font-size: 5vw;
+    bottom: -7vw;
     position: absolute;
     overflow: hidden;
     word-wrap: break-word;
   }
   
-  .bar-graph .bar.primary {
-    border: 1px solid #1779ba;
-    background: linear-gradient(#2196e3, #1779ba 70%);
+  .bar-graph .bar.primary{
+    border: 1px solid white;
+    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
   }
   
   .bar-graph .bar.secondary {
-    border: 1px solid #767676;
-    background: linear-gradient(#909090, #767676 70%);
+    border: 1px solid white;
+    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
   }
   
   .bar-graph .bar.success {
-    border: 1px solid #3adb76;
-    background: linear-gradient(#65e394, #3adb76 70%);
+    border: 1px solid white;
+    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
   }
   
   .bar-graph .bar.warning {
-    border: 1px solid #ffae00;
-    background: linear-gradient(#ffbe33, #ffae00 70%);
+    border: 1px solid white;
+    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
   }
   
   .bar-graph .bar.alert {
-    border: 1px solid #cc4b37;
-    background: linear-gradient(#d67060, #cc4b37 70%);
+    border: 1px solid white;
+    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
   }
 
   .bar-graph .bar.extra{
-      border: 1px solid #621ea0;
-      background: linear-gradient(#6f22b6, #621ea0 70%);
+    border: 1px solid white;
+    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
+    margin: 0px;
   }
 
 
 .table-expand {
     margin-top: 5rem;
-    text-align: center;
   }
   
   .table-expand .text-right {
     padding-right: 3rem;
+  }
+
+  .table-expand-row:hover{
+      background-color: lightcoral;
+      cursor: pointer;
   }
   
   .table-expand-row.is-active .expand-icon::after {

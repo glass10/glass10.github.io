@@ -36,14 +36,8 @@
 
         <div class="row" id="memberArea">
                 <div class="medium-12 medium-centered column">
-                    <h1 id="currentMember">Member Name</h1>
                     <div class="memberStats">
-                        <div class="medium-5 column" id="hoursFrame">
-                                <p>COMMITTEE HOURS<br><span id="userHours">##</span></p>
-                        </div>
-                        <div class="medium-5 column"  id="pointsFrame">
-                                <p>INTERCOMMITTEE POINTS<br><span id="userPoints">##</span></p>
-                        </div>
+                        <h1 id="currentMember">Member Name</h1>
                     </div>
                     
                     <form id="hours-form">
@@ -67,51 +61,20 @@
                                 <button type="button" class="button expanded" id="hoursButton" onclick="addHours()">ADD HOURS</button>
                         </div>
                     </form>
+                    <div class="medium-12 column" id="confirmArea">
+                        <h5 id="confirmMessage"></h5>
+                    </div>
                     <table class="table-expand" id="hoursTable">
-                            <thead>
-                              <tr class="table-expand-row">
+                            <thead id="tableHead">
+                              <tr class="table-expand-row-head">
                                 <th width="200">Date</th>
                                 <th>Event</th>
                                 <th width="150">Hours</th>
                                 <th width="150">Points</th>
                               </tr>
                             </thead>
-                            <tbody>
-                              <tr class="table-expand-row" data-open-details>
-                                <td>August 30</td>
-                                <td>Welcome Back Bash</td>
-                                <td>6</td>
-                                <td>0</td>
-                              </tr>
-                          
-                              <tr class="table-expand-row" data-open-details>
-                                <td>September 21</td>
-                                <td>Coffee and Canvas</td>
-                                <td>3</td>
-                                <td>6</td>
-                              </tr>
-
-                              <tr class="table-expand-row" data-open-details>
-                                    <td>August 30</td>
-                                    <td>Welcome Back Bash</td>
-                                    <td>6</td>
-                                    <td>0</td>
-                                  </tr>
-                              
-                            <tr class="table-expand-row" data-open-details>
-                                <td>September 21</td>
-                                <td>Coffee and Canvas</td>
-                                <td>3</td>
-                                <td>6</td>
-                            </tr>
-
-                            <tr class="table-expand-row" data-open-details>
-                                    <td style="visibility:hidden"></td>
-                                    <td style="visibility:hidden"></td>
-                                    <td><b>18</b></td>
-                                    <td><b>12</b></td>
-                                </tr>
-                          
+                            <tbody id="tableBody">
+                
                             </tbody>
                     </table>   
                 </div>
@@ -122,28 +85,28 @@
                     <ul class="bar-graph">
                             <li class="bar primary" style="height: 0%;" title="0" id="artsAndCultureLI">
                               
-                              <div class="description">Arts and Culture</div>
+                              <div class="description">A&C</div>
                               <div class="percent" id="artsAndCultureTXT">90</div>
                             </li>
                             <li class="bar secondary" style="height: 0%;" title="0" id="currentEventsLI">
                               <div class="percent" id="currentEventsTXT">80</div>
-                              <div class="description">Current Events</div>
+                              <div class="description">CE</div>
                             </li>
                             <li class="bar success" style="height: 0%;" title="0" id="entertainmentLI">
                               <div class="percent" id="entertainmentTXT">70</div>
-                              <div class="description">Entertainment</div>
+                              <div class="description">ENT</div>
                             </li>
                             <li class="bar warning" style="height: 0%;" title="0" id="publicityLI">
                               <div class="percent" id="publicityTXT">60</div>
-                              <div class="description">Publicity</div>
+                              <div class="description">PUB</div>
                             </li>
                             <li class="bar alert" style="height: 0%;" title="0" id="purdueAfterDarkLI">
                               <div class="percent" id="purdueAfterDarkTXT">50</div>
-                              <div class="description">Purdue After Dark</div>
+                              <div class="description">PAD</div>
                             </li>
                             <li class="bar extra" style="height: 0%;" title="0" id="spiritAndTraditionsLI">
                                 <div class="percent" id="spiritAndTraditionsTXT">40</div>
-                                <div class="description">Spirit and Traditions</div>
+                                <div class="description">S&T</div>
                             </li>
                     </ul>
                 </div>
