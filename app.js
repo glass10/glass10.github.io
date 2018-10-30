@@ -412,11 +412,13 @@ function adjustTheme(){
         document.getElementsByClassName("body")[0].id = "normalTheme";
         button.innerHTML = "Turn On Theme";
         document.getElementsByTagName("canvas")[0].style.display = "none";
+        document.getElementById("logo").src="Logo.png"
     }
     else{
         document.getElementsByClassName("body")[0].id = "particles-js";
         button.innerHTML = "Turn Off Theme";
         document.getElementsByTagName("canvas")[0].style.display = "block";
+        document.getElementById("logo").src="Logo-Halloween.png";
     }
 }
 
