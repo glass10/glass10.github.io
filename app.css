@@ -1,27 +1,46 @@
-body{
+#normalTheme{
     background:#2f00ff;
     -webkit-animation:colour 10s linear infinite;
       -moz-animation:colour 10s linear infinite;
     
-  }
-  @-webkit-keyframes colour{
-      0%{ background:#2f00ff}
-      40%{ background:#03a0ff}
-      80%{ background:#016afb}
-      100%{ background:#2f00ff}
-  
-  }
-  
-  @-moz-keyframes colour{
+}
+@-webkit-keyframes colour{
     0%{ background:#2f00ff}
     40%{ background:#03a0ff}
     80%{ background:#016afb}
     100%{ background:#2f00ff}
-  }
+
+}
+
+@-moz-keyframes colour{
+0%{ background:#2f00ff}
+40%{ background:#03a0ff}
+80%{ background:#016afb}
+100%{ background:#2f00ff}
+}
+
+#themeToggle{
+    border: 2px solid white;
+    border-radius: 25px;
+    padding: 0.5rem;
+    color: white;
+    top: 1.5vw;
+    right: 1.5vw;
+    position: absolute;
+}
+
+#themeToggle:hover{
+    border: 2px solid white;
+    border-radius: 25px;
+    padding: 0.5rem;
+    color: black;
+    background-color: white;
+    cursor: pointer;
+}
 
 #logo{
-    height: 30%;
-    width: 30%;
+    height: 30vw;
+    width: 30vw;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -407,7 +426,17 @@ input:hover{
     color: black;
   }
   
+
+  /* Particles */
+  /* ---- reset ---- */ body{ margin:0; font:normal 75% Arial, Helvetica, sans-serif; } 
   
+canvas{ display: block; 
+    vertical-align: bottom; 
+    position: absolute;
+    z-index: -1;
+    top: 0; 
+
+} /* ---- particles.js container ---- */ #particles-js{ position:absolute; width: 100%; height: 100%; background-color: #000000; background-image: url(""); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; } /* ---- stats.js ---- */ .count-particles{ background: #000022; position: absolute; top: 48px; left: 0; width: 80px; color: #13E8E9; font-size: .8em; text-align: left; text-indent: 4px; line-height: 14px; padding-bottom: 2px; font-family: Helvetica, Arial, sans-serif; font-weight: bold; } .js-count-particles{ font-size: 1.1em; } #stats, .count-particles{ -webkit-user-select: none; margin-top: 5px; margin-left: 5px; } #stats{ border-radius: 3px 3px 0 0; overflow: hidden; } .count-particles{ border-radius: 0 0 3px 3px; }
   
   
 

@@ -10,8 +10,10 @@
         <link rel="stylesheet" href="app.css">
         <link href="https://fonts.googleapis.com/css?family=Oswald|Permanent+Marker" rel="stylesheet">
     </head>
-    <body onLoad="load()">
+    <body onLoad="load()" id="particles-js" class="body">
     <!--<body>-->
+        <button id="themeToggle" onclick="adjustTheme()">Turn Off Theme</button>
+
         <img src="Logo.png" id="logo">
         <div class="row" id="loginArea">
             <div class="medium-5 medium-centered column">
@@ -115,8 +117,13 @@
         </div>
         <!-- <div id="barchart_material" ></div> -->
         <!-- <script src="https://apis.google.com/js/api.js"></script> -->
+        <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib --> 
+        <!-- <script src="http://threejs.org/examples/js/libs/stats.min.js"></script> -->
+
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="app.js"></script>
         <script src="jquery-3.2.1.min.js"></script>
+
+        
     </body>
 </html>

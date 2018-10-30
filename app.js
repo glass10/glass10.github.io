@@ -5,39 +5,43 @@ var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"
 
 // Committee Spreadsheet IDS
 var sheetIDS = {
-                "artsAndCulture":'1mbu-7VK5mqQk2FNKwwk0b5CGbXt1nGaW53rVa4lbvPc',
-                "currentEvents":'12a9SZndguVFyRlO8xbAj9vLQ5J45Dmn8DIeEBenVOSY',
-                "entertainment":'1CwhXGiTaf8QZHMfSOiBkF2CrqQlPRYPiB0-j-BHADRI',
-                "publicity":'1rU7315Nl-fZpTU2YCRcKWUmYUBqlSLMfhFEJ7e8slf8',
-                "purdueAfterDark":'1cYa09UftGhaE8ExG9bJnuxwAgalSbY4-t5abFZY1QPQ',
-                "spiritAndTraditions":'1r7cxTeWDccKVAp4_cd9BKSnhxqRxQv9goxEYafTPv5I'
+    "artsAndCulture": '1mbu-7VK5mqQk2FNKwwk0b5CGbXt1nGaW53rVa4lbvPc',
+    "currentEvents": '12a9SZndguVFyRlO8xbAj9vLQ5J45Dmn8DIeEBenVOSY',
+    "entertainment": '1CwhXGiTaf8QZHMfSOiBkF2CrqQlPRYPiB0-j-BHADRI',
+    "publicity": '1rU7315Nl-fZpTU2YCRcKWUmYUBqlSLMfhFEJ7e8slf8',
+    "purdueAfterDark": '1cYa09UftGhaE8ExG9bJnuxwAgalSbY4-t5abFZY1QPQ',
+    "spiritAndTraditions": '1r7cxTeWDccKVAp4_cd9BKSnhxqRxQv9goxEYafTPv5I'
 }
 
 //All Committee Data
-var committees = {"artsAndCulture": [], 
-                    "currentEvents": [], 
-                    "entertainment": [],
-                    "publicity": [],
-                    "purdueAfterDark": [], 
-                    "spiritAndTraditions": []};
+var committees = {
+    "artsAndCulture": [],
+    "currentEvents": [],
+    "entertainment": [],
+    "publicity": [],
+    "purdueAfterDark": [],
+    "spiritAndTraditions": []
+};
 
 var committeeList = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
 
 //All Intercommittee Points
-var points = {"artsAndCulture": 0, 
-                    "currentEvents": 0,
-                    "entertainment": 0, 
-                    "publicity": 0,
-                    "purdueAfterDark": 0,
-                    "spiritAndTraditions": 0
-    }
+var points = {
+    "artsAndCulture": 0,
+    "currentEvents": 0,
+    "entertainment": 0,
+    "publicity": 0,
+    "purdueAfterDark": 0,
+    "spiritAndTraditions": 0
+}
 
-var scripts = {"artsAndCulture": "https://script.google.com/macros/s/AKfycbwHZInpf-2XVeATHRFTi2s2KMFh5odvbvGvLYmdVah-Mc0j1ss/exec", 
-                "currentEvents": "https://script.google.com/macros/s/AKfycbxNNSZ-oIRBXZUm1I6isLwo0LpNQxpI-y6Gur_9-Jmu2Hcwo7E/exec",
-                "entertainment": "https://script.google.com/macros/s/AKfycbx5kmyOMiui5joHakz-RDs5AtHYI64I7BBZ_rkLBWVww5RClrw/exec", 
-                "publicity": "https://script.google.com/macros/s/AKfycbxsLiZpXYRBjCN2Eo5GYvxmv-BDoMu9JcX2CX2LSRldleYlxPM/exec",
-                "purdueAfterDark": "https://script.google.com/macros/s/AKfycbwsOqIWytba8oZvq9NaZ1bshNIkKPD2-jwrfOILRVcQVosB0j4/exec",
-                "spiritAndTraditions": "https://script.google.com/macros/s/AKfycbyCj7FY0DXRp1T_gTH6mM261puqhUGqIvIXdGo5Yp-FXJ5VUqk/exec"
+var scripts = {
+    "artsAndCulture": "https://script.google.com/macros/s/AKfycbwHZInpf-2XVeATHRFTi2s2KMFh5odvbvGvLYmdVah-Mc0j1ss/exec",
+    "currentEvents": "https://script.google.com/macros/s/AKfycbxNNSZ-oIRBXZUm1I6isLwo0LpNQxpI-y6Gur_9-Jmu2Hcwo7E/exec",
+    "entertainment": "https://script.google.com/macros/s/AKfycbx5kmyOMiui5joHakz-RDs5AtHYI64I7BBZ_rkLBWVww5RClrw/exec",
+    "publicity": "https://script.google.com/macros/s/AKfycbxsLiZpXYRBjCN2Eo5GYvxmv-BDoMu9JcX2CX2LSRldleYlxPM/exec",
+    "purdueAfterDark": "https://script.google.com/macros/s/AKfycbwsOqIWytba8oZvq9NaZ1bshNIkKPD2-jwrfOILRVcQVosB0j4/exec",
+    "spiritAndTraditions": "https://script.google.com/macros/s/AKfycbyCj7FY0DXRp1T_gTH6mM261puqhUGqIvIXdGo5Yp-FXJ5VUqk/exec"
 }
 
 //Current Information
@@ -47,35 +51,35 @@ var currentData = {};
 let heights = {};
 let dataCount = 0;
 
-function load(){
+function load() {
     heights = {};
-    for(var i = 0; i < committeeList.length; i++){
+    for (var i = 0; i < committeeList.length; i++) {
         data(committeeList[i]);
     }
 }
 
-function calculateHeight(){
+function calculateHeight() {
     // Dynamic Height
     let maxHeight = 90;
     let tallest = 0;
     let heightValues = Object.values(heights);
-    for(let i = 0; i < heightValues.length; i++){
-        if(heightValues[i] - tallest > 0){
+    for (let i = 0; i < heightValues.length; i++) {
+        if (heightValues[i] - tallest > 0) {
             tallest = heightValues[i];
         }
     }
-    if(tallest > maxHeight){
+    if (tallest > maxHeight) {
         // Recalculate heights
         let factor = maxHeight / tallest;
-        for(var i = 0; i < committeeList.length; i++){
-            document.getElementById(committeeList[i] + "LI").style = "height: " + heights[committeeList[i]]*factor + "%";
+        for (var i = 0; i < committeeList.length; i++) {
+            document.getElementById(committeeList[i] + "LI").style = "height: " + heights[committeeList[i]] * factor + "%";
         }
     }
 }
 
-function data(committee){
+function data(committee) {
     console.log('Loading ' + committee + ' data');
-    if(committees[committee].length !== 0){
+    if (committees[committee].length !== 0) {
         committees[committee] = [];
     }
 
@@ -87,28 +91,28 @@ function data(committee){
         "headers": {
         }
     }
-          
+
     $.ajax(settings).done(function (response) {
         //console.log(response);
-        response = response.substring(response.indexOf("{"), response.length-2)
+        response = response.substring(response.indexOf("{"), response.length - 2)
         var response = JSON.parse(response);
         console.log(response);
-        for(var i = 0; i < response.feed.entry.length; i++){
-            if(i !== response.feed.entry.length-1){
+        for (var i = 0; i < response.feed.entry.length; i++) {
+            if (i !== response.feed.entry.length - 1) {
                 var tempName = response.feed.entry[i].gsx$name.$t;
                 var tempPin = response.feed.entry[i].gsx$pin.$t;
                 var tempID = response.feed.entry[i].gsx$sheetid.$t;
                 var tempHours = response.feed.entry[i].gsx$hours.$t;
                 var tempPoints = response.feed.entry[i].gsx$points.$t;
-    
-                committees[committee].push({name: tempName, pin: tempPin, id: tempID, number: i+2, hours: tempHours, points: tempPoints});
-                
+
+                committees[committee].push({ name: tempName, pin: tempPin, id: tempID, number: i + 2, hours: tempHours, points: tempPoints });
+
             }
-            else{
+            else {
                 var tempHours = response.feed.entry[i].gsx$committeehours.$t
                 var tempPoints = response.feed.entry[i].gsx$committeepoints.$t
-                
-                committees[committee].push({totalHours: tempHours, totalPoints: tempPoints});
+
+                committees[committee].push({ totalHours: tempHours, totalPoints: tempPoints });
 
                 var height = tempPoints;
 
@@ -122,23 +126,23 @@ function data(committee){
         console.log(committees[committee]);
 
         dataCount++;
-        if(dataCount === 6){
+        if (dataCount === 6) {
             calculateHeight();
         }
     });
     console.log("Data Loaded Successfully");
 }
-    
 
-function committeeChange(){
+
+function committeeChange() {
     $("#memberSelect").empty();
     var select = document.getElementById("committeeSelect");
     var text = select.options[select.selectedIndex].text; //committee Text
-    text = text.substring(0,1).toLowerCase() + text.substring(1, text.length);
+    text = text.substring(0, 1).toLowerCase() + text.substring(1, text.length);
     text = text.replace(/\s/g, '') //Manipulation Done
 
     var optionsAsString = "";
-    for(var i = 0; i < committees[text].length-1; i++){
+    for (var i = 0; i < committees[text].length - 1; i++) {
         optionsAsString += "<option value='" + committees[text][i].name + "'>" + committees[text][i].name + "</option>";
     }
     $("#memberSelect").html(optionsAsString);
@@ -146,7 +150,7 @@ function committeeChange(){
 
 }
 
-function login(){
+function login() {
     console.log("Login Attempted");
     var selectedCommittee = document.getElementById("committeeSelect");
     var selectedUser = document.getElementById("memberSelect");
@@ -154,25 +158,25 @@ function login(){
     var committee = selectedCommittee.options[selectedCommittee.selectedIndex].text;
     var user = selectedUser.options[selectedUser.selectedIndex].text;
 
-    if(committee === 'Select Your Committee' || user === 'Committee Not Selected'){
+    if (committee === 'Select Your Committee' || user === 'Committee Not Selected') {
         unsuccessfulLogin("Committee and/or Member Information Missing");
     }
-    else{
-        
-        committee = committee.substring(0,1).toLowerCase() + committee.substring(1, committee.length);
+    else {
+
+        committee = committee.substring(0, 1).toLowerCase() + committee.substring(1, committee.length);
         committee = committee.replace(/\s/g, '') //Manipulation Done
 
         var pinInput = document.getElementById("pinText").value;
 
         console.log(committee + ", " + user + ", " + pinInput);
 
-        for(var i = 0; i < committees[committee].length; i++){
-            if(committees[committee][i].name === user){
-                if(committees[committee][i].pin === pinInput){
+        for (var i = 0; i < committees[committee].length; i++) {
+            if (committees[committee][i].name === user) {
+                if (committees[committee][i].pin === pinInput) {
                     console.log("Successful Login");
                     successfulLogin(committees[committee][i], committee);
                 }
-                else{
+                else {
                     unsuccessfulLogin("Incorrect PIN");
                 }
                 i = committees[committee].length;
@@ -180,10 +184,10 @@ function login(){
         }
     }
 
-    
+
 }
 
-function successfulLogin(data, committee){
+function successfulLogin(data, committee) {
 
     document.getElementById("memberArea").style.display = "block";
     $('html, body').animate({
@@ -204,7 +208,7 @@ function successfulLogin(data, committee){
     updateHoursSheet(data, committee);
 }
 
-function updateHoursSheet(data, committee){
+function updateHoursSheet(data, committee) {
     document.getElementById("tableBody").innerHTML = "";
     var settings = {
         "async": true,
@@ -216,38 +220,38 @@ function updateHoursSheet(data, committee){
             // "secret": API_KEY,
         }
     }
-          
+
     $.ajax(settings).done(function (response) {
-        response = response.substring(response.indexOf("{"), response.length-2)
+        response = response.substring(response.indexOf("{"), response.length - 2)
         var response = JSON.parse(response);
         console.log(response);
 
         var totalHours = 0;
         var totalPoints = 0;
 
-        for(var i = 0; i < response.feed.entry.length; i++){
+        for (var i = 0; i < response.feed.entry.length; i++) {
             var data = response.feed.entry[i];
-            if(i == 0){
+            if (i == 0) {
                 totalHours = data.gsx$hourstotal.$t;
                 totalPoints = data.gsx$pointstotal.$t;
             }
 
-            if(data.gsx$hourstotal.$t === "" || i === 0 ){
+            if (data.gsx$hourstotal.$t === "" || i === 0) {
                 var date = data.gsx$date.$t;
                 var event = data.gsx$event.$t;
                 var hours = data.gsx$hours.$t;
                 var points = data.gsx$points.$t;
-    
+
                 let args = {
-                    "date": date, 
-                    "event": event, 
-                    "hours": hours, 
+                    "date": date,
+                    "event": event,
+                    "hours": hours,
                     "points": points
                 };
 
                 let tempTR = document.createElement("tr");
                 tempTR.classList = "table-expand-row";
-                tempTR.addEventListener("click", function(){
+                tempTR.addEventListener("click", function () {
                     removeHours(args);
                 })
 
@@ -296,22 +300,22 @@ function updateHoursSheet(data, committee){
     console.log("Member Hours Updated Successfully");
 }
 
-function unsuccessfulLogin(reason){
+function unsuccessfulLogin(reason) {
     console.log("Unsuccessful Login");
     alert("Login Unsuccessful: " + reason)
 }
 
-function addHours(){
+function addHours() {
     var date = document.getElementById("dateInput").value;
     var event = document.getElementById("eventInput").value;
     var hours = document.getElementById("hoursInput").value;
 
-    if(date === "" || event === "" || hours === ""){
+    if (date === "" || event === "" || hours === "") {
         alert("Please provide values for all event details");
     }
-    else{
+    else {
         var select = document.getElementById("eventType");
-        var multiplier = select.options[select.selectedIndex].value; 
+        var multiplier = select.options[select.selectedIndex].value;
 
         var intercommitteeOptions = ["No", "Yes", "Yes"];
         var intercommittee = intercommitteeOptions[multiplier];
@@ -323,7 +327,7 @@ function addHours(){
             "url": scripts[currentCommittee],
             "type": "POST",
             //"dataType": "json",
-            "data":{
+            "data": {
                 "Member": currentName,
                 "Date": date,
                 "Event": event,
@@ -332,7 +336,7 @@ function addHours(){
                 "Points": points
             }
         }
-            
+
         $.ajax(settings).done(function (response) {
             document.getElementById("dateInput").value = "";
             document.getElementById("eventInput").value = "";
@@ -340,20 +344,20 @@ function addHours(){
             document.getElementById("eventType").selectedIndex = 0;
 
             document.getElementById("confirmMessage").innerHTML = event + " Added Successfully";
-            
+
             updateHoursSheet(currentData, currentCommittee); //called after POST made successfully
         });
     }
 }
 
-function removeHours(rowInfo){
+function removeHours(rowInfo) {
     let verify = confirm("Are you sure you want to remove " + rowInfo.event + "?");
 
-    if(verify){
+    if (verify) {
         var settings2 = {
             "url": scripts[currentCommittee],
             "type": "GET", // not actual GET
-            "data":{
+            "data": {
                 "Member": currentName,
                 "Date": rowInfo.date,
                 "Event": rowInfo.event,
@@ -362,7 +366,7 @@ function removeHours(rowInfo){
                 "Points": rowInfo.points
             }
         }
-    
+
         $.ajax(settings2).done(function (response) {
             document.getElementById("confirmMessage").innerHTML = rowInfo.event + " Removed Successfully";
 
@@ -373,13 +377,13 @@ function removeHours(rowInfo){
 
 function drawChart() {
     var data = google.visualization.arrayToDataTable([
-      ['Committee', "Points", { role: 'annotation' }],
-      ['Arts and Culture', 1000, 'Test'],
-      ['Current Events', 1170, 'Test'],
-      ['Entertainment', 660, 'Test'],
-      ['Purdue After Dark', 660, 'Test'],
-      ['Publicity', 1030, 'Test'],
-      ['Spirit and Traditions', 660, 'Test'],
+        ['Committee', "Points", { role: 'annotation' }],
+        ['Arts and Culture', 1000, 'Test'],
+        ['Current Events', 1170, 'Test'],
+        ['Entertainment', 660, 'Test'],
+        ['Purdue After Dark', 660, 'Test'],
+        ['Publicity', 1030, 'Test'],
+        ['Spirit and Traditions', 660, 'Test'],
     ]);
     var view = new google.visualization.DataView(data);
     var options = {
@@ -388,14 +392,34 @@ function drawChart() {
         colors: ['white', 'black', 'black', 'black', 'green', 'red'],
         legend: { position: 'none' },
         bars: 'horizontal', // Required for Material Bar Charts.
-        vAxis: {title: 'Committees', 
-        titleTextStyle: {color: 'white'}},
-        
+        vAxis: {
+            title: 'Committees',
+            titleTextStyle: { color: 'white' }
+        },
+
         bar: { groupWidth: "90%" }
-      };
+    };
 
     var chart = new google.charts.Bar(document.getElementById('barchart_material'));
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
-  }
+}
+
+
+function adjustTheme(){
+    let button = document.getElementById("themeToggle");
+    if(button.innerHTML == "Turn Off Theme"){
+        document.getElementsByClassName("body")[0].id = "normalTheme";
+        button.innerHTML = "Turn On Theme";
+        document.getElementsByTagName("canvas")[0].style.display = "none";
+    }
+    else{
+        document.getElementsByClassName("body")[0].id = "particles-js";
+        button.innerHTML = "Turn Off Theme";
+        document.getElementsByTagName("canvas")[0].style.display = "block";
+    }
+}
+
+//   Particles
+particlesJS("particles-js", { "particles": { "number": { "value": 10, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#003cff" }, "shape": { "type": "image", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 5 }, "image": { "src": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/146/ghost_1f47b.png", "width": 100, "height": 100 } }, "opacity": { "value": 0.5, "random": false, "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 20.042650760819036, "random": true, "anim": { "enable": false, "speed": 5, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": false, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 5, "direction": "top", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false, "mode": "repulse" }, "onclick": { "enable": false, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 400, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 200, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } }, "retina_detect": true }); var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function () { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);;
 
