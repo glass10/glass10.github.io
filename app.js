@@ -150,6 +150,13 @@ function committeeChange() {
 
 }
 
+document.getElementById('login-form').onkeydown = function(e){
+    // Login on Enter
+    if(e.keyCode == 13){
+      login();
+    }
+ };
+
 function login() {
     console.log("Login Attempted");
     var selectedCommittee = document.getElementById("committeeSelect");

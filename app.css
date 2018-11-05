@@ -147,10 +147,12 @@ table thead th{
     font-family: 'Oswald';
     text-align: center;
     font-size: 2rem;
-    width: 103vw;
+    width: auto;
+    padding: 0px;
     border-bottom: 2px solid white;
     margin-bottom: 1.5rem;
-    margin-left: -3vw;
+    margin-left: -0.9375rem;
+    margin-right: -0.9375rem;
     /* padding-left: -1.5rem; */
     background-color: rgba(255, 255, 255, 0.75);
 }
@@ -336,10 +338,10 @@ input:hover{
     }
   }
   .bar-graph .percent {
-    font-size: 3vw;
+    font-size: 2.5vw;
     color: white;
     opacity: 0.8;
-    margin-top: -4.5vw;
+    margin-top: -3.5vw;
   }
   
   .bar-graph .description {
