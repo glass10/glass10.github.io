@@ -4,9 +4,9 @@ body{
 
 .navbar-dark{
     background-color: #4169E1;
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
+    /* position: fixed;
+    top: 0; 
+    width: 100%;  */
 }
 
 .btn-outline-primary{
@@ -33,3 +33,152 @@ body{
 #navName{
     color: #294390;
 }
+
+h1{
+    font-family: 'Oswald';
+    text-align: center;
+    color: white;
+}
+h3{
+    font-family: 'Oswald';
+    text-align: left;
+}
+h3.hidden{
+    visibility: hidden;
+}
+h3.visible{
+    visibility: visible;
+}
+button.hidden{
+    visibility: hidden;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+input{
+    font-family: 'Oswald' !important;
+}
+select{
+    font-family: 'Oswald';
+}
+
+
+table{
+    font-family: 'Oswald';
+    text-align: center;
+}
+
+table thead th{
+    text-align: center;
+}
+
+#memberArea{
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    border: 2px solid white;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+#userHours, #userPoints {
+    padding: 0.25rem;
+}
+
+#hoursFrame, #pointsFrame{
+    background-color: rgba(255, 255, 255, 0.25);
+    border: 2px solid white;
+    border-radius: 25px;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+#dateInput, #eventInput, #hoursInput, #eventType, #hoursButton{
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.75);
+    color: black;
+}
+
+.memberStats{
+    font-family: 'Oswald';
+    text-align: center;
+    font-size: 2rem;
+    width: auto;
+    padding: 0px;
+    border-bottom: 2px solid white;
+    margin-bottom: 1.5rem;
+    margin-left: -0.9375rem;
+    margin-right: -0.9375rem;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+#currentMember{
+    color: #294390;
+}
+
+#hoursButton{
+    border: 2px solid white;
+}
+
+#hoursButton:hover{
+    background: white;
+    border: 2px solid blue;
+}
+
+.input-group-field:hover{
+    transition: all 0.30s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    border: 3px solid lightgreen;
+}
+select:hover{
+   transition: all 0.30s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    border: 2px solid blue; 
+}
+
+input:hover{
+    transition: all 0.30s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    border: 2px solid blue; 
+}
+
+#confirmArea{
+    text-align: center;
+    color: white;
+}
+
+#confirmArea h5{
+    font-weight: bold;
+}
+
+.table-expand {
+    margin-top: 5rem;
+  }
+  
+  .table-expand .text-right {
+    padding-right: 3rem;
+  }
+
+  .table-expand-row:hover{
+      background-color: lightcoral;
+      cursor: pointer;
+  }
+  
+  .table-expand-row.is-active .expand-icon::after {
+    content: '-';
+  }
+  
+  .table-expand-row .expand-icon::after {
+    content: '+';
+    float: right;
+  }
+  
+  .table-expand-row-content {
+    display: none;
+  }

@@ -226,39 +226,6 @@ input:hover{
     font-weight: bold;
 }
 
-/* .warning.button{
-    color: white !important;
-    background-color: gray !important;
-}
-.warning.button:hover{
-    background-color: gold !important;
-}
-.warning.button.select{
-    background-color: gold !important;
-    color: black !important;
-}
-
-.input-group-label{
-    width: 50%;
-    background:lightgray;
-}
-.input-group-label:hover{
-    transition: all 0.30s ease-in-out;
-    background:silver;
-} */
-
-/* #SearchH3{
-    float: left;
-}
-#searchButton{
-    background-color: orange !important;
-}
-#searchButton:hover{
-    transition: all 0.20s ease-in;
-    background-color: orangered !important;
-} */
-
-
 .bar-graph {
     padding: 0 1rem;
     /* width: 100%; */
