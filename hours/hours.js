@@ -1,7 +1,3 @@
-function logout(){
-    console.log("Logout Attempted");
-}
-
 var CLIENT_ID = '741003728693-o30686b65lf3np0fd6lbhngfhmv5oqkh.apps.googleusercontent.com'
 var API_KEY = 'AIzaSyAtQULaPG_AsmOKmsWESJEESDuqOPs8IdU'
 var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
@@ -52,171 +48,28 @@ var scripts = {
 var currentCommittee = "";
 var currentName = "";
 var currentData = {};
-let heights = {};
-let dataCount = 0;
 
-function load() {
-    heights = {};
-    for (var i = 0; i < committeeList.length; i++) {
-        data(committeeList[i]);
-    }
+function logout(){
+    console.log("Logout Attempted");
+    localStorage.removeItem("psubPortal");
+    window.location.replace("../index.html")
 }
 
-function calculateHeight() {
-    // Dynamic Height
-    let maxHeight = 90;
-    let tallest = 0;
-    let heightValues = Object.values(heights);
-    for (let i = 0; i < heightValues.length; i++) {
-        if (heightValues[i] - tallest > 0) {
-            tallest = heightValues[i];
-        }
+function load(){
+    //Safety Check
+    if(localStorage.getItem("psubPortal") === null){
+        window.location.replace("../index.html");
     }
-    if (tallest > maxHeight) {
-        // Recalculate heights
-        let factor = maxHeight / tallest;
-        for (var i = 0; i < committeeList.length; i++) {
-            document.getElementById(committeeList[i] + "LI").style = "height: " + heights[committeeList[i]] * factor + "%";
-        }
+    else{
+        let storageObj = JSON.parse(localStorage.getItem("psubPortal"));
+        currentCommittee = storageObj.committee;
+        currentName = storageObj.name;
+        currentData = storageObj;
+
+        let firstName = currentName.substring(0, currentName.indexOf(" "));
+        document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
+        updateHoursSheet(storageObj, storageObj.committee);
     }
-}
-
-function data(committee) {
-    console.log('Loading ' + committee + ' data');
-    if (committees[committee].length !== 0) {
-        committees[committee] = [];
-    }
-
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/1/public/full?alt=json-in-script',
-        "method": "GET",
-        "headers": {
-        }
-    }
-
-    $.ajax(settings).done(function (response) {
-        //console.log(response);
-        response = response.substring(response.indexOf("{"), response.length - 2)
-        var response = JSON.parse(response);
-        console.log(response);
-        for (var i = 0; i < response.feed.entry.length; i++) {
-            if (i !== response.feed.entry.length - 1) {
-                var tempName = response.feed.entry[i].gsx$name.$t;
-                var tempPin = response.feed.entry[i].gsx$pin.$t;
-                var tempID = response.feed.entry[i].gsx$sheetid.$t;
-                var tempHours = response.feed.entry[i].gsx$hours.$t;
-                var tempPoints = response.feed.entry[i].gsx$points.$t;
-
-                committees[committee].push({ name: tempName, pin: tempPin, id: tempID, number: i + 2, hours: tempHours, points: tempPoints });
-
-            }
-            else {
-                var tempHours = response.feed.entry[i].gsx$committeehours.$t
-                var tempPoints = response.feed.entry[i].gsx$committeepoints.$t
-
-                committees[committee].push({ totalHours: tempHours, totalPoints: tempPoints });
-
-                var height = tempPoints;
-
-                points[committee] = tempPoints; //for intercommittee points
-                document.getElementById(committee + "LI").style = "height: " + height + "%";
-                heights[committee] = height;
-                document.getElementById(committee + "LI").title = tempPoints;
-                document.getElementById(committee + "TXT").textContent = tempPoints;
-            }
-        }
-        console.log(committees[committee]);
-
-        dataCount++;
-        if (dataCount === 6) {
-            calculateHeight();
-        }
-    });
-    console.log("Data Loaded Successfully");
-}
-
-
-function committeeChange() {
-    $("#memberSelect").empty();
-    var select = document.getElementById("committeeSelect");
-    var text = select.options[select.selectedIndex].text; //committee Text
-    text = text.substring(0, 1).toLowerCase() + text.substring(1, text.length);
-    text = text.replace(/\s/g, '') //Manipulation Done
-
-    var optionsAsString = "";
-    for (var i = 0; i < committees[text].length - 1; i++) {
-        optionsAsString += "<option value='" + committees[text][i].name + "'>" + committees[text][i].name + "</option>";
-    }
-    $("#memberSelect").html(optionsAsString);
-    console.log("Members Updated");
-
-}
-
-document.getElementById('login-form').onkeydown = function(e){
-    // Login on Enter
-    if(e.keyCode == 13){
-      login();
-    }
- };
-
-function login() {
-    console.log("Login Attempted");
-    var selectedCommittee = document.getElementById("committeeSelect");
-    var selectedUser = document.getElementById("memberSelect");
-
-    var committee = selectedCommittee.options[selectedCommittee.selectedIndex].text;
-    var user = selectedUser.options[selectedUser.selectedIndex].text;
-
-    if (committee === 'Select Your Committee' || user === 'Committee Not Selected') {
-        unsuccessfulLogin("Committee and/or Member Information Missing");
-    }
-    else {
-
-        committee = committee.substring(0, 1).toLowerCase() + committee.substring(1, committee.length);
-        committee = committee.replace(/\s/g, '') //Manipulation Done
-
-        var pinInput = document.getElementById("pinText").value;
-
-        console.log(committee + ", " + user + ", " + pinInput);
-
-        for (var i = 0; i < committees[committee].length; i++) {
-            if (committees[committee][i].name === user) {
-                if (committees[committee][i].pin === pinInput) {
-                    console.log("Successful Login");
-                    successfulLogin(committees[committee][i], committee);
-                }
-                else {
-                    unsuccessfulLogin("Incorrect PIN");
-                }
-                i = committees[committee].length;
-            }
-        }
-    }
-
-
-}
-
-function successfulLogin(data, committee) {
-
-    document.getElementById("memberArea").style.display = "block";
-    $('html, body').animate({
-        scrollTop: $("#memberArea").offset().top
-    }, 2000);
-
-    //Populate Member Section 
-    document.getElementById("currentMember").textContent = data.name;
-    // document.getElementById("userHours").textContent = data.hours;
-    // document.getElementById("userPoints").textContent = data.points;
-
-    //Setting Globals
-    currentCommittee = committee;
-    currentName = data.name;
-    currentData = data;
-
-    //Display Hour Sheet
-    updateHoursSheet(data, committee);
 }
 
 function updateHoursSheet(data, committee) {
@@ -311,10 +164,10 @@ function updateHoursSheet(data, committee) {
     console.log("Member Hours Updated Successfully");
 }
 
-function unsuccessfulLogin(reason) {
-    console.log("Unsuccessful Login");
-    alert("Login Unsuccessful: " + reason)
-}
+// function unsuccessfulLogin(reason) {
+//     console.log("Unsuccessful Login");
+//     alert("Login Unsuccessful: " + reason)
+// }
 
 function addHours() {
     var date = document.getElementById("dateInput").value;

@@ -52,9 +52,16 @@ let heights = {};
 let dataCount = 0;
 
 function load() {
-    heights = {};
-    for (var i = 0; i < committeeList.length; i++) {
-        data(committeeList[i]);
+    if(localStorage.getItem("psubPortal") == null){
+        console.log("Local Storage Empty");
+        heights = {};
+        for (var i = 0; i < committeeList.length; i++) {
+            data(committeeList[i]);
+        }
+    }
+    else{
+        console.log("Local Storage Found. Redirecting");
+        window.location.replace("hours/hours.html")
     }
 }
 
@@ -195,223 +202,17 @@ function login() {
 }
 
 function successfulLogin(data, committee) {
-
-    document.getElementById("memberArea").style.display = "block";
-    $('html, body').animate({
-        scrollTop: $("#memberArea").offset().top
-    }, 2000);
-
-    //Populate Member Section 
-    document.getElementById("currentMember").textContent = data.name;
-    // document.getElementById("userHours").textContent = data.hours;
-    // document.getElementById("userPoints").textContent = data.points;
-
-    //Setting Globals
-    currentCommittee = committee;
-    currentName = data.name;
-    currentData = data;
-
-    //Display Hour Sheet
-    updateHoursSheet(data, committee);
-}
-
-function updateHoursSheet(data, committee) {
-    document.getElementById("tableBody").innerHTML = "";
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/' + data.number + '/public/full?alt=json-in-script',
-        "method": "GET",
-        "headers": {
-            // "id": CLIENT_ID,
-            // "secret": API_KEY,
-        }
-    }
-
-    $.ajax(settings).done(function (response) {
-        response = response.substring(response.indexOf("{"), response.length - 2)
-        var response = JSON.parse(response);
-        console.log(response);
-
-        var totalHours = 0;
-        var totalPoints = 0;
-
-        for (var i = 0; i < response.feed.entry.length; i++) {
-            var data = response.feed.entry[i];
-            if (i == 0) {
-                totalHours = data.gsx$hourstotal.$t;
-                totalPoints = data.gsx$pointstotal.$t;
-            }
-
-            if (data.gsx$hourstotal.$t === "" || i === 0) {
-                var date = data.gsx$date.$t;
-                var event = data.gsx$event.$t;
-                var hours = data.gsx$hours.$t;
-                var points = data.gsx$points.$t;
-
-                let args = {
-                    "date": date,
-                    "event": event,
-                    "hours": hours,
-                    "points": points
-                };
-
-                let tempTR = document.createElement("tr");
-                tempTR.classList = "table-expand-row";
-                tempTR.addEventListener("click", function () {
-                    removeHours(args);
-                })
-
-                let dateTD = document.createElement("td");
-                dateTD.innerHTML = date;
-                let eventTD = document.createElement("td");
-                eventTD.innerHTML = event;
-                let hoursTD = document.createElement("td");
-                hoursTD.innerHTML = hours;
-                let pointsTD = document.createElement("td");
-                pointsTD.innerHTML = points;
-
-                tempTR.appendChild(dateTD);
-                tempTR.appendChild(eventTD);
-                tempTR.appendChild(hoursTD);
-                tempTR.appendChild(pointsTD);
-
-                document.getElementById("tableBody").appendChild(tempTR);
-
-            }
-        }
-
-        let tempTR = document.createElement("tr");
-        tempTR.classList = "table-expand-row-bottom";
-
-        let dateTD = document.createElement("td");
-        dateTD.innerHTML = "";
-        dateTD.style = "visibility:hidden";
-        let eventTD = document.createElement("td");
-        eventTD.innerHTML = "";
-        eventTD.style = "visibility:hidden";
-        let hoursTD = document.createElement("td");
-        hoursTD.innerHTML = totalHours;
-        hoursTD.style = "font-weight: bold";
-        let pointsTD = document.createElement("td");
-        pointsTD.innerHTML = totalPoints;
-        pointsTD.style = "font-weight: bold";
-
-        tempTR.appendChild(dateTD);
-        tempTR.appendChild(eventTD);
-        tempTR.appendChild(hoursTD);
-        tempTR.appendChild(pointsTD);
-
-        document.getElementById("tableBody").appendChild(tempTR);
-    });
-    console.log("Member Hours Updated Successfully");
+    console.log("DATA: " + data);
+    let storageObj = data;
+    storageObj["committee"] = committee;
+    localStorage.setItem("psubPortal", JSON.stringify(storageObj));
+    window.location.replace("hours/hours.html");
 }
 
 function unsuccessfulLogin(reason) {
     console.log("Unsuccessful Login");
     alert("Login Unsuccessful: " + reason)
 }
-
-function addHours() {
-    var date = document.getElementById("dateInput").value;
-    var event = document.getElementById("eventInput").value;
-    var hours = document.getElementById("hoursInput").value;
-
-    if (date === "" || event === "" || hours === "") {
-        alert("Please provide values for all event details");
-    }
-    else {
-        var select = document.getElementById("eventType");
-        var multiplier = select.options[select.selectedIndex].value;
-
-        var intercommitteeOptions = ["No", "Yes", "Yes"];
-        var intercommittee = intercommitteeOptions[multiplier];
-        var points = hours * multiplier;
-
-        console.log(scripts[currentCommittee]);
-
-        var settings = {
-            "url": scripts[currentCommittee],
-            "type": "POST",
-            //"dataType": "json",
-            "data": {
-                "Member": currentName,
-                "Date": date,
-                "Event": event,
-                "Hours": hours,
-                "Intercommittee": intercommittee,
-                "Points": points
-            }
-        }
-
-        $.ajax(settings).done(function (response) {
-            document.getElementById("dateInput").value = "";
-            document.getElementById("eventInput").value = "";
-            document.getElementById("hoursInput").value = "";
-            document.getElementById("eventType").selectedIndex = 0;
-
-            document.getElementById("confirmMessage").innerHTML = event + " Added Successfully";
-
-            updateHoursSheet(currentData, currentCommittee); //called after POST made successfully
-        });
-    }
-}
-
-function removeHours(rowInfo) {
-    let verify = confirm("Are you sure you want to remove " + rowInfo.event + "?");
-
-    if (verify) {
-        var settings2 = {
-            "url": scripts[currentCommittee],
-            "type": "GET", // not actual GET
-            "data": {
-                "Member": currentName,
-                "Date": rowInfo.date,
-                "Event": rowInfo.event,
-                "Hours": rowInfo.hours,
-                // "Intercommittee": intercommittee,
-                "Points": rowInfo.points
-            }
-        }
-
-        $.ajax(settings2).done(function (response) {
-            document.getElementById("confirmMessage").innerHTML = rowInfo.event + " Removed Successfully";
-
-            updateHoursSheet(currentData, currentCommittee); //called after GET made successfully
-        });
-    }
-}
-
-function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['Committee', "Points", { role: 'annotation' }],
-        ['Arts and Culture', 1000, 'Test'],
-        ['Current Events', 1170, 'Test'],
-        ['Entertainment', 660, 'Test'],
-        ['Purdue After Dark', 660, 'Test'],
-        ['Publicity', 1030, 'Test'],
-        ['Spirit and Traditions', 660, 'Test'],
-    ]);
-    var view = new google.visualization.DataView(data);
-    var options = {
-        backgroundColor: 'transparent',
-        // colors: ['#2196e3', '#909090', '#2196e3', '#2196e3', '#2196e3', '#2196e3'],
-        colors: ['white', 'black', 'black', 'black', 'green', 'red'],
-        legend: { position: 'none' },
-        bars: 'horizontal', // Required for Material Bar Charts.
-        vAxis: {
-            title: 'Committees',
-            titleTextStyle: { color: 'white' }
-        },
-
-        bar: { groupWidth: "90%" }
-    };
-
-    var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-
-    chart.draw(data, google.charts.Bar.convertOptions(options));
-}
-
 
 function adjustTheme(){
     let button = document.getElementById("themeToggle");

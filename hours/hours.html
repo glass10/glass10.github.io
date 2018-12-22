@@ -13,11 +13,11 @@
         <link href="hours.css" rel="stylesheet" >
 
     </head>
-    <body>
+    <body onLoad="load()">
         <!-- Nav Bar -->
         <nav class="navbar navbar-expand-lg navbar-dark static-top">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand">
                     <img src="../Logo.png" alt="" id="navLogo">
                     </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@
                     </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item" id="navNameLI"><a class="nav-link" id="navName">Hi, Cameron!</a></li>
+                    <li class="nav-item" id="navNameLI"><a class="nav-link" id="navName">Hi!</a></li>
 
                     <li class="nav-item active">
                         <a class="nav-link" href="hours.html">Hours
@@ -53,7 +53,6 @@
         <div class="container">
             <div class="row" id="memberArea">
                 <div class="memberStats col-12">
-                    <!-- <h1 id="currentMember">Member Name</h1> -->
                     <form id="hours-form" class="form-inline col-12">
                             <div class="col-sm-12 col-md-3">
                                 <input type="date" class="form-control formInput" name="eventDate" id="dateInput">
@@ -91,7 +90,7 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            <tr>
+                            <!-- <tr>
                                 <th>1</th>
                                 <td>Mark</td>
                                 <td>Otto</td>
@@ -102,13 +101,13 @@
                                 <td>Cameron</td>
                                 <td>Glass</td>
                                 <td>@glass10</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                 </table>   
             </div>
         </div>
 
-        <script src="../jquery-3.3.1.slim.min.js"></script>
+        <script src="../jquery-3.2.1.min.js"></script>
         <script src="../bootstrap.bundle.min.js"></script>
         <script src="hours.js"></script>
     </body>

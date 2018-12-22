@@ -23,6 +23,7 @@ body{
 #navLogo{
     width: 5rem;
     height: auto;
+    pointer-events: none;
 }
 
 #navNameLI{
