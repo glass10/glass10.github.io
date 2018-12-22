@@ -52,49 +52,59 @@
         <!-- Member Hour Section -->
         <div class="container">
             <div class="row" id="memberArea">
-                    <div class="col-12">
-                        <div class="memberStats">
-                            <h1 id="currentMember">Member Name</h1>
-                        </div>
-                        
-                        <form id="hours-form">
-                            <div class="col-3">
-                                    <input type="date" name="eventDate" id="dateInput">
+                <div class="memberStats col-12">
+                    <!-- <h1 id="currentMember">Member Name</h1> -->
+                    <form id="hours-form" class="form-inline col-12">
+                            <div class="col-sm-12 col-md-3">
+                                <input type="date" class="form-control formInput" name="eventDate" id="dateInput">
                             </div>
-                            <div class="col-3">
-                                    <input type="text" name="Event" placeholder="Event Name" id="eventInput">
+                            <div class="col-sm-12 col-md-3">
+                                <input type="text" class="form-control formInput" name="Event" placeholder="Event Name" id="eventInput">
                             </div>
-                            <div class="col-2">
-                                            <input type="number" name="Hours" placeholder="Hours" id="hoursInput">
-                                    </div>
-                            <div class="col-2">
-                                    <select name="eventType" id="eventType">
-                                            <option value="0">My Committee</option>
-                                            <option value="1">Intercommittee - Singled</option>
-                                            <option value="2">Intercommittee - Doubled</option>
-                                    </select>
+                            <div class="col-sm-12 col-md-2">
+                                <input type="number" class="form-control formInput" name="Hours" placeholder="Hours" id="hoursInput">
                             </div>
-                            <div class="col-2">
-                                    <button type="button" class="button expanded" id="hoursButton" onclick="addHours()">ADD HOURS</button>
+                            <div class="col-sm-12 col-md-2">
+                                <select name="eventType" class="form-control formInput" id="eventType">
+                                        <option value="0">My Committee</option>
+                                        <option value="1">Intercommittee - Singled</option>
+                                        <option value="2">Intercommittee - Doubled</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-2">
+                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addHours()">ADD HOURS</button>
                             </div>
                         </form>
-                        <div class="col-12" id="confirmArea">
-                            <h5 id="confirmMessage"></h5>
-                        </div>
-                        <table class="table-expand" id="hoursTable">
-                                <thead id="tableHead">
-                                    <tr class="table-expand-row-head">
-                                    <th width="200">Date</th>
-                                    <th>Event</th>
-                                    <th width="150">Hours</th>
-                                    <th width="150">Points</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableBody">
-                    
-                                </tbody>
-                        </table>   
-                    </div>
+                </div>
+                
+                
+                <div class="col-12" id="confirmArea">
+                    <h5 id="confirmMessage"></h5>
+                </div>
+                <table class="table" id="hoursTable">
+                        <thead id="tableHead">
+                            <tr>
+                                <th width="200">Date</th>
+                                <th>Event</th>
+                                <th width="150">Hours</th>
+                                <th width="150">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr>
+                                <th>1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>Cameron</td>
+                                <td>Glass</td>
+                                <td>@glass10</td>
+                            </tr>
+                        </tbody>
+                </table>   
             </div>
         </div>
 

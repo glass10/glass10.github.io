@@ -35,12 +35,10 @@ body{
 }
 
 h1{
-    font-family: 'Oswald';
     text-align: center;
     color: white;
 }
 h3{
-    font-family: 'Oswald';
     text-align: left;
 }
 h3.hidden{
@@ -59,16 +57,7 @@ ul {
     padding: 0;
 }
 
-input{
-    font-family: 'Oswald' !important;
-}
-select{
-    font-family: 'Oswald';
-}
-
-
 table{
-    font-family: 'Oswald';
     text-align: center;
 }
 
@@ -78,7 +67,7 @@ table thead th{
 
 #memberArea{
     background: rgba(255, 255, 255, 0.5);
-    border-radius: 25px;
+    /* border-radius: 25px; */
     border: 2px solid white;
     overflow: hidden;
     margin-top: 15px;
@@ -96,56 +85,29 @@ table thead th{
     margin-bottom: 1.5rem;
 }
 
-#dateInput, #eventInput, #hoursInput, #eventType, #hoursButton{
-    border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.75);
-    color: black;
+#hours-form{
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .memberStats{
-    font-family: 'Oswald';
     text-align: center;
     font-size: 2rem;
     width: auto;
     padding: 0px;
     border-bottom: 2px solid white;
-    margin-bottom: 1.5rem;
-    margin-left: -0.9375rem;
-    margin-right: -0.9375rem;
+    /* margin-bottom: 1.5rem; */
+    /* margin-left: -0.9375rem;
+    margin-right: -0.9375rem; */
     background-color: rgba(255, 255, 255, 0.75);
+}
+
+.formInput{
+    width:100% !important;
 }
 
 #currentMember{
     color: #294390;
-}
-
-#hoursButton{
-    border: 2px solid white;
-}
-
-#hoursButton:hover{
-    background: white;
-    border: 2px solid blue;
-}
-
-.input-group-field:hover{
-    transition: all 0.30s ease-in-out;
-    outline: none;
-    padding: 3px 0px 3px 3px;
-    border: 3px solid lightgreen;
-}
-select:hover{
-   transition: all 0.30s ease-in-out;
-    outline: none;
-    padding: 3px 0px 3px 3px;
-    border: 2px solid blue; 
-}
-
-input:hover{
-    transition: all 0.30s ease-in-out;
-    outline: none;
-    padding: 3px 0px 3px 3px;
-    border: 2px solid blue; 
 }
 
 #confirmArea{
@@ -157,28 +119,28 @@ input:hover{
     font-weight: bold;
 }
 
-.table-expand {
-    margin-top: 5rem;
-  }
+.table{
+    margin-bottom: 0px;
+}
   
-  .table-expand .text-right {
+.table .text-right {
     padding-right: 3rem;
-  }
+}
 
-  .table-expand-row:hover{
-      background-color: lightcoral;
-      cursor: pointer;
-  }
-  
-  .table-expand-row.is-active .expand-icon::after {
+.table tbody tr:hover{
+    background-color: lightcoral;
+    cursor: pointer;
+}
+
+/* .table-row.is-active .expand-icon::after {
     content: '-';
-  }
-  
-  .table-expand-row .expand-icon::after {
+}
+
+.table-row .expand-icon::after {
     content: '+';
     float: right;
-  }
-  
-  .table-expand-row-content {
+}
+
+.table-row-content {
     display: none;
-  }
+} */
