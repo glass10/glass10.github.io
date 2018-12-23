@@ -48,6 +48,8 @@ var scripts = {
 var currentCommittee = "";
 var currentName = "";
 var currentData = {};
+let heights = {};
+let dataCount = 0;
 
 function logout(){
     console.log("Logout Attempted");
@@ -61,6 +63,13 @@ function load(){
         window.location.replace("../index.html");
     }
     else{
+        // Intercommittee
+        heights = {};
+        for (var i = 0; i < committeeList.length; i++) {
+            data(committeeList[i]);
+        }
+
+        // Hour Sheet
         let storageObj = JSON.parse(localStorage.getItem("psubPortal"));
         currentCommittee = storageObj.committee;
         currentName = storageObj.name;
@@ -70,6 +79,81 @@ function load(){
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
         updateHoursSheet(storageObj, storageObj.committee);
     }
+}
+
+function calculateHeight() {
+    // Dynamic Height
+    let maxHeight = 90;
+    let tallest = 0;
+    let heightValues = Object.values(heights);
+    for (let i = 0; i < heightValues.length; i++) {
+        if (heightValues[i] - tallest > 0) {
+            tallest = heightValues[i];
+        }
+    }
+    if (tallest > maxHeight) {
+        // Recalculate heights
+        let factor = maxHeight / tallest;
+        for (var i = 0; i < committeeList.length; i++) {
+            document.getElementById(committeeList[i] + "LI").style = "height: " + heights[committeeList[i]] * factor + "%";
+        }
+    }
+}
+
+function data(committee) {
+    console.log('Loading ' + committee + ' data');
+    if (committees[committee].length !== 0) {
+        committees[committee] = [];
+    }
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/1/public/full?alt=json-in-script',
+        "method": "GET",
+        "headers": {
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        //console.log(response);
+        response = response.substring(response.indexOf("{"), response.length - 2)
+        var response = JSON.parse(response);
+        console.log(response);
+        for (var i = 0; i < response.feed.entry.length; i++) {
+            if (i !== response.feed.entry.length - 1) {
+                var tempName = response.feed.entry[i].gsx$name.$t;
+                var tempPin = response.feed.entry[i].gsx$pin.$t;
+                var tempID = response.feed.entry[i].gsx$sheetid.$t;
+                var tempHours = response.feed.entry[i].gsx$hours.$t;
+                var tempPoints = response.feed.entry[i].gsx$points.$t;
+
+                committees[committee].push({ name: tempName, pin: tempPin, id: tempID, number: i + 2, hours: tempHours, points: tempPoints });
+
+            }
+            else {
+                var tempHours = response.feed.entry[i].gsx$committeehours.$t
+                var tempPoints = response.feed.entry[i].gsx$committeepoints.$t
+
+                committees[committee].push({ totalHours: tempHours, totalPoints: tempPoints });
+
+                var height = tempPoints;
+
+                points[committee] = tempPoints; //for intercommittee points
+                document.getElementById(committee + "LI").style = "height: " + height + "%";
+                heights[committee] = height;
+                document.getElementById(committee + "LI").title = tempPoints;
+                document.getElementById(committee + "TXT").textContent = tempPoints;
+            }
+        }
+        console.log(committees[committee]);
+
+        dataCount++;
+        if (dataCount === 6) {
+            calculateHeight();
+        }
+    });
+    console.log("Data Loaded Successfully");
 }
 
 function updateHoursSheet(data, committee) {

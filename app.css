@@ -1,57 +1,19 @@
-#normalTheme{
-    background:#2f00ff;
-    -webkit-animation:colour 10s linear infinite;
-      -moz-animation:colour 10s linear infinite;
-    
-}
-@-webkit-keyframes colour{
-    0%{ background:#2f00ff}
-    40%{ background:#03a0ff}
-    80%{ background:#016afb}
-    100%{ background:#2f00ff}
-
-}
-
-@-moz-keyframes colour{
-0%{ background:#2f00ff}
-40%{ background:#03a0ff}
-80%{ background:#016afb}
-100%{ background:#2f00ff}
-}
-
-#themeToggle{
-    border: 2px solid white;
-    border-radius: 25px;
-    padding: 0.5rem;
-    color: white;
-    top: 1.5vw;
-    right: 1.5vw;
+canvas{ display: block; 
+    vertical-align: bottom; 
     position: absolute;
+    z-index: -1;
+    top: 0; 
 }
 
-#themeToggle:hover{
-    border: 2px solid white;
-    border-radius: 25px;
-    padding: 0.5rem;
-    color: black;
-    background-color: white;
-    cursor: pointer;
+body{
+    height: 100%;
 }
 
-#logo{
-    height: 30vw;
-    width: 30vw;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
 h1{
-    font-family: 'Oswald';
     text-align: center;
     color: white;
 }
 h3{
-    font-family: 'Oswald';
     text-align: left;
 }
 h3.hidden{
@@ -64,101 +26,42 @@ button.hidden{
     visibility: hidden;
 }
 
-ul {
-    list-style-type: none;
-    font-family: 'Oswald';
-    margin: 0;
-    padding: 0;
-}
 img{
     padding-top: 10px;
     padding-bottom: 0px;
 }
-input{
-    font-family: 'Oswald' !important;
-}
-select{
-    font-family: 'Oswald';
-}
-button{
-    font-family: 'Oswald';
+
+#normalTheme{
+    background-color:#4169E1;
 }
 
-table{
-    font-family: 'Oswald';
+#themeToggle{
+    padding: 0.5rem;
+    top: 1.5vw;
+    right: 1.5vw;
+    position: absolute;
+    font-size: 10px;
+}
+
+#logo{
+    height: 30vw;
+    width: 30vw;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#committeeSelect, #memberSelect, #pinText{
+    margin-bottom: 10px;
+    background-color: #F2F2F2;
+}
+
+#login-form{
     text-align: center;
-}
-
-table thead th{
-    text-align: center;
-}
-
-#loginArea{
-    /* background: linear-gradient( #2f00ff, #03a0ff); */
-    height: 100vh;
-}
-
-#committeeSelect, #memberSelect, #pinText, #enterButton{
-    border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.5);
-    color: black;
-}
-
-#enterButton{
-    border-radius: 50px;
-    font-size: 1rem;
-    border: 2px solid white;
-}
-
-#enterButton:hover{
-    background-color: white;
-    border: 2px solid blue;
-}
-#memberArea{
-    /* background: linear-gradient(#016afb, #03a0ff); */
-    display: none;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 25px;
-    border: 2px solid white;
-    overflow: hidden;
-}
-
-#userHours, #userPoints {
-    padding: 0.25rem;
-    /* border-radius: 10px;
-    border: 2px solid white; */
-}
-
-#hoursFrame, #pointsFrame{
-    background-color: rgba(255, 255, 255, 0.25);
-    border: 2px solid white;
-    border-radius: 25px;
-    color: white;
-    margin-bottom: 1.5rem;
 }
 
 #dateInput, #eventInput, #hoursInput, #eventType, #hoursButton{
-    border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.75);
-    color: black;
-}
-
-.memberStats{
-    font-family: 'Oswald';
-    text-align: center;
-    font-size: 2rem;
-    width: auto;
-    padding: 0px;
-    border-bottom: 2px solid white;
-    margin-bottom: 1.5rem;
-    margin-left: -0.9375rem;
-    margin-right: -0.9375rem;
-    /* padding-left: -1.5rem; */
-    background-color: rgba(255, 255, 255, 0.75);
-}
-
-#currentMember{
-    color: black;
+    margin-bottom: 5vw;
 }
 
 #hoursButton{
@@ -170,53 +73,6 @@ table thead th{
     border: 2px solid blue;
 }
 
-#intercommitteeArea{
-    /* background: linear-gradient(#03a0ff, #00ecff); */
-    height: 100vh;
-}
-
-#barchart_material{
-    height: 100vh;
-    width: 100vw;
-    /* background-color: transparent; */
-
-}
-
-.barText{
-    letter-spacing: -3px;
-    opacity: 0.6;
-    font-size: 3vw;
-    color: white;
-    /* position: absolute; */
-    text-align: center;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    min-height: 1px;
-}
-
-
-.input-group-field:hover{
-    transition: all 0.30s ease-in-out;
-    outline: none;
-    padding: 3px 0px 3px 3px;
-    border: 3px solid lightgreen;
-}
-select:hover{
-   transition: all 0.30s ease-in-out;
-    outline: none;
-    padding: 3px 0px 3px 3px;
-    border: 2px solid blue; 
-}
-
-input:hover{
-    transition: all 0.30s ease-in-out;
-    outline: none;
-    padding: 3px 0px 3px 3px;
-    border: 2px solid blue; 
-}
-
 #confirmArea{
     text-align: center;
     color: white;
@@ -226,185 +82,7 @@ input:hover{
     font-weight: bold;
 }
 
-.bar-graph {
-    padding: 0 1rem;
-    /* width: 100%; */
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: flex-end;
-        -ms-flex-align: end;
-            align-items: flex-end;
-    height: 425px;
-    margin: 0;
-    position: center;
-
-    background: rgba(255, 255, 255, 0.25);
-    border: 2px solid white;
-    border-radius: 25px;
-  }
-  
-  .bar-graph li {
-    display: block;
-    position: relative;
-    text-align: center;
-    vertical-align: bottom;
-    border-radius: 4px 4px 0 0;
-    max-width: 20%;
-    height: 100%;
-    margin: 0 1.8% 0 0;
-    -webkit-flex: 1 1 15%;
-        -ms-flex: 1 1 15%;
-            flex: 1 1 15%;
-  }
-  
-  .bar-graph .bar-graph-axis {
-    -webkit-flex: 1 1 8%;
-        -ms-flex: 1 1 8%;
-            flex: 1 1 8%;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-  }
-  
-  @media print, screen and (min-width: 40em) {
-    .bar-graph .bar-graph-label:before, .bar-graph .bar-graph-label:after {
-      content: "";
-      position: absolute;
-      border-bottom: 1px dashed #8a8a8a;
-      top: 0;
-      left: 0;
-      height: 50%;
-      width: 20%;
-    }
-  }
-  
-  @media print, screen and (min-width: 40em) and (min-width: 64em) {
-    .bar-graph .bar-graph-label:before, .bar-graph .bar-graph-label:after {
-      width: 30%;
-    }
-  }
-  
-  @media print, screen and (min-width: 40em) {
-    .bar-graph .bar-graph-label:after {
-      left: auto;
-      right: 0;
-    }
-  }
-  
-  @media print, screen and (min-width: 40em) {
-    .bar-graph .percent {
-      font-size: 14px;
-      color: white;
-    }
-  }
-  .bar-graph .percent {
-    font-size: 2.5vw;
-    color: white;
-    opacity: 0.8;
-    margin-top: -3.5vw;
-  }
-  
-  .bar-graph .description {
-    font-weight: 800;
-    opacity: 0.8;
-    color: white;
-    text-transform: uppercase;
-    width: 100%;
-    font-size: 5vw;
-    bottom: -7vw;
-    position: absolute;
-    overflow: hidden;
-    word-wrap: break-word;
-  }
-  
-  .bar-graph .bar.primary{
-    border: 1px solid white;
-    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
-  }
-  
-  .bar-graph .bar.secondary {
-    border: 1px solid white;
-    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
-  }
-  
-  .bar-graph .bar.success {
-    border: 1px solid white;
-    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
-  }
-  
-  .bar-graph .bar.warning {
-    border: 1px solid white;
-    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
-  }
-  
-  .bar-graph .bar.alert {
-    border: 1px solid white;
-    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
-  }
-
-  .bar-graph .bar.extra{
-    border: 1px solid white;
-    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 70%);
-    margin: 0px;
-  }
-
-
-.table-expand {
-    margin-top: 5rem;
-  }
-  
-  .table-expand .text-right {
-    padding-right: 3rem;
-  }
-
-  .table-expand-row:hover{
-      background-color: lightcoral;
-      cursor: pointer;
-  }
-  
-  .table-expand-row.is-active .expand-icon::after {
-    content: '-';
-  }
-  
-  .table-expand-row .expand-icon::after {
-    content: '+';
-    float: right;
-  }
-  
-  .table-expand-row-content {
-    display: none;
-  }
-
-  input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: black;
-  }
-  input::-moz-placeholder { /* Firefox 19+ */
-    color: black;
-  }
-  input::-ms-input-placeholder { /* IE 10+ */
-    color: black;
-  }
-  input::-moz-placeholder { /* Firefox 18- */
-    color: black;
-  }
-  
-
-  /* Particles */
-  /* ---- reset ---- */ body{ margin:0; font:normal 75% Arial, Helvetica, sans-serif; } 
-  
-canvas{ display: block; 
-    vertical-align: bottom; 
-    position: absolute;
-    z-index: -1;
-    top: 0; 
-
-} #particles-js{ position:absolute; width: 100%; height: 100%; background-color: #b61924; background-image: url(""); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; } /* ---- stats.js ---- */ .count-particles{ background: #000022; position: absolute; top: 48px; left: 0; width: 80px; color: #13E8E9; font-size: .8em; text-align: left; text-indent: 4px; line-height: 14px; padding-bottom: 2px; font-family: Helvetica, Arial, sans-serif; font-weight: bold; } .js-count-particles{ font-size: 1.1em; } #stats, .count-particles{ -webkit-user-select: none; margin-top: 5px; margin-left: 5px; } #stats{ border-radius: 3px 3px 0 0; overflow: hidden; } .count-particles{ border-radius: 0 0 3px 3px; }
+/* Particles */
+#particles-js{ position:absolute; width: 100%; height: 100%; background-color: #b61924; background-image: url(""); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; } /* ---- stats.js ---- */ .count-particles{ background: #000022; position: absolute; top: 48px; left: 0; width: 80px; color: #13E8E9; font-size: .8em; text-align: left; text-indent: 4px; line-height: 14px; padding-bottom: 2px; font-family: Helvetica, Arial, sans-serif; font-weight: bold; } .js-count-particles{ font-size: 1.1em; } #stats, .count-particles{ -webkit-user-select: none; margin-top: 5px; margin-left: 5px; } #stats{ border-radius: 3px 3px 0 0; overflow: hidden; } .count-particles{ border-radius: 0 0 3px 3px; }
 
 

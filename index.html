@@ -6,19 +6,21 @@
         <title>PSUB Portal</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css">
-        <link rel="stylesheet" href="app.css">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css"> -->
         <link href="https://fonts.googleapis.com/css?family=Oswald|Permanent+Marker" rel="stylesheet">
+
+        <link href="bootstrap.min.css" rel="stylesheet">
+        <link href="app.css" rel="stylesheet">
     </head>
     <body onLoad="load()" id="particles-js" class="body">
     <!--<body>-->
-        <button id="themeToggle" onclick="adjustTheme()">Turn Off Theme</button>
+        <button id="themeToggle" onclick="adjustTheme()" class="btn btn-outline-light">Turn Off Theme</button>
 
         <img src="Logo-Christmas.png" id="logo">
-        <div class="row" id="loginArea">
-            <div class="medium-5 medium-centered column">
-                <form id="login-form" onsubmit="return false">
-                    <select name="committee" id="committeeSelect" onChange="committeeChange();">
+        <div class="row justify-content-md-center" id="loginArea">
+            <div class="col-md-5">
+                <form id="login-form" onsubmit="return false" class="form">
+                    <select name="committee" id="committeeSelect" onChange="committeeChange();" class="form-control">
                             <option value="" disabled selected>Select your Committee</option>
                             <option value="ART">Arts And Culture</option>
                             <option value="CUR">Current Events</option>
@@ -27,103 +29,18 @@
                             <option value="PAD">Purdue After Dark</option>
                             <option value="SPI">Spirit And Traditions</option>
                     </select>
-                    <select name="members" id="memberSelect">
+                    <select name="members" class="form-control" id="memberSelect">
                             <option value="" disabled selected>Committee Not Selected</option>
                     </select>
-                    <input type="password" name="PIN" placeholder="PIN" id="pinText">
-                    <button type="button" class="button expanded" id="enterButton" onclick="login()">ENTER</button>
+                    <input type="password" name="PIN" placeholder="PIN" id="pinText" class="form-control">
+                    <button type="button" class="btn btn-outline-light" id="enterButton" class="form-control" onclick="login()">ENTER</button>
                 </form>
             </div>
         </div>
-
-        <div class="row" id="memberArea">
-                <div class="medium-12 medium-centered column">
-                    <div class="memberStats">
-                        <h1 id="currentMember">Member Name</h1>
-                    </div>
-                    
-                    <form id="hours-form">
-                        <div class="medium-3 column">
-                            <input type="date" name="eventDate" id="dateInput">
-                        </div>
-                        <div class="medium-3 column">
-                            <input type="text" name="Event" placeholder="Event Name" id="eventInput">
-                        </div>
-                        <div class="medium-2 column">
-                            <input type="number" name="Hours" placeholder="Hours" id="hoursInput">
-                        </div>
-                        <div class="medium-2 column">
-                            <select name="eventType" id="eventType">
-                                <option value="0">My Committee</option>
-                                <option value="1">Intercommittee - Singled</option>
-                                <option value="2">Intercommittee - Doubled</option>
-                            </select>
-                        </div>
-                        <div class="medium-2 column">
-                            <button type="button" class="button expanded" id="hoursButton" onclick="addHours()">ADD HOURS</button>
-                        </div>
-                    </form>
-                    <div class="medium-12 column" id="confirmArea">
-                        <h5 id="confirmMessage"></h5>
-                    </div>
-                    <table class="table-expand" id="hoursTable">
-                            <thead id="tableHead">
-                              <tr class="table-expand-row-head">
-                                <th width="200">Date</th>
-                                <th>Event</th>
-                                <th width="150">Hours</th>
-                                <th width="150">Points</th>
-                              </tr>
-                            </thead>
-                            <tbody id="tableBody">
-                
-                            </tbody>
-                    </table>   
-                </div>
-        </div>
-        <div class="row" id="intercommitteeArea">
-                <div class="medium-12 medium-centered column">
-                    <h1>Intercommittee Showdown</h1>
-                    <ul class="bar-graph">
-                            <li class="bar primary" style="height: 0%;" title="0" id="artsAndCultureLI">
-                              
-                              <div class="description">A&C</div>
-                              <div class="percent" id="artsAndCultureTXT">90</div>
-                            </li>
-                            <li class="bar secondary" style="height: 0%;" title="0" id="currentEventsLI">
-                              <div class="percent" id="currentEventsTXT">80</div>
-                              <div class="description">CE</div>
-                            </li>
-                            <li class="bar success" style="height: 0%;" title="0" id="entertainmentLI">
-                              <div class="percent" id="entertainmentTXT">70</div>
-                              <div class="description">ENT</div>
-                            </li>
-                            <li class="bar warning" style="height: 0%;" title="0" id="publicityLI">
-                              <div class="percent" id="publicityTXT">60</div>
-                              <div class="description">PUB</div>
-                            </li>
-                            <li class="bar alert" style="height: 0%;" title="0" id="purdueAfterDarkLI">
-                              <div class="percent" id="purdueAfterDarkTXT">50</div>
-                              <div class="description">PAD</div>
-                            </li>
-                            <li class="bar extra" style="height: 0%;" title="0" id="spiritAndTraditionsLI">
-                                <div class="percent" id="spiritAndTraditionsTXT">40</div>
-                                <div class="description">S&T</div>
-                            </li>
-                    </ul>
-                </div>
-                <div>&nbsp</div>
-                
-        </div>
-        <!-- <div id="barchart_material" ></div> -->
-        <!-- <script src="https://apis.google.com/js/api.js"></script> -->
-        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib --> 
-        <!-- <script src="http://threejs.org/examples/js/libs/stats.min.js"></script> -->
-
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="app.js"></script>
-        <script src="jquery-3.2.1.min.js"></script>
-
         
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib --> 
+        <script src="jquery-3.2.1.min.js"></script>
+        <script src="bootstrap.bundle.min.js"></script>
+        <script src="app.js"></script>
     </body>
 </html>

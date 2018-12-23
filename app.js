@@ -48,13 +48,11 @@ var scripts = {
 var currentCommittee = "";
 var currentName = "";
 var currentData = {};
-let heights = {};
 let dataCount = 0;
 
 function load() {
     if(localStorage.getItem("psubPortal") == null){
         console.log("Local Storage Empty");
-        heights = {};
         for (var i = 0; i < committeeList.length; i++) {
             data(committeeList[i]);
         }
@@ -62,25 +60,6 @@ function load() {
     else{
         console.log("Local Storage Found. Redirecting");
         window.location.replace("hours/hours.html")
-    }
-}
-
-function calculateHeight() {
-    // Dynamic Height
-    let maxHeight = 90;
-    let tallest = 0;
-    let heightValues = Object.values(heights);
-    for (let i = 0; i < heightValues.length; i++) {
-        if (heightValues[i] - tallest > 0) {
-            tallest = heightValues[i];
-        }
-    }
-    if (tallest > maxHeight) {
-        // Recalculate heights
-        let factor = maxHeight / tallest;
-        for (var i = 0; i < committeeList.length; i++) {
-            document.getElementById(committeeList[i] + "LI").style = "height: " + heights[committeeList[i]] * factor + "%";
-        }
     }
 }
 
@@ -120,22 +99,9 @@ function data(committee) {
                 var tempPoints = response.feed.entry[i].gsx$committeepoints.$t
 
                 committees[committee].push({ totalHours: tempHours, totalPoints: tempPoints });
-
-                var height = tempPoints;
-
-                points[committee] = tempPoints; //for intercommittee points
-                document.getElementById(committee + "LI").style = "height: " + height + "%";
-                heights[committee] = height;
-                document.getElementById(committee + "LI").title = tempPoints;
-                document.getElementById(committee + "TXT").textContent = tempPoints;
             }
         }
         console.log(committees[committee]);
-
-        dataCount++;
-        if (dataCount === 6) {
-            calculateHeight();
-        }
     });
     console.log("Data Loaded Successfully");
 }
