@@ -25,6 +25,8 @@ function load(){
         currentData = storageObj;
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
+        viewHoursForDate();
+        viewScheduleForDate();
         /* todo initialize dates with view date signups and calendar */
     }
 }
@@ -74,7 +76,9 @@ function addMarketingHours(){
 function viewHoursForDate(){
     viewDate = document.getElementById("dateInputView").value;
     if(viewDate === ""){
-        viewDate = new Date();/* TODO */
+        viewDate = new Date();/* date for today */
+        viewDate = viewDate.getFullYear() + '-' + (viewDate.getMonth() +1 < 10?'0':'' ) + (viewDate.getMonth() +1)
+        + '-' + (viewDate.getDate() +1 < 10?'0':'' ) + viewDate.getDate();
     }
 
     var dateStr = viewDate.split("-");
@@ -90,12 +94,13 @@ function viewHoursForDate(){
             // "secret": API_KEY,
         }
     }
+
     $.ajax(settings).done(function (response) {
         response = response.substring(response.indexOf("{"), response.length - 2);
         var response = JSON.parse(response);
         
-        var dateChosen = viewDate.getFullYear() + '-' + (viewDate.getMonth() +1)
-                            + '-' + viewDate.getDate();
+        var dateChosen = viewDate.getFullYear() + '-' + (viewDate.getMonth() +1 < 10?'0':'' ) + (viewDate.getMonth() +1)
+                            + '-' + (viewDate.getDate() +1 < 10?'0':'' ) + viewDate.getDate();
         for (var i = 0; i < response.feed.entry.length; i++) {
             var data = response.feed.entry[i];
             var name = data.gsx$member.$t;
@@ -106,6 +111,7 @@ function viewHoursForDate(){
             var endTime = /* 'Hi'; */new Date(data.gsx$endtime.$t);       
             endTime = endTime.getHours() + ':' + ((endTime.getMinutes() < 10)?'0':'') + endTime.getMinutes();
             var hours = data.gsx$hours.$t;
+            //console.log(dateChosen);
             if(date === dateChosen){
                 let tempTR = document.createElement("tr");
 
@@ -141,15 +147,19 @@ function viewScheduleForDate(){
 
     if(startSchedDate === "" || endSchedDate === ""){
         startSchedDate = new Date();/* TODO */
+        endSchedDate = new Date();
+        endSchedDate.setDate(endSchedDate.getDate() + (7-endSchedDate.getDay()) - (endSchedDate.getDay() == 0?7:1));
+        startSchedDate.setDate(startSchedDate.getDate() - startSchedDate.getDay() + (startSchedDate.getDay() == 0? -6:1));
+    }else{
+        startSchedDate = new Date( startSchedDate.split("-")[0], 
+                                startSchedDate.split("-")[1]-1, 
+                                    startSchedDate.split("-")[2],0,0,0,0);
+        endSchedDate = new Date( endSchedDate.split("-")[0], 
+                                endSchedDate.split("-")[1]-1, 
+                                    endSchedDate.split("-")[2],0,0,0,0);
     }
 
-    startSchedDate = new Date( startSchedDate.split("-")[0], 
-                            startSchedDate.split("-")[1]-1, 
-                                startSchedDate.split("-")[2],0,0,0,0);
-    endSchedDate = new Date( endSchedDate.split("-")[0], 
-                            endSchedDate.split("-")[1]-1, 
-                                endSchedDate.split("-")[2],0,0,0,0);
-    document.getElementById("tableBody").innerHTML = "";
+    document.getElementById("schedTableBody").innerHTML = "";
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -163,7 +173,7 @@ function viewScheduleForDate(){
     $.ajax(settings).done(function (response) {
         response = response.substring(response.indexOf("{"), response.length - 2);
         var response = JSON.parse(response);
-        console.log(response);
+        //console.log(response);
 
         for (var i = 0; i < response.feed.entry.length; i++) {
             var data = response.feed.entry[i];
@@ -188,7 +198,7 @@ function viewScheduleForDate(){
                 tempTR.appendChild(locationTD);
                 tempTR.appendChild(timeTD);
 
-                document.getElementById("tableBody").appendChild(tempTR);               
+                document.getElementById("schedTableBody").appendChild(tempTR);               
             }
             
         }
