@@ -98,8 +98,10 @@ function viewHoursForDate(){
             var name = data.gsx$member.$t;
             var committee = data.gsx$committee.$t;
             var date = data.gsx$date.$t;
-            var startTime = /* 'Hi'; */data.gsx$starttime.$t;
-            var endTime = /* 'Hi'; */data.gsx$endtime.$t;
+            var startTime = /* 'Hi'; */new Date(data.gsx$starttime.$t);
+            startTime = startTime.getHours() + ':' + ((startTime.getMinutes()< 10)?'0':'') + startTime.getMinutes();
+            var endTime = /* 'Hi'; */new Date(data.gsx$endtime.$t);       
+            endTime = endTime.getHours() + ':' + ((endTime.getMinutes() < 10)?'0':'') + endTime.getMinutes();
             var hours = data.gsx$hours.$t;
             if(date === dateChosen){
                 let tempTR = document.createElement("tr");
