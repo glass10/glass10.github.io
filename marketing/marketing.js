@@ -4,6 +4,8 @@ var currentCommittee = "";
 var currentName = "";
 var currentData = {};
 var viewDate = new Date();
+var startSchedDate = new Date();
+var endSchedDate = new Date();
 
 function logout(){
     console.log("Logout Attempted");
@@ -23,6 +25,7 @@ function load(){
         currentData = storageObj;
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
+        /* todo initialize dates with view date signups and calendar */
     }
 }
 
@@ -128,4 +131,68 @@ function viewHoursForDate(){
         }
 
     });
+}
+
+
+function viewScheduleForDate(){
+    startSchedDate = document.getElementById("dateStartInputView").value;
+    endSchedDate = document.getElementById("dateEndInputView").value;
+
+
+    if(startSchedDate === "" || endSchedDate === ""){
+        startSchedDate = new Date();/* TODO */
+    }
+
+    startSchedDate = new Date( startSchedDate.split("-")[0], 
+                            startSchedDate.split("-")[1]-1, 
+                                startSchedDate.split("-")[2],0,0,0,0);
+    endSchedDate = new Date( endSchedDate.split("-")[0], 
+                            endSchedDate.split("-")[1]-1, 
+                                endSchedDate.split("-")[2],0,0,0,0);
+    document.getElementById("tableBody").innerHTML = "";
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": 'https://spreadsheets.google.com/feeds/list/11yTZsfcJNa7ta_3iBjwvDo2SSdsbAbWmLMyFsdoBzO0/3/public/full?alt=json-in-script',
+        "method": "GET",
+        "headers": {
+            // "id": CLIENT_ID,
+            // "secret": API_KEY,
+        }
+    }
+    $.ajax(settings).done(function (response) {
+        response = response.substring(response.indexOf("{"), response.length - 2);
+        var response = JSON.parse(response);
+        console.log(response);
+
+        for (var i = 0; i < response.feed.entry.length; i++) {
+            var data = response.feed.entry[i];
+            var date = data.gsx$date.$t;
+            var dateStr = new Date( date.split("-")[0], 
+                                date.split("-")[1]-1, 
+                                    date.split("-")[2],0,0,0,0);    
+            //console.log(dateStr,startSchedDate,endSchedDate);
+            if(dateStr.getTime() >= startSchedDate.getTime() && dateStr.getTime() <= endSchedDate.getTime()){
+                var location = data.gsx$location.$t;
+                var time = data.gsx$timerange.$t;
+                let tempTR = document.createElement("tr");
+
+                let dateTD = document.createElement("td");
+                dateTD.innerHTML = date;
+                let locationTD = document.createElement("td");
+                locationTD.innerHTML = location;
+                let timeTD = document.createElement("td");
+                timeTD.innerHTML = time;
+
+                tempTR.appendChild(dateTD);
+                tempTR.appendChild(locationTD);
+                tempTR.appendChild(timeTD);
+
+                document.getElementById("tableBody").appendChild(tempTR);               
+            }
+            
+        }
+
+    });
+
 }
