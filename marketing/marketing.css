@@ -118,8 +118,12 @@ table thead th{
     padding-right: 3rem;
 }
 
+.table tbody tr{
+    background-color:white;
+}
+
 .table tbody tr:hover{
-    background-color: lightcoral;
+    background-color: #41E1B9;
     cursor: pointer;
 }
 
@@ -163,4 +167,8 @@ ul {
       font-size: 14px;
       color: black;
     }
+  }
+
+  .formLabel{
+      padding: 0px;
   }

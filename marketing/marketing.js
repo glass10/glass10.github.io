@@ -150,7 +150,8 @@ function viewScheduleForDate(){
         endSchedDate = new Date();
         endSchedDate.setDate(endSchedDate.getDate() + (7-endSchedDate.getDay()) - (endSchedDate.getDay() == 0?7:1));
         startSchedDate.setDate(startSchedDate.getDate() - startSchedDate.getDay() + (startSchedDate.getDay() == 0? -6:1));
-    }else{
+    }
+    else{
         startSchedDate = new Date( startSchedDate.split("-")[0], 
                                 startSchedDate.split("-")[1]-1, 
                                     startSchedDate.split("-")[2],0,0,0,0);
@@ -159,7 +160,7 @@ function viewScheduleForDate(){
                                     endSchedDate.split("-")[2],0,0,0,0);
     }
 
-    document.getElementById("schedTableBody").innerHTML = "";
+    // document.getElementById("schedTableBody").innerHTML = "";
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -187,22 +188,18 @@ function viewScheduleForDate(){
                 var time = data.gsx$timerange.$t;
                 let tempTR = document.createElement("tr");
 
-                let dateTD = document.createElement("td");
-                dateTD.innerHTML = date;
-                let locationTD = document.createElement("td");
-                locationTD.innerHTML = location;
-                let timeTD = document.createElement("td");
-                timeTD.innerHTML = time;
+                let cardHTML = `<td>${date}</td>
+                                <td>${location}</td>
+                                <td>${time}</td>`;
 
-                tempTR.appendChild(dateTD);
-                tempTR.appendChild(locationTD);
-                tempTR.appendChild(timeTD);
-
-                document.getElementById("schedTableBody").appendChild(tempTR);               
+                document.getElementById("date-" + i).innerHTML = cardHTML;
             }
             
         }
-
     });
 
+}
+
+function expandDate(date){
+   console.log(date);
 }

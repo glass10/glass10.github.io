@@ -6,7 +6,6 @@
         <title>Marketing</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.5.1/css/foundation.min.css"> -->
         <link href="https://fonts.googleapis.com/css?family=Oswald|Permanent+Marker" rel="stylesheet">
 
         <link href="../bootstrap.min.css" rel="stylesheet">
@@ -54,10 +53,16 @@
             <div class="row" id="memberArea">
                 <div class="memberStats col-12">
                     <form id="hours-form" class="form-inline col-12">
-                        <div class="col-sm-12 col-md-3">
+                        <div class="col-sm-12 col-md-2 formLabel">
+                            <h5 for="dateStartInputView">Start Date:</h5>
+                        </div>
+                        <div class="col-sm-12 col-md-3 formLabel">
                             <input type="date" class="form-control formInput" name="date" id="dateStartInputView">
                         </div>
-                        <div class="col-sm-12 col-md-3">
+                        <div class="col-sm-12 col-md-2 formLabel">
+                            <h5 for="dateEndInputView">End Date:</h5>
+                        </div>
+                        <div class="col-sm-12 col-md-3 formLabel">
                             <input type="date" class="form-control formInput" name="date" id="dateEndInputView">
                         </div>
                         <div class="col-sm-12 col-md-2">
@@ -66,9 +71,8 @@
                     </form>
                 </div>
             </div>
-        </div>
-        
-        <table class="table" id="scheduleTable">
+
+            <table class="table" id="scheduleTable">
                 <thead id="scheduleTabHead">
                     <tr>
                         <th width="200">Date</th>
@@ -77,20 +81,35 @@
                     </tr>
                 </thead>
                 <tbody id="schedTableBody">
-                    <!-- <tr>
-                        <th>1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td>Cameron</td>
-                        <td>Glass</td>
-                        <td>@glass10</td>
-                    </tr> -->
+                    <!-- JS Adds elements to this -->
+                    <!-- Date 0 -->
+                    <tr id="date-0" data-toggle="collapse" data-target="#date-0-sub" class="date-card"></tr>
+                    <tr id="date-0-sub" class="collapse"><td>Test</td></tr>
+
+                    <!-- Date 1 -->
+                    <tr id="date-1" data-toggle="collapse" data-target="#date-1-sub" class="date-card"></tr>
+                    <tr id="date-1-sub" class="collapse"><td></td></tr>
+
+                    <!-- Date 0 -->
+                    <tr id="date-2" data-toggle="collapse" data-target="#date-2-sub" class="date-card"></tr>
+                    <tr id="date-2-sub" class="collapse"><td></td></tr>
+
+                    <!-- Date 0 -->
+                    <tr id="date-3" data-toggle="collapse" data-target="#date-3-sub" class="date-card"></tr>
+                    <tr id="date-3-sub" class="collapse"><td></td></tr>
+
+                    <!-- Date 0 -->
+                    <tr id="date-4" data-toggle="collapse" data-target="#date-4-sub" class="date-card"></tr>
+                    <tr id="date-4-sub" class="collapse"><td></td></tr>
+
+                    <!-- Date 0 -->
+                    <tr id="date-5" data-toggle="collapse" data-target="#date-5-sub" class="date-card"></tr>
+                    <tr id="date-5-sub" class="collapse"><td></td></tr>
+                    
                 </tbody>
-        </table> 
+            </table> 
+            <!--  -->
+        </div>
 
         <!-- marketing area -->
         <div class="container">

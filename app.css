@@ -1,5 +1,6 @@
-canvas{ display: block; 
-    vertical-align: bottom; 
+canvas{ 
+    display: block; 
+    vertical-align: bottom;
     position: absolute;
     z-index: -1;
     top: 0; 
