@@ -175,13 +175,46 @@ function viewScheduleForDate(){
             if(dateStr.getTime() >= startSchedDate.getTime() && dateStr.getTime() <= endSchedDate.getTime()){
                 var location = data.gsx$location.$t;
                 var time = data.gsx$timerange.$t;
-                let tempTR = document.createElement("tr");
 
                 let cardHTML = `<td>${date}</td>
                                 <td>${location}</td>
                                 <td>${time}</td>`;
 
                 document.getElementById("date-" + i).innerHTML = cardHTML;
+
+                // Get all 30 min times from range
+                let timeObj = time.replace(/\s+/g, '');
+                timeObj = timeObj.split("-");
+                timeObj[0] = "1/1/2000 " + timeObj[0].toUpperCase();
+                timeObj[0] = timeObj[0].replace("AM", " AM");
+                timeObj[1] = "1/1/2000 " + timeObj[1].toUpperCase();
+                timeObj[1] = timeObj[1].replace("PM", " PM");
+                
+                let startDate = new Date(timeObj[0]);
+                let endDate = new Date(timeObj[1]);
+
+                let allTimes = [startDate.toTimeString().split(' ')[0]];
+                while(startDate.getTime() != endDate.getTime()){
+                    startDate.setMinutes(startDate.getMinutes() + 30);
+                    allTimes.push(startDate.toTimeString().split(' ')[0])
+                }
+
+                console.log(allTimes);
+
+                let table = document.createElement("table");
+                let body = document.createElement("tbody");
+
+                for(let i = 0; i < allTimes.length; i++){
+                    let newRow = document.createElement("tr");
+                    let timeTD = document.createElement("td");
+                    timeTD.innerHTML = allTimes[i];
+                    newRow.appendChild(timeTD);
+                    body.appendChild(newRow);
+                }
+                table.appendChild(body);
+                document.getElementById("date-"+ i + "-sub").innerHTML = "";
+                document.getElementById("date-"+ i + "-sub").appendChild(table);
+                
             }
             
         }
@@ -196,5 +229,5 @@ function expandDate(row){
     var startTime = row.split(" ")[1];
     var endTime = "";
     
-    viewHoursForDate(date, startTime, endTime);
+    // viewHoursForDate(date, startTime, endTime);
 }
