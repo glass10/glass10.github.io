@@ -3,7 +3,6 @@
 var currentCommittee = "";
 var currentName = "";
 var currentData = {};
-var viewDate = new Date();
 var startSchedDate = new Date();
 var endSchedDate = new Date();
 
@@ -25,7 +24,7 @@ function load(){
         currentData = storageObj;
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
-        viewHoursForDate();
+        //viewHoursForDate();
         viewScheduleForDate();
         /* todo initialize dates with view date signups and calendar */
     }
@@ -73,17 +72,8 @@ function addMarketingHours(){
     }
 }
 
-function viewHoursForDate(){
-    viewDate = document.getElementById("dateInputView").value;
-    if(viewDate === ""){
-        viewDate = new Date();/* date for today */
-        viewDate = viewDate.getFullYear() + '-' + (viewDate.getMonth() +1 < 10?'0':'' ) + (viewDate.getMonth() +1)
-        + '-' + (viewDate.getDate() +1 < 10?'0':'' ) + viewDate.getDate();
-    }
-
-    var dateStr = viewDate.split("-");
-    viewDate = new Date( dateStr[0], dateStr[1]-1, dateStr[2],0,0,0,0);
-    document.getElementById("tableBody").innerHTML = "";
+function viewHoursForDate(dateServer, startTime, endTime){
+    document.getElementById("tableBodyDate0").innerHTML = "";
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -99,8 +89,7 @@ function viewHoursForDate(){
         response = response.substring(response.indexOf("{"), response.length - 2);
         var response = JSON.parse(response);
         
-        var dateChosen = viewDate.getFullYear() + '-' + (viewDate.getMonth() +1 < 10?'0':'' ) + (viewDate.getMonth() +1)
-                            + '-' + (viewDate.getDate() +1 < 10?'0':'' ) + viewDate.getDate();
+        var dateChosen = dateServer;
         for (var i = 0; i < response.feed.entry.length; i++) {
             var data = response.feed.entry[i];
             var name = data.gsx$member.$t;
@@ -132,7 +121,7 @@ function viewHoursForDate(){
                 tempTR.appendChild(endTD);
                 tempTR.appendChild(hoursTD);
 
-                document.getElementById("tableBody").appendChild(tempTR);
+                document.getElementById("tableBodyDate0").appendChild(tempTR);
             }
         }
 
@@ -200,6 +189,12 @@ function viewScheduleForDate(){
 
 }
 
-function expandDate(date){
-   console.log(date);
+function expandDate(row){
+    console.log(row);
+    var date = row.substring(0,row.indexOf("	"));
+    row = row.substring(row.indexOf("	")+1);
+    var startTime = row.split(" ")[1];
+    var endTime = "";
+    
+    viewHoursForDate(date, startTime, endTime);
 }
