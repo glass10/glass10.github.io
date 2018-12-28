@@ -6,6 +6,8 @@ var currentData = {};
 var startSchedDate = new Date();
 var endSchedDate = new Date();
 
+let allDates = [];
+
 function logout(){
     console.log("Logout Attempted");
     localStorage.removeItem("psubPortal");
@@ -30,11 +32,15 @@ function load(){
     }
 }
 
-function addMarketingHours(){
-    var date = document.getElementById("dateInput").value;
-    var start = document.getElementById("startHoursInput").value;
-    var end = document.getElementById("endHoursInput").value;
+function addMarketingHours(dateIndex){
+    var date = allDates[dateIndex];
+    var startSelect = document.getElementById("startHour-"+dateIndex);
+    var endSelect = document.getElementById("endHour-"+dateIndex);
+
+    let start = startSelect.options[startSelect.selectedIndex].value;
+    let end = endSelect.options[endSelect.selectedIndex].value;
     
+    console.log("DATE: " + date + " START: " + start + " END: " + end);
 
     if (date === "" || start === "" || end === "") {
         alert("Please provide values for all event details");
@@ -181,6 +187,7 @@ function viewScheduleForDate(){
                                 <td>${time}</td>`;
 
                 document.getElementById("date-" + i).innerHTML = cardHTML;
+                allDates.push(date);
 
                 // Get all 30 min times from range
                 let timeObj = time.replace(/\s+/g, '');
@@ -201,23 +208,19 @@ function viewScheduleForDate(){
 
                 console.log(allTimes);
 
-                let td = document.createElement("td");
-                let tr = document.createElement("tr");
-                let table = document.createElement("table");
-                let body = document.createElement("tbody");
-
+                // Append times to table and select
                 for(let j = 0; j < allTimes.length; j++){
                     let newRow = document.createElement("tr");
                     let timeTD = document.createElement("td");
                     timeTD.innerHTML = allTimes[j];
                     newRow.appendChild(timeTD);
-                    // body.appendChild(newRow);
                     document.getElementById("date-"+ i + "-sub-tab").appendChild(newRow);
+
+                    // Select options
+                    let optionString = "<option value='" + allTimes[j] + "'>" + allTimes[j] + "</option>";
+                    document.getElementById("startHour-"+i).innerHTML += (optionString);
+                    document.getElementById("endHour-"+i).innerHTML += (optionString);
                 }
-                // table.appendChild(body);
-                // td.appendChild(table);
-                // document.getElementById("date-"+ i + "-sub").innerHTML = "";
-                // document.getElementById("date-"+ i + "-sub-tab").appendChild(td);
                 
             }
             
