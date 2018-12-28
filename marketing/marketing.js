@@ -78,11 +78,14 @@ function addMarketingHours(dateIndex){
             alert("Marketing successfully added on " + date);
             // Update 
             viewScheduleForDate();
+            // Start Spinner
+            document.getElementById("topSpinner").style.visibility = "visible";
         });
     }
 }
 
 function getMembers(date, time){
+    document.getElementById("topSpinner").style.visibility = "visible";
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -109,13 +112,14 @@ function getMembers(date, time){
             console.log("All Times: " + allTimes);
             if(date === dateChosen){
                 if(allTimes.includes(time)){
-                    allMembers += name + "\n";
+                    allMembers += name + ", ";
                 }
             }
         }
         console.log(allMembers);
         if(allMembers != ""){
             document.getElementById(dateChosen+"-"+time).innerHTML = allMembers;
+            // document.getElementById("topSpinner").style.visibility = "hidden";
         }
     });
 }
@@ -124,7 +128,7 @@ function getMembers(date, time){
 function viewScheduleForDate(){
     startSchedDate = document.getElementById("dateStartInputView").value;
     endSchedDate = document.getElementById("dateEndInputView").value;
-
+    document.getElementById("topSpinner").style.visibility = "visible";
 
     if(startSchedDate === "" || endSchedDate === ""){
         startSchedDate = new Date();/* TODO */
@@ -218,21 +222,14 @@ function viewScheduleForDate(){
                     if(j != 0){
                         document.getElementById("endHour-"+i).innerHTML += (optionString);
                     }
+
+                    if(j === allTimes.length-1){
+                        document.getElementById("topSpinner").style.visibility = "hidden";
+                    }
                 }
                 
-            }
-            
+            }     
         }
+       
     });
-
-}
-
-function expandDate(row){
-    console.log(row);
-    var date = row.substring(0,row.indexOf("	"));
-    row = row.substring(row.indexOf("	")+1);
-    var startTime = row.split(" ")[1];
-    var endTime = "";
-    
-    // viewHoursForDate(date, startTime, endTime);
 }

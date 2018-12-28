@@ -70,6 +70,8 @@ table thead th{
     overflow: hidden;
     margin-top: 15px;
     margin-bottom: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 
@@ -118,11 +120,11 @@ table thead th{
     padding-right: 3rem;
 }
 
-.table tbody tr{
+.date-card{
     background-color:white;
 }
 
-.table tbody tr:hover{
+.date-card:hover{
     background-color: #41E1B9;
     cursor: pointer;
 }
@@ -135,6 +137,14 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+.signupRow{
+    background-color:lightgray !important;
+}
+
+.mainTD{
+    padding: 0px !important;
 }
  
   @media print, screen and (min-width: 40em) {
@@ -173,6 +183,50 @@ ul {
       padding: 0px;
   }
 
-  #date-0-sub{
-    
+  .spinner {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    font-size: 32px;
+    border-bottom: 1px solid;
+    vertical-align: middle;
+    overflow: hidden;
+    color: #fff;
+    text-indent: 100%;
+    -webkit-animation: 0.5s spinner linear infinite;
+    -moz-animation: 0.5s spinner linear infinite;
+    animation: 0.5s spinner linear infinite;
+
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  .spinner, .spinner:after {
+    border-radius: 100%;
+  }
+  .spinner:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid;
+    opacity: 0.5;
+  }
+
+  @-webkit-keyframes spinner {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @-moz-keyframes spinner {
+    to {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
   }
