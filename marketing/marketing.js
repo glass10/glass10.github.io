@@ -199,7 +199,7 @@ function viewScheduleForDate(){
                 console.log(allTimes);
 
                 // Append times to table and select
-                for(let j = 0; j < allTimes.length; j++){
+                for(let j = 0; j < allTimes.length-1; j++){
                     let newRow = document.createElement("tr");
                     let timeTD = document.createElement("td");
                     let memberTD = document.createElement("td");
@@ -223,7 +223,7 @@ function viewScheduleForDate(){
                         document.getElementById("endHour-"+i).innerHTML += (optionString);
                     }
 
-                    if(j === allTimes.length-1){
+                    if(j === allTimes.length-2){
                         document.getElementById("topSpinner").style.visibility = "hidden";
                     }
                 }
