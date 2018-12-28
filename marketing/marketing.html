@@ -83,124 +83,229 @@
                 <tbody id="schedTableBody">
                     <!-- JS Adds elements to this -->
                     <!-- Date 0 -->
-                    <tr id="date-0" data-toggle="collapse" data-target="#date-0-sub" onclick="expandDate(this.innerText)" class="date-card"></tr>
+                    <tr id="date-0" data-toggle="collapse" data-target="#date-0-sub" class="date-card"></tr>
                     <tr id="date-0-sub" class="collapse">
-                        <!-- <td colspan="3"> -->
-                            <!-- <table class="table" id="hoursTable">
-                                <thead id="tableHead">
+                        <td colspan="3">
+                            <table width="100%">
+                                <tbody id="date-0-sub-tab">
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Committee</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Hours (rounded)</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableBodyDate0">
-                                        
-                                    
-                                </tbody>
-                            </table> -->
-                            <!-- <table width="100%">
-                                <thead>
-                                    <th>Hours</th>
-                                    <th>Mins</th>
-                                    <th>Hours</th>
-                                    <th cols>Mins</th>
-                                    <th></th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <select name="startTimeHr" class="form-control formInput" id="startHour">
-                                                
-                                            </select>
-                                         </td>
-                                        <td>
-                                            <select name="startTimeMin" class="form-control formInput" id="startMin">
-                                                
-                                            </select>
+                                        <td colspan="3">
+                                            <form id="hours-form" class="form-inline" width="100%">
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateStartInputView">Start Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateEndInputView">End Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addMarketingHours()">SIGNUP</button>
+                                                </div>  
+                                            </form>
                                         </td>
-                                        <td>
-                                            <select name="endTimeHr" class="form-control formInput" id="endHour">
-                                                
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="endTimeMin" class="form-control formInput" id="endMin">
-                                                
-                                            </select> 
-                                        </td>  
-                                        <td> 
-                                            <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addMarketingHours()">
-                                                SIGNUP!
-                                            </button>
-                                        </td>
-                                                        
                                     </tr>
                                 </tbody>
-                            </table>   -->
-                        <!-- </td> -->
+                            </table>
+                        </td>
                     </tr>
 
                     <!-- Date 1 -->
                     <tr id="date-1" data-toggle="collapse" data-target="#date-1-sub" class="date-card"></tr>
-                    <tr id="date-1-sub" class="collapse"><td></td></tr>
+                    <tr id="date-1-sub" class="collapse">
+                        <td colspan="3">
+                            <table width="100%">
+                                <tbody id="date-1-sub-tab">
+                                    <tr>
+                                        <td colspan="3">
+                                            <form id="hours-form" class="form-inline" width="100%">
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateStartInputView">Start Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateEndInputView">End Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addMarketingHours()">SIGNUP</button>
+                                                </div>  
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
 
-                    <!-- Date 0 -->
+                    <!-- Date 2 -->
                     <tr id="date-2" data-toggle="collapse" data-target="#date-2-sub" class="date-card"></tr>
-                    <tr id="date-2-sub" class="collapse"><td></td></tr>
+                    <tr id="date-2-sub" class="collapse">
+                        <td colspan="3">
+                            <table width="100%">
+                                <tbody id="date-2-sub-tab">
+                                    <tr>
+                                        <td colspan="3">
+                                            <form id="hours-form" class="form-inline" width="100%">
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateStartInputView">Start Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateEndInputView">End Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addMarketingHours()">SIGNUP</button>
+                                                </div>  
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
 
-                    <!-- Date 0 -->
+                    <!-- Date 3 -->
                     <tr id="date-3" data-toggle="collapse" data-target="#date-3-sub" class="date-card"></tr>
-                    <tr id="date-3-sub" class="collapse"><td></td></tr>
+                    <tr id="date-3-sub" class="collapse">
+                        <td colspan="3">
+                            <table width="100%">
+                                <tbody id="date-3-sub-tab">
+                                    <tr>
+                                        <td colspan="3">
+                                            <form id="hours-form" class="form-inline" width="100%">
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateStartInputView">Start Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateEndInputView">End Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addMarketingHours()">SIGNUP</button>
+                                                </div>  
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
 
-                    <!-- Date 0 -->
+                    <!-- Date 4 -->
                     <tr id="date-4" data-toggle="collapse" data-target="#date-4-sub" class="date-card"></tr>
-                    <tr id="date-4-sub" class="collapse"><td></td></tr>
+                    <tr id="date-4-sub" class="collapse">
+                        <td colspan="3">
+                            <table width="100%">
+                                <tbody id="date-4-sub-tab">
+                                    <tr>
+                                        <td colspan="3">
+                                            <form id="hours-form" class="form-inline" width="100%">
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateStartInputView">Start Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateEndInputView">End Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addMarketingHours()">SIGNUP</button>
+                                                </div>  
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
 
-                    <!-- Date 0 -->
+                    <!-- Date 5 -->
                     <tr id="date-5" data-toggle="collapse" data-target="#date-5-sub" class="date-card"></tr>
-                    <tr id="date-5-sub" class="collapse"><td></td></tr>
+                    <tr id="date-5-sub" class="collapse">
+                        <td colspan="3">
+                            <table width="100%">
+                                <tbody id="date-5-sub-tab">
+                                    <tr>
+                                        <td colspan="3">
+                                            <form id="hours-form" class="form-inline" width="100%">
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateStartInputView">Start Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 formLabel">
+                                                    <h5 for="dateEndInputView">End Time:</h5>
+                                                </div>
+                                                <div class="col-sm-6 col-md-3 formLabel">
+                                                    <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addMarketingHours()">SIGNUP</button>
+                                                </div>  
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
                     
                 </tbody>
             </table> 
-            <!--  -->
         </div>
 
         <!-- marketing area -->
-            <div class="row" id="memberArea">
+            <!-- <div class="row" id="memberArea">
                 <div class="memberStats col-12">
                     <form id="hours-form" class="form-inline col-12">
-                            <div class="col-sm-12 col-md-3">
-                                <input type="date" class="form-control formInput" name="date" id="dateInput">
-                            </div>
-                            <div class="col-sm-12 col-md-2">
-                                <select name="eventType" class="form-control formInput" id="startHour">
-                                    
-                                </select>
-                            </div>
-                            <div class="col-sm-12 col-md-2">
-                                <select name="eventType" class="form-control formInput" id="startMin">
-                                    
-                                </select>
-                            </div>
-                            <div class="col-sm-12 col-md-2">
-                                <select name="eventType" class="form-control formInput" id="endHour">
-                                    
-                                </select>
-                            </div>
-                            <div class="col-sm-12 col-md-2">
-                                <select name="eventType" class="form-control formInput" id="endMin">
-                                    
-                                </select>                            
-                            </div>
-                            <div class="col-sm-12 col-md-2">
-                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addMarketingHours()">ADD HOURS</button>
-                            </div>
-                        </form>
+                        <div class="col-sm-6 col-md-1 formLabel">
+                            <h5 for="dateStartInputView">Date:</h5>
+                        </div>
+                        <div class="col-sm-6 col-md-2 formLabel">
+                            <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                        </div>
+                        <div class="col-sm-6 col-md-1 formLabel">
+                            <h5 for="dateStartInputView">Start Time:</h5>
+                        </div>
+                        <div class="col-sm-6 col-md-2 formLabel">
+                            <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                        </div>
+                        <div class="col-sm-6 col-md-1 formLabel">
+                            <h5 for="dateEndInputView">End Time:</h5>
+                        </div>
+                        <div class="col-sm-6 col-md-2 formLabel">
+                            <select name="startTimeHr" class="form-control formInput" id="startHour"></select>
+                        </div>
+                        <div class="col-sm-12 col-md-2">
+                            <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addMarketingHours()">SIGNUP</button>
+                        </div>  
+                    </form>
                 </div>
-            </div>
+            </div> -->
 
         <div class="col-12" id="confirmArea">
             <h5 id="confirmMessage"></h5>
@@ -208,7 +313,7 @@
 
           
 
-        <div class="container">
+        <!-- <div class="container">
             <div class="row" id="memberArea">
                 <div class="memberStats col-12">
                     <form id="hours-form" class="form-inline col-12">
@@ -221,9 +326,9 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
         
-        <table class="table" id="hoursTable">
+        <!-- <table class="table" id="hoursTable">
                 <thead id="tableHead">
                     <tr>
                         <th width="200">Name</th>
@@ -234,20 +339,9 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- <tr>
-                        <th>1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td>Cameron</td>
-                        <td>Glass</td>
-                        <td>@glass10</td>
-                    </tr> -->
+
                 </tbody>
-        </table>   
+        </table>    -->
     
 
         <script src="../jquery-3.2.1.min.js"></script>

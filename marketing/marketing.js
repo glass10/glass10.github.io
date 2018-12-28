@@ -201,19 +201,23 @@ function viewScheduleForDate(){
 
                 console.log(allTimes);
 
+                let td = document.createElement("td");
+                let tr = document.createElement("tr");
                 let table = document.createElement("table");
                 let body = document.createElement("tbody");
 
-                for(let i = 0; i < allTimes.length; i++){
+                for(let j = 0; j < allTimes.length; j++){
                     let newRow = document.createElement("tr");
                     let timeTD = document.createElement("td");
-                    timeTD.innerHTML = allTimes[i];
+                    timeTD.innerHTML = allTimes[j];
                     newRow.appendChild(timeTD);
-                    body.appendChild(newRow);
+                    // body.appendChild(newRow);
+                    document.getElementById("date-"+ i + "-sub-tab").appendChild(newRow);
                 }
-                table.appendChild(body);
-                document.getElementById("date-"+ i + "-sub").innerHTML = "";
-                document.getElementById("date-"+ i + "-sub").appendChild(table);
+                // table.appendChild(body);
+                // td.appendChild(table);
+                // document.getElementById("date-"+ i + "-sub").innerHTML = "";
+                // document.getElementById("date-"+ i + "-sub-tab").appendChild(td);
                 
             }
             
