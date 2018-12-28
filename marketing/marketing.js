@@ -42,17 +42,23 @@ function addMarketingHours(dateIndex){
     
     console.log("DATE: " + date + " START: " + start + " END: " + end);
 
+    let allOptions = [startSelect.options[0].value];
+    for(let i = 0; i < endSelect.length; i++){
+        allOptions.push(endSelect.options[i].value);
+    }
+
+    let allTimes = "";
+    let hours = 0;
+    for(let i = allOptions.indexOf(start); i < allOptions.indexOf(end); i++){
+        allTimes += (allOptions[i]) + ",";
+        hours += 0.5;
+    }
+    console.log(allTimes);
+
     if (date === "" || start === "" || end === "") {
         alert("Please provide values for all event details");
     }
     else {
-        start = start.split(":");
-        end = end.split(":");
-        var dateStr = date.split("-");
-        var startTime = new Date( dateStr[0], dateStr[1]-1, dateStr[2], start[0],start[1], 0, 0);
-        var endTime = new Date( dateStr[0], dateStr[1]-1, dateStr[2], end[0],end[1], 0, 0);
-        
-        var hours = Math.round((endTime.getTime()-startTime.getTime())/36e5);
         var settings = {
             "url": 'https://script.google.com/macros/s/AKfycbxTmGRbhyv56t3assM_urWIxMwGmnR82ltDsy_LnG0_oczCkQck/exec',/* TODO:  */
             "type": "POST",
@@ -61,25 +67,22 @@ function addMarketingHours(dateIndex){
                 "Member": currentName,
                 "Committee": currentCommittee,
                 "Date": date,
-                "StartTime": startTime,
-                "EndTime": endTime,
+                "Times": allTimes,
+                // "StartTime": start,
+                // "EndTime": end,
                 "Hours": hours
             }
         }
 
         $.ajax(settings).done(function (response) {
-            document.getElementById("dateInput").value = "";
-            document.getElementById("startHoursInput").value = "";
-            document.getElementById("endHoursInput").value = "";
-            //console.log(response);
-            document.getElementById("confirmMessage").innerHTML = date + " Added Successfully";
-
+            alert("Marketing successfully added on " + date);
+            // Update 
+            viewScheduleForDate();
         });
     }
 }
 
-function viewHoursForDate(dateServer, startTime, endTime){
-    document.getElementById("tableBodyDate0").innerHTML = "";
+function getMembers(date, time){
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -95,42 +98,25 @@ function viewHoursForDate(dateServer, startTime, endTime){
         response = response.substring(response.indexOf("{"), response.length - 2);
         var response = JSON.parse(response);
         
-        var dateChosen = dateServer;
+        var dateChosen = date;
+        let allMembers = "";
         for (var i = 0; i < response.feed.entry.length; i++) {
-            var data = response.feed.entry[i];
-            var name = data.gsx$member.$t;
-            var committee = data.gsx$committee.$t;
-            var date = data.gsx$date.$t;
-            var startTime = /* 'Hi'; */new Date(data.gsx$starttime.$t);
-            startTime = startTime.getHours() + ':' + ((startTime.getMinutes()< 10)?'0':'') + startTime.getMinutes();
-            var endTime = /* 'Hi'; */new Date(data.gsx$endtime.$t);       
-            endTime = endTime.getHours() + ':' + ((endTime.getMinutes() < 10)?'0':'') + endTime.getMinutes();
-            var hours = data.gsx$hours.$t;
-            //console.log(dateChosen);
+            let data = response.feed.entry[i];
+            let name = data.gsx$member.$t;
+            let committee = data.gsx$committee.$t;
+            let date = data.gsx$date.$t;
+            let allTimes = data.gsx$times.$t;
+            console.log("All Times: " + allTimes);
             if(date === dateChosen){
-                let tempTR = document.createElement("tr");
-
-                let nameTD = document.createElement("td");
-                nameTD.innerHTML = name;
-                let committeeTD = document.createElement("td");
-                committeeTD.innerHTML = committee;
-                let startTD = document.createElement("td");
-                startTD.innerHTML = startTime;
-                let hoursTD = document.createElement("td");
-                hoursTD.innerHTML = hours;
-                let endTD = document.createElement("td");
-                endTD.innerHTML = endTime;
-
-                tempTR.appendChild(nameTD);
-                tempTR.appendChild(committeeTD);
-                tempTR.appendChild(startTD);
-                tempTR.appendChild(endTD);
-                tempTR.appendChild(hoursTD);
-
-                document.getElementById("tableBodyDate0").appendChild(tempTR);
+                if(allTimes.includes(time)){
+                    allMembers += name + "\n";
+                }
             }
         }
-
+        console.log(allMembers);
+        if(allMembers != ""){
+            document.getElementById(dateChosen+"-"+time).innerHTML = allMembers;
+        }
     });
 }
 
@@ -212,14 +198,26 @@ function viewScheduleForDate(){
                 for(let j = 0; j < allTimes.length; j++){
                     let newRow = document.createElement("tr");
                     let timeTD = document.createElement("td");
+                    let memberTD = document.createElement("td");
+                    memberTD.setAttribute("colspan", 2);
+                    memberTD.setAttribute("id", date+"-"+allTimes[j]);
                     timeTD.innerHTML = allTimes[j];
+                    memberTD.innerHTML = "Empty";
+                    //Call to update
+                    getMembers(date, allTimes[j])
+
                     newRow.appendChild(timeTD);
+                    newRow.appendChild(memberTD);
                     document.getElementById("date-"+ i + "-sub-tab").appendChild(newRow);
 
                     // Select options
                     let optionString = "<option value='" + allTimes[j] + "'>" + allTimes[j] + "</option>";
-                    document.getElementById("startHour-"+i).innerHTML += (optionString);
-                    document.getElementById("endHour-"+i).innerHTML += (optionString);
+                    if(j != allTimes.length-1){
+                        document.getElementById("startHour-"+i).innerHTML += (optionString);
+                    }
+                    if(j != 0){
+                        document.getElementById("endHour-"+i).innerHTML += (optionString);
+                    }
                 }
                 
             }
