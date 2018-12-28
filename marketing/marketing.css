@@ -88,6 +88,10 @@ table thead th{
     margin-bottom: 10px;
 }
 
+#hoursButton{
+    margin-top:10px;
+}
+
 .memberStats{
     text-align: center;
     font-size: 2rem;
