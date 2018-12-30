@@ -11,6 +11,7 @@
 
         <link href="../bootstrap.min.css" rel="stylesheet">
         <link href="attendance.css" rel="stylesheet" >
+        <script src="https://www.google.com/jsapi" type="text/javascript"></script>
 
     </head>
     <body onLoad="load()">
@@ -48,10 +49,26 @@
                 </div>
             </div>
         </nav>
+                
+        <div id="headerBox">
+            <h1>Attendance</h1>
+        
+            <table class="AttendanceTable" style="width:100%;">
+                <thead id="tableHead">
+                    <tr>
+                        <th width = "120">Date</th>
+                        <th>Event Name</th>
+                        <th width = "100">Attendance</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
 
         <script src="../jquery-3.2.1.min.js"></script>
         <script src="../bootstrap.bundle.min.js"></script>
         <script src="attendance.js"></script>
+
     </body>
        
 </html>
