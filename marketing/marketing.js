@@ -7,6 +7,8 @@ var startSchedDate = new Date();
 var endSchedDate = new Date();
 
 let allDates = [];
+let locationInfo = {};
+let locationIndex = 0;
 
 function logout(){
     console.log("Logout Attempted");
@@ -27,13 +29,13 @@ function load(){
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
         //viewHoursForDate();
-        viewScheduleForDate();
+        getLocations();
         /* todo initialize dates with view date signups and calendar */
     }
 }
 
 function addMarketingHours(dateIndex){
-    var date = allDates[dateIndex];
+    var date = allDates[dateIndex+locationIndex];
     var startSelect = document.getElementById("startHour-"+dateIndex);
     var endSelect = document.getElementById("endHour-"+dateIndex);
 
@@ -77,7 +79,7 @@ function addMarketingHours(dateIndex){
         $.ajax(settings).done(function (response) {
             alert("Marketing successfully added on " + date);
             // Update 
-            viewScheduleForDate();
+            viewScheduleForDate(0);
             // Start Spinner
             document.getElementById("topSpinner").style.visibility = "visible";
         });
@@ -109,43 +111,106 @@ function getMembers(date, time){
             let committee = data.gsx$committee.$t;
             let date = data.gsx$date.$t;
             let allTimes = data.gsx$times.$t;
-            console.log("All Times: " + allTimes);
+            // console.log("All Times: " + allTimes);
             if(date === dateChosen){
                 if(allTimes.includes(time)){
                     allMembers += name + ", ";
                 }
             }
         }
-        console.log(allMembers);
+        // console.log(allMembers);
         if(allMembers != ""){
             document.getElementById(dateChosen+"-"+time).innerHTML = allMembers;
             // document.getElementById("topSpinner").style.visibility = "hidden";
         }
+        document.getElementById("topSpinner").style.visibility = "hidden";
     });
 }
 
-
-function viewScheduleForDate(){
-    startSchedDate = document.getElementById("dateStartInputView").value;
-    endSchedDate = document.getElementById("dateEndInputView").value;
-    document.getElementById("topSpinner").style.visibility = "visible";
-
-    if(startSchedDate === "" || endSchedDate === ""){
-        startSchedDate = new Date();/* TODO */
-        endSchedDate = new Date();
-        endSchedDate.setDate(endSchedDate.getDate() + (7-endSchedDate.getDay()) - (endSchedDate.getDay() == 0?7:1));
-        startSchedDate.setDate(startSchedDate.getDate() - startSchedDate.getDay() + (startSchedDate.getDay() == 0? -6:1));
+function viewScheduleForDate(direction){
+    let allData = locationInfo;
+    let dataKeys = Object.keys(allData);
+    let locationNumber = dataKeys.length;
+    locationIndex += direction;
+    let pageCount = Math.ceil(locationNumber / 5);
+    let currentPage = (locationIndex / 5) + 1;
+    document.getElementById("pageIndicator").innerHTML = `Page ${currentPage} / ${pageCount}`;
+    if(currentPage === 1){
+        document.getElementById("prevButton").classList.add("disable");
+    }
+    else if(currentPage === pageCount){
+        document.getElementById("nextButton").classList.add("disable");
     }
     else{
-        startSchedDate = new Date( startSchedDate.split("-")[0], 
-                                startSchedDate.split("-")[1]-1, 
-                                    startSchedDate.split("-")[2],0,0,0,0);
-        endSchedDate = new Date( endSchedDate.split("-")[0], 
-                                endSchedDate.split("-")[1]-1, 
-                                    endSchedDate.split("-")[2],0,0,0,0);
+        document.getElementById("prevButton").classList.remove("disable");
+        document.getElementById("nextButton").classList.remove("disable");
     }
 
-    // document.getElementById("schedTableBody").innerHTML = "";
+    for(let i = locationIndex; i < locationIndex+5; i++){
+        let dateInfo = allData[dataKeys[i]];
+        if(dateInfo !== undefined){
+            let cardHTML = `<td>${dateInfo.date}</td>
+                            <td>${dateInfo.location}</td>
+                            <td>${dateInfo.timeStr}</td>`;
+
+            // Reset Values
+            document.getElementById("date-" + (i-locationIndex)).style.visibility = "visible";
+            document.getElementById("startHour-"+(i-locationIndex)).innerHTML = "";
+            document.getElementById("endHour-"+(i-locationIndex)).innerHTML = "";
+            document.getElementById("date-"+ (i-locationIndex) + "-sub-tab").innerHTML = document.getElementById("date-"+ (i-locationIndex) + "-sub-tab").parentElement.rows[0].innerHTML;
+
+            // Set main table
+            document.getElementById("date-" + (i-locationIndex)).innerHTML = cardHTML;
+
+            // Append times to table and select
+            for(let j = 0; j < dateInfo.allTimes.length; j++){
+                let newRow = document.createElement("tr");
+                let timeTD = document.createElement("td");
+                let memberTD = document.createElement("td");
+                memberTD.setAttribute("colspan", 2);
+                memberTD.setAttribute("id", dateInfo.date+"-"+dateInfo.allTimes[j]);
+                timeTD.innerHTML = dateInfo.allTimes[j];
+                memberTD.innerHTML = "Empty";
+
+                newRow.appendChild(timeTD);
+                newRow.appendChild(memberTD);
+                if(j !== dateInfo.allTimes.length-1){
+                    //Call to update
+                    getMembers(dateInfo.date, dateInfo.allTimes[j]);
+
+                    // Append to table
+                    document.getElementById("date-"+ (i-locationIndex) + "-sub-tab").appendChild(newRow);
+                }
+
+                // Select options
+                let optionString = "<option value='" + dateInfo.allTimes[j] + "'>" + dateInfo.allTimes[j] + "</option>";
+                if(j !== dateInfo.allTimes.length-1){
+                    document.getElementById("startHour-"+(i-locationIndex)).innerHTML += (optionString);
+                }
+                if(j !== 0){
+                    document.getElementById("endHour-"+(i-locationIndex)).innerHTML += (optionString);
+                }
+
+                // if(j === dateInfo.allTimes.length-1){
+                    document.getElementById("topSpinner").style.visibility = "hidden";
+                // }
+            }
+        }
+        else{
+            document.getElementById("date-" + (i-locationIndex)).style.visibility = "hidden";
+        }
+    }
+}
+
+
+function getLocations(){
+    document.getElementById("topSpinner").style.visibility = "visible";
+
+    startSchedDate = new Date();/* TODO */
+    endSchedDate = new Date();
+    endSchedDate.setDate(endSchedDate.getDate() + (7-endSchedDate.getDay()) - (endSchedDate.getDay() == 0?7:1));
+    startSchedDate.setDate(startSchedDate.getDate() - startSchedDate.getDay() + (startSchedDate.getDay() == 0? -6:1));
+
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -162,21 +227,17 @@ function viewScheduleForDate(){
         //console.log(response);
 
         for (var i = 0; i < response.feed.entry.length; i++) {
+            let dateObj = {};
             var data = response.feed.entry[i];
             var date = data.gsx$date.$t;
-            var dateStr = new Date( date.split("-")[0], 
-                                date.split("-")[1]-1, 
-                                    date.split("-")[2],0,0,0,0);    
-            //console.log(dateStr,startSchedDate,endSchedDate);
-            if(dateStr.getTime() >= startSchedDate.getTime() && dateStr.getTime() <= endSchedDate.getTime()){
-                var location = data.gsx$location.$t;
-                var time = data.gsx$timerange.$t;
+            var location = data.gsx$location.$t;
+            var time = data.gsx$timerange.$t;
+            var dateStr = new Date( date.split("-")[0], date.split("-")[1]-1, date.split("-")[2],0,0,0,0);    
+            
+            let currentDate = new Date();
+            currentDate.setHours(0, 0, -1, 999);
+            if(dateStr.getTime() >= currentDate.getTime()){
 
-                let cardHTML = `<td>${date}</td>
-                                <td>${location}</td>
-                                <td>${time}</td>`;
-
-                document.getElementById("date-" + i).innerHTML = cardHTML;
                 allDates.push(date);
 
                 // Get all 30 min times from range
@@ -196,40 +257,19 @@ function viewScheduleForDate(){
                     allTimes.push(startDate.toTimeString().split(' ')[0])
                 }
 
-                console.log(allTimes);
-
-                // Append times to table and select
-                for(let j = 0; j < allTimes.length-1; j++){
-                    let newRow = document.createElement("tr");
-                    let timeTD = document.createElement("td");
-                    let memberTD = document.createElement("td");
-                    memberTD.setAttribute("colspan", 2);
-                    memberTD.setAttribute("id", date+"-"+allTimes[j]);
-                    timeTD.innerHTML = allTimes[j];
-                    memberTD.innerHTML = "Empty";
-                    //Call to update
-                    getMembers(date, allTimes[j])
-
-                    newRow.appendChild(timeTD);
-                    newRow.appendChild(memberTD);
-                    document.getElementById("date-"+ i + "-sub-tab").appendChild(newRow);
-
-                    // Select options
-                    let optionString = "<option value='" + allTimes[j] + "'>" + allTimes[j] + "</option>";
-                    if(j != allTimes.length-1){
-                        document.getElementById("startHour-"+i).innerHTML += (optionString);
-                    }
-                    if(j != 0){
-                        document.getElementById("endHour-"+i).innerHTML += (optionString);
-                    }
-
-                    if(j === allTimes.length-2){
-                        document.getElementById("topSpinner").style.visibility = "hidden";
-                    }
-                }
-                
+                // console.log(allTimes);
+                dateObj = {
+                    "date": date,
+                    "location": location,
+                    "timeStr": time,
+                    "startTime": new Date(timeObj[0]),
+                    "endTime": new Date(timeObj[1]),
+                    "allTimes": allTimes
+                };
+                locationInfo[date] = dateObj;
+                document.getElementById("topSpinner").style.visibility = "hidden";
             }     
         }
-       
+       viewScheduleForDate(0);
     });
 }

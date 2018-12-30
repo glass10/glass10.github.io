@@ -54,9 +54,9 @@
 
         <!-- schedule view area -->
         <div class="container">
-            <div class="row" id="memberArea">
-                <div class="memberStats col-12">
-                    <form id="hours-form" class="form-inline col-12">
+            <div class="row col-12" id="pageSelection">
+                <!-- <div class="memberStats col-12 row"> -->
+                    <!-- <form id="hours-form" class="form-inline col-12">
                         <div class="col-sm-12 col-md-2 formLabel">
                             <h5 for="dateStartInputView">Start Date:</h5>
                         </div>
@@ -72,8 +72,17 @@
                         <div class="col-sm-12 col-md-2">
                             <button type="button" class="btn btn-outline-primary formInput" id="dateButton" onclick="viewScheduleForDate()">VIEW SCHEDULE</button>
                         </div>  
-                    </form>
-                </div>
+                    </form> -->
+                    <div class="col-4">
+                        <button class="btn btn-outline-primary disable" id="prevButton" onclick="viewScheduleForDate(-5);">Previous</button>
+                    </div>
+                    <div class="col-4" >
+                        <p id="pageIndicator">Page: # / #</p>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-outline-primary" id="nextButton" onclick="viewScheduleForDate(5)">Next</button>
+                    </div>
+                <!-- </div> -->
             </div>
 
             <table class="table" id="scheduleTable">
