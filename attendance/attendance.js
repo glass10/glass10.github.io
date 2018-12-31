@@ -6,6 +6,7 @@ var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
 var currentCommittee = "";
 var currentName = "";
+var membersArray = [];
 
 function logout(){
     console.log("Logout Attempted");
@@ -95,6 +96,8 @@ function loadAttendance() {
         });
 }
 
+var request;
+
 function loadMembers() {
     var committeeListed = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
         var committee = 0;
@@ -117,7 +120,6 @@ function loadMembers() {
             var columns = entry[entry.length-1].gs$cell.col
             console.log("columns: %s", columns);
             
-            var membersArray = []; // array of events
             var attendanceArray = []; // array of attendance
             var row = 0; // row of found row
                         
@@ -142,12 +144,14 @@ function loadMembers() {
                 
                     let selectAttendance = document.createElement("select");
                     selectAttendance.id = membersArray[x] + "dropdown";
+                
+                    console.log("FSAFASFASFASF%s", selectAttendance.id);
                     
                     for(var y = 0; y < attendanceValues.length; y++) {
                         var option = document.createElement("option");
                         option.value = attendanceValues[y];
                         option.text = attendanceValues[y];
-                    selectAttendance.appendChild(option);
+                        selectAttendance.appendChild(option);
                     }
 
                     attendance.appendChild(selectAttendance);
@@ -161,4 +165,22 @@ function loadMembers() {
 
 function submitAttendance(){
     console.log("submit Attendance");
+    var array = [];
+    
+    array.push(currentCommittee);
+    
+    for(x = 0; x < membersArray.length; x++){
+        console.log("submit Attendance");
+        
+        var str = membersArray[x] + "dropdown";
+        var val = document.getElementById(str).value;
+        array.push(val.toString());
+    }
+    console.log(array);
+    
+    var settings = {
+            "url": "https://script.google.com/macros/s/AKfycbzKFVELOGvHYMPDzS21iaWYl0nIq0w-7WwgqnkNdD0JS_0ZyNE/exec",
+            "type": "POST",
+            "data": array.toString()
+            }
 }

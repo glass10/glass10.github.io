@@ -50,7 +50,7 @@
             </div>
         </nav>
                 
-        <div id="headerBox">
+        <form id="headerBox">
             <h1>Attendance</h1>
         
             <table class="AttendanceTable" style="width:100%;">
@@ -63,8 +63,8 @@
                 <tbody id="tableBody"></tbody>
             </table>
             
-            <input id="submit" type="button" value="Submit" onclick="submitAttendance();" />
-        </div>
+            <button type="button" id="submit" class="button" onclick="submitAttendance();">Submit</button>
+        </form>
 
         <script src="../jquery-3.2.1.min.js"></script>
         <script src="../bootstrap.bundle.min.js"></script>
