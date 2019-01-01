@@ -86,7 +86,7 @@ function addMarketingHours(dateIndex){
                     addToGoogle(date, start, end, date);
                 }
                 // Update 
-                viewScheduleForDate(0);
+                getMembers(dateIndex);
                 // Start Spinner
                 document.getElementById("topSpinner").style.visibility = "visible";
             });
