@@ -56,7 +56,6 @@ table thead th{
 }
 table, td, th, select{
     border-collapse: collapse;
-    border: 1px solid grey;
 }
 
 #tableHead th{

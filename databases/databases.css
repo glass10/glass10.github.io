@@ -7,6 +7,7 @@ body{
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
+    z-index: 10;
 }
 
 .btn-outline-primary{
@@ -93,6 +94,7 @@ tbody tr:hover{
     padding-bottom: 0.5rem;
     padding-left: 12.5%;
     padding-right: 12.5%;
+    z-index: 1;
 }
 
 .searchButton{
