@@ -53,6 +53,8 @@ body{
 
 .table{
     margin-bottom: 0px;
+    /* table-layout: fixed;
+    word-wrap: break-word; */
 }
 
 tbody{
@@ -68,6 +70,7 @@ tbody tr:hover{
     width: 50%;
     text-align: center;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .fullTab:hover{
@@ -77,6 +80,7 @@ tbody tr:hover{
 #alumniTab, #membersTab{
     background-color: white;
     border: 2px solid white;
+    overflow: scroll;
 }
 
 #alumniTab{
