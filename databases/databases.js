@@ -34,10 +34,16 @@ function openTab(members) {
     if(members == "members") {
         document.getElementById("membersTab").style.display = "block";
         document.getElementById("alumniTab").style.display = "none";
+
+        document.getElementById("memberNav").classList.add("active");
+        document.getElementById("alumniNav").classList.remove("active");
     }
     else{
         document.getElementById("membersTab").style.display = "none";
-        document.getElementById("alumniTab").style.display = "block";        
+        document.getElementById("alumniTab").style.display = "block";    
+        
+        document.getElementById("memberNav").classList.remove("active");
+        document.getElementById("alumniNav").classList.add("active");
     }    
 }
 

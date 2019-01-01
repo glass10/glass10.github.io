@@ -50,31 +50,49 @@
         </nav>
         
         <div id="tabBox">
-            <div id="tab" class="tab">
-                <button id="membertab" class ="tablinks" onclick="openTab('members')">Members</button>
-                <button id="alumnitab"class ="tablinks" onclick="openTab('alumni')">Alumni</button>
+            <div id="tab" class="tab nav nav-tabs">
+                <li class="nav-item fullTab">
+                    <a class="nav-link active" id="memberNav" onclick="openTab('members')">Members</a>
+                </li>
+                <li class="nav-item fullTab">
+                    <a class="nav-link" id="alumniNav" onclick="openTab('alumni')">Alumni</a>
+                </li>
             </div>
 
-            <div id="membersTab" class="tabcontent">
-                <h1>Members</h1>
-                <table id="table" style="width:100%">
-                    <th style="width: 20%">Name</th>
-                    <th style="width: 20%">Committee</th>
-                    <th style="width: 15%">Major</th>
-                    <th style="width: 10%">Class</th>
-                    <th style="width: 30%">Email</th>
+            <div class="input-group fluid-container" id="searchBar">
+                <input type="text" class="form-control" placeholder="Search" id="txtSearch"/>
+                <div class="input-group-btn">
+                    <button class="btn btn-primary searchButton" type="submit">
+                        <span>Search</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="membersTab" class="tabcontent fluid-container">
+                <!-- <h1>Members</h1> -->
+                <table id="table" class="table">
+                    <thead>
+                        <th style="width: 20%">Name</th>
+                        <th style="width: 20%">Committee</th>
+                        <th style="width: 15%">Major</th>
+                        <th style="width: 10%">Class</th>
+                        <th style="width: 30%">Email</th>
+                    </thead>
                     
                     <tbody id="tableBodyMembers"></tbody>
                 </table>
             </div>
-            <div id="alumniTab" class="tabcontent">
-                <h1>Alumni</h1>
-                <table id="table" style="width:100%">
-                    <th style="width: 20%">Name</th>
-                    <th style="width: 10%">Class</th>
-                    <th style="width: 10%">Position</th>
-                    <th style="width: 30%">Current Work</th>
-                    <th style="width: 30%">Contact Info</th>
+
+            <div id="alumniTab" class="tabcontent fluid-container">
+                <!-- <h1>Alumni</h1>I -->
+                <table id="table" class="table">
+                    <thead>
+                        <th style="width: 20%">Name</th>
+                        <th style="width: 10%">Class</th>
+                        <th style="width: 10%">Position</th>
+                        <th style="width: 30%">Current Work</th>
+                        <th style="width: 30%">Contact Info</th>
+                    </thead>
                     
                     <tbody id="tableBodyAlumni"></tbody>
                 </table>
