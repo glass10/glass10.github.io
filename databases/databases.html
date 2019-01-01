@@ -48,6 +48,38 @@
                 </div>
             </div>
         </nav>
+        
+        <div id="tabBox">
+            <div id="tab" class="tab">
+                <button id="membertab" class ="tablinks" onclick="openTab('members')">Members</button>
+                <button id="alumnitab"class ="tablinks" onclick="openTab('alumni')">Alumni</button>
+            </div>
+
+            <div id="membersTab" class="tabcontent">
+                <h1>Members</h1>
+                <table id="table" style="width:100%">
+                    <th style="width: 20%">Name</th>
+                    <th style="width: 20%">Committee</th>
+                    <th style="width: 15%">Major</th>
+                    <th style="width: 10%">Class</th>
+                    <th style="width: 30%">Email</th>
+                    
+                    <tbody id="tableBodyMembers"></tbody>
+                </table>
+            </div>
+            <div id="alumniTab" class="tabcontent">
+                <h1>Alumni</h1>
+                <table id="table" style="width:100%">
+                    <th style="width: 20%">Name</th>
+                    <th style="width: 10%">Class</th>
+                    <th style="width: 10%">Position</th>
+                    <th style="width: 30%">Current Work</th>
+                    <th style="width: 30%">Contact Info</th>
+                    
+                    <tbody id="tableBodyAlumni"></tbody>
+                </table>
+            </div>
+        </div>
 
         <script src="../jquery-3.2.1.min.js"></script>
         <script src="../bootstrap.bundle.min.js"></script>
