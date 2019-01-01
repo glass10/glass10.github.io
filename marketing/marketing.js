@@ -3,6 +3,7 @@
 var currentCommittee = "";
 var currentName = "";
 var currentData = {};
+var offSet = 5;
 var startSchedDate = new Date();
 var endSchedDate = new Date();
 
@@ -81,7 +82,9 @@ function addMarketingHours(dateIndex){
             }
 
             $.ajax(settings).done(function (response) {
-                alert("Marketing successfully added on " + date);
+                if(confirm("Marketing successfully added on " + date + ". Would you like to create a Google calendar event?")){
+                    addToGoogle(date, start, end, date);
+                }
                 // Update 
                 getMembers(dateIndex);
                 // Start Spinner
@@ -89,6 +92,26 @@ function addMarketingHours(dateIndex){
             });
         }
     }
+}
+
+function addToGoogle(date, startTime, endTime, dateIndex){
+    //console.log(date, startTime, endTime, locationInfo[dateIndex].location);
+    let dateBeginStr = date.split("-")[0] + date.split("-")[1] + date.split("-")[2];
+    let dateEndStr = date.split("-")[0] + date.split("-")[1] + date.split("-")[2];
+    //console.log(parseInt(startTime.split(":")[0])+5);
+    let timeBeginStr = (parseInt(startTime.split(":")[0])+offSet)+ startTime.split(":")[1] + startTime.split(":")[2];
+    let timeEndStr = (parseInt(endTime.split(":")[0])+offSet) + endTime.split(":")[1] + endTime.split(":")[2];
+    let dateTime = dateBeginStr + 'T' + timeBeginStr +'Z/' +dateEndStr + 'T' + timeEndStr +'Z'
+    let locationDesc = 'Marketing location is ' + locationInfo[dateIndex].location;
+    let name = 'PSUB Marketing';
+
+
+    let link = 
+        'https://calendar.google.com/calendar/r/eventedit?text=' + name +'&dates=' +dateTime 
+        +'&location=' + 'Purdue Memorial Union, 101 Grant St, West Lafayette, IN 47906, USA' 
+        +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/marketing/marketing.html' 
+        + '&details='+ locationDesc +'&sf=true&output=xml'
+    window.open(link, '_blank', 'location=yes,height=750,width=750,scrollbars=yes,status=yes');
 }
 
 function getMembers(dateIndex){
