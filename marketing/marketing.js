@@ -83,7 +83,7 @@ function addMarketingHours(dateIndex){
             $.ajax(settings).done(function (response) {
                 alert("Marketing successfully added on " + date);
                 // Update 
-                viewScheduleForDate(0);
+                getMembers(dateIndex);
                 // Start Spinner
                 document.getElementById("topSpinner").style.visibility = "visible";
             });
