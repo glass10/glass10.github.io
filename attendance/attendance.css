@@ -7,6 +7,7 @@ body{
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
+    z-index: 10;
 }
 
 .btn-outline-primary{
@@ -73,14 +74,18 @@ table, td, th, select{
     text-align: center;
 }
 
-select, options {
-    width: 90%;
+select{
+    z-index: 0;
 }
 
 #submit {
-    color: grey;
+    /* color: grey; */
     display: block;
     width: 100px;
     margin: 15px auto;
     position:relative;
+}
+
+.tableRow{
+    background-color: white;
 }

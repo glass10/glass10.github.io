@@ -136,29 +136,31 @@ function loadMembers() {
             
             for(var x = 0; x < membersArray.length; x++) {
                 let tempTR = document.createElement("tr");
+                tempTR.setAttribute("class", "tableRow");
 
-                    let members = document.createElement("td");
-                    members.innerHTML = membersArray[x];
+                let members = document.createElement("td");
+                members.innerHTML = membersArray[x];
+            
+                let attendance = document.createElement("td");
+            
+                let selectAttendance = document.createElement("select");
+                selectAttendance.id = membersArray[x] + "dropdown";
+                selectAttendance.setAttribute("class", "form-control dropdown")
+            
+                console.log("FSAFASFASFASF%s", selectAttendance.id);
                 
-                    let attendance = document.createElement("td");
-                
-                    let selectAttendance = document.createElement("select");
-                    selectAttendance.id = membersArray[x] + "dropdown";
-                
-                    console.log("FSAFASFASFASF%s", selectAttendance.id);
-                    
-                    for(var y = 0; y < attendanceValues.length; y++) {
-                        var option = document.createElement("option");
-                        option.value = attendanceValues[y];
-                        option.text = attendanceValues[y];
-                        selectAttendance.appendChild(option);
-                    }
+                for(var y = 0; y < attendanceValues.length; y++) {
+                    var option = document.createElement("option");
+                    option.value = attendanceValues[y];
+                    option.text = attendanceValues[y];
+                    selectAttendance.appendChild(option);
+                }
 
-                    attendance.appendChild(selectAttendance);
-                    tempTR.appendChild(members);
-                    tempTR.appendChild(attendance);
+                attendance.appendChild(selectAttendance);
+                tempTR.appendChild(members);
+                tempTR.appendChild(attendance);
 
-                    document.getElementById("tableBody").appendChild(tempTR);
+                document.getElementById("tableBody").appendChild(tempTR);
             }
         });
 }
