@@ -121,7 +121,7 @@ function addToGoogle(date, startTime, endTime, dateIndex){
         //document.getElementById("modalBody").innerHTML = 
         //    '<a target="_blank" href="' + link + '">Add to google</a>';
     //window.open(link);
-    document.getElementById("google").setAttribute('onclick', 'window.location.href=\'' + link + '\'');
+    document.getElementById("google").setAttribute('onclick', 'location.href=\'' + link + '\'');
 }
 
 function getMembers(dateIndex){
