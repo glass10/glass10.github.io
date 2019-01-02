@@ -76,6 +76,7 @@ table, td, th, select{
 
 select{
     z-index: 0;
+    cursor: pointer;
 }
 
 #submit {
