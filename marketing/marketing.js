@@ -114,7 +114,7 @@ function addToGoogle(date, startTime, endTime, dateIndex){
         // +'&location=' + 'Purdue Memorial Union, 101 Grant St, West Lafayette, IN 47906, USA' 
         + '&location=' + locationInfo[dateIndex].location
         +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/marketing/marketing.html' 
-        + '&details='+ locationDesc +'&sf=true&output=xml'
+        + '&details='+ locationDesc
 
         document.getElementById("add to cal").innerHTML = 
             '<a target="_blank" href="' + link + '">Add to google</a>';
