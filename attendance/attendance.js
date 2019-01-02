@@ -1,11 +1,54 @@
-var CLIENT_ID = '769441401372-9llk2flchfa6uusfpqkuer5ai5eahdml.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyAsC9gY5zRn5qS_bqTkZBJgsAITmMBpIAQ';
-
-var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+var CLIENT_ID = '741003728693-o30686b65lf3np0fd6lbhngfhmv5oqkh.apps.googleusercontent.com'
+var API_KEY = 'AIzaSyAtQULaPG_AsmOKmsWESJEESDuqOPs8IdU'
 var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 
+// Committee Spreadsheet IDS
+var sheetIDS = {
+    "artsAndCulture": '1mbu-7VK5mqQk2FNKwwk0b5CGbXt1nGaW53rVa4lbvPc',
+    "currentEvents": '12a9SZndguVFyRlO8xbAj9vLQ5J45Dmn8DIeEBenVOSY',
+    "entertainment": '1CwhXGiTaf8QZHMfSOiBkF2CrqQlPRYPiB0-j-BHADRI',
+    "publicity": '1rU7315Nl-fZpTU2YCRcKWUmYUBqlSLMfhFEJ7e8slf8',
+    "purdueAfterDark": '1cYa09UftGhaE8ExG9bJnuxwAgalSbY4-t5abFZY1QPQ',
+    "spiritAndTraditions": '1r7cxTeWDccKVAp4_cd9BKSnhxqRxQv9goxEYafTPv5I'
+}
+
+//All Committee Data
+var committees = {
+    "artsAndCulture": [],
+    "currentEvents": [],
+    "entertainment": [],
+    "publicity": [],
+    "purdueAfterDark": [],
+    "spiritAndTraditions": []
+};
+
+var committeeList = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
+
+//All Intercommittee Points
+var points = {
+    "artsAndCulture": 0,
+    "currentEvents": 0,
+    "entertainment": 0,
+    "publicity": 0,
+    "purdueAfterDark": 0,
+    "spiritAndTraditions": 0
+}
+
+var scripts = {
+    "artsAndCulture": "https://script.google.com/macros/s/AKfycbwHZInpf-2XVeATHRFTi2s2KMFh5odvbvGvLYmdVah-Mc0j1ss/exec",
+    "currentEvents": "https://script.google.com/macros/s/AKfycbxNNSZ-oIRBXZUm1I6isLwo0LpNQxpI-y6Gur_9-Jmu2Hcwo7E/exec",
+    "entertainment": "https://script.google.com/macros/s/AKfycbx5kmyOMiui5joHakz-RDs5AtHYI64I7BBZ_rkLBWVww5RClrw/exec",
+    "publicity": "https://script.google.com/macros/s/AKfycbxsLiZpXYRBjCN2Eo5GYvxmv-BDoMu9JcX2CX2LSRldleYlxPM/exec",
+    "purdueAfterDark": "https://script.google.com/macros/s/AKfycbwsOqIWytba8oZvq9NaZ1bshNIkKPD2-jwrfOILRVcQVosB0j4/exec",
+    "spiritAndTraditions": "https://script.google.com/macros/s/AKfycbyCj7FY0DXRp1T_gTH6mM261puqhUGqIvIXdGo5Yp-FXJ5VUqk/exec"
+}
+//Current Information
 var currentCommittee = "";
 var currentName = "";
+var currentData = {};
+let heights = {};
+let dataCount = 0;
 var membersArray = [];
 
 function logout(){
@@ -28,74 +71,14 @@ function load(){
         
         console.log(currentCommittee);
         loadMembers();
+
+        // Intercommittee
+        heights = {};
+        for (var i = 0; i < committeeList.length; i++) {
+            data(committeeList[i]);
+        }
     }   
 }
-// function loadAttendance() {
-//     var committeeListed = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
-//         var committee = 0;
-        
-//         console.log(currentCommittee);
-//         for(var x = 0; x < committeeListed.length; x++) {
-//             if(currentCommittee == committeeListed[x]) {
-//                 console.log("found committee %s", x+1);
-//                 committee = x+1;
-//             }
-//         }
-//         console.log("commitee %s", committeeListed[committee-1]);
-        
-        
-//         var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1xHh-igylkYXPXMEArgNJISWYgsJPMqo9ijUM72gmy58/' + committee + '/public/full?alt=json';
-//         $.getJSON(sheetUrl, function(data){
-//           var entry = data.feed.entry;
-//           console.log(entry);
-            
-//             var columns = entry[entry.length-1].gs$cell.col
-//             console.log("columns: %s", columns);
-            
-//             var eventNames = []; // array of events
-//             var dates = []; // array of dates
-//             var attendanceArray = []; // array of attendance
-//             var row = 0; // row of found row
-                        
-//             //parses member and its attendance values
-//             for(var x = 0; x < entry.length; x++){
-//                 if(entry[x].gs$cell.row == 1 && entry[x].gs$cell.col != "1") {
-//                     eventNames.push(entry[x].content.$t);
-//                 }
-//                 if(entry[x].gs$cell.row == 2 && entry[x].gs$cell.col != "1") {
-//                     dates.push(entry[x].content.$t);
-//                 }
-//                 if(entry[x].gs$cell.col == "1" && entry[x].content.$t == currentName) {
-//                     row = (x)/columns+1;
-//                 }
-//                 if(entry[x].gs$cell.row == row && entry[x].gs$cell.col != "1"){
-//                     attendanceArray.push(entry[x].content.$t);
-//                 }
-//             }
-//             console.log("dates: %s", dates.toString()); // array of all dates
-//             console.log("events: %s", eventNames.toString()); // array of all events
-//             console.log("attendance: %s", attendanceArray.toString()); // array of all attendance
-//             console.log("row: %s", row); // row of current member
-            
-//             for(var x = 0; x < dates.length; x++) {
-//                 let tempTR = document.createElement("tr");
-
-//                     let date = document.createElement("td");
-//                     date.innerHTML = dates[x];
-//                     let event = document.createElement("td");
-//                     event.innerHTML = eventNames[x];
-//                     let attendance = document.createElement("td");
-//                     attendance.innerHTML = attendanceArray[x];
-
-//                     tempTR.appendChild(date);
-//                     tempTR.appendChild(event);
-//                     tempTR.appendChild(attendance);
-
-//                     document.getElementById("tableBody").appendChild(tempTR);
-//             }
-//         });
-// }
-
 var request;
 
 function loadMembers() {
@@ -184,4 +167,79 @@ function submitAttendance(){
         alert("Error recording attendance");
        }
     });
+}
+
+function calculateHeight() {
+    // Dynamic Height
+    let maxHeight = 90;
+    let tallest = 0;
+    let heightValues = Object.values(heights);
+    for (let i = 0; i < heightValues.length; i++) {
+        if (heightValues[i] - tallest > 0) {
+            tallest = heightValues[i];
+        }
+    }
+    if (tallest > maxHeight) {
+        // Recalculate heights
+        let factor = maxHeight / tallest;
+        for (var i = 0; i < committeeList.length; i++) {
+            document.getElementById(committeeList[i] + "LI").style = "height: " + heights[committeeList[i]] * factor + "%";
+        }
+    }
+}
+
+function data(committee) {
+    console.log('Loading ' + committee + ' data');
+    if (committees[committee].length !== 0) {
+        committees[committee] = [];
+    }
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/1/public/full?alt=json-in-script',
+        "method": "GET",
+        "headers": {
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        //console.log(response);
+        response = response.substring(response.indexOf("{"), response.length - 2)
+        var response = JSON.parse(response);
+        console.log(response);
+        for (var i = 0; i < response.feed.entry.length; i++) {
+            if (i !== response.feed.entry.length - 1) {
+                var tempName = response.feed.entry[i].gsx$name.$t;
+                var tempPin = response.feed.entry[i].gsx$pin.$t;
+                var tempID = response.feed.entry[i].gsx$sheetid.$t;
+                var tempHours = response.feed.entry[i].gsx$hours.$t;
+                var tempPoints = response.feed.entry[i].gsx$points.$t;
+
+                committees[committee].push({ name: tempName, pin: tempPin, id: tempID, number: i + 2, hours: tempHours, points: tempPoints });
+
+            }
+            else {
+                var tempHours = response.feed.entry[i].gsx$committeehours.$t
+                var tempPoints = response.feed.entry[i].gsx$committeepoints.$t
+
+                committees[committee].push({ totalHours: tempHours, totalPoints: tempPoints });
+
+                var height = tempPoints;
+
+                points[committee] = tempPoints; //for intercommittee points
+                document.getElementById(committee + "LI").style = "height: " + height + "%";
+                heights[committee] = height;
+                document.getElementById(committee + "LI").title = tempPoints;
+                document.getElementById(committee + "TXT").textContent = tempPoints;
+            }
+        }
+        console.log(committees[committee]);
+
+        dataCount++;
+        if (dataCount === 6) {
+            calculateHeight();
+        }
+    });
+    console.log("Data Loaded Successfully");
 }
