@@ -120,7 +120,7 @@ function addToGoogle(date, startTime, endTime, dateIndex){
 
         document.getElementById("add to cal").innerHTML = 
             '<a target="_blank" href="' + link + '">Add to google</a>';
-    window.open(link, '_blank');
+    window.open(link);
 }
 
 function getMembers(dateIndex){
