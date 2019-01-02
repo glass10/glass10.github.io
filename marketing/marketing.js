@@ -81,9 +81,11 @@ function addMarketingHours(dateIndex){
 
             $.ajax(settings).done(function (response) {
                 if(response.result === "success"){
-                    if(confirm("Marketing successfully added on " + date + ". Would you like to create a Google calendar event?")){
-                        addToGoogle(date, start, end, date);
-                    }
+                    document.getElementById("modalBody").innerHTML = "Marketing successfully added on " + date + ". \nAdd to a calendar below ↓"
+                    $('#myModal').modal('show');
+                    // if(confirm("Marketing successfully added on " + date + ". Would you like to create a Google calendar event?")){
+                    //     addToGoogle(date, start, end, date);
+                    // }
                     // Update 
                     getMembers(dateIndex);
                     // Start Spinner

@@ -265,3 +265,7 @@ ul {
       transform: rotate(360deg);
     }
   }
+
+  #myModal{
+    white-space: pre-line;
+  }
