@@ -81,10 +81,10 @@ function addMarketingHours(dateIndex){
 
             $.ajax(settings).done(function (response) {
                 if(response.result === "success"){
-                    document.getElementById("modalBody").innerHTML = "Marketing successfully added on " + date + ". \nAdd to a calendar below ↓"
+                    document.getElementById("modalBody").innerHTML = "Marketing successfully added on " + date + ". \nAdd to a calendar below ↓\n"
                     $('#myModal').modal('show');
                     // if(confirm("Marketing successfully added on " + date + ". Would you like to create a Google calendar event?")){
-                    //     addToGoogle(date, start, end, date);
+                         addToGoogle(date, start, end, date);
                     // }
                     // Update 
                     getMembers(dateIndex);
@@ -117,10 +117,11 @@ function addToGoogle(date, startTime, endTime, dateIndex){
         + '&location=' + locationInfo[dateIndex].location
         +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/marketing/marketing.html' 
         + '&details='+ locationDesc
-
-        document.getElementById("add to cal").innerHTML = 
-            '<a target="_blank" href="' + link + '">Add to google</a>';
-    window.open(link);
+        //document.getElementById("modalBody").appendChild('<div id="add to cal">Google</div>')
+        //document.getElementById("modalBody").innerHTML = 
+        //    '<a target="_blank" href="' + link + '">Add to google</a>';
+    //window.open(link);
+    document.getElementById("google").setAttribute('onclick', 'window.location.href=\'' + link + '\'');
 }
 
 function getMembers(dateIndex){
