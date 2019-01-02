@@ -31,6 +31,11 @@ function load(){
 
 function openTab(members) {
     document.getElementById('txtSearch').value = ""; //resets value to 0
+    
+    //hides search tabs
+    document.getElementById("searchTabAlumni").style.display = "none";
+    document.getElementById("searchTabMembers").style.display = "none";
+    
     if(members == "members") {
         tab = 'members';
         document.getElementById("membersTab").style.display = "block";
