@@ -75,20 +75,23 @@ function addMarketingHours(dateIndex){
                     "Committee": currentCommittee,
                     "Date": date,
                     "Times": allTimes,
-                    // "StartTime": start,
-                    // "EndTime": end,
                     "Hours": hours
                 }
             }
 
             $.ajax(settings).done(function (response) {
-                if(confirm("Marketing successfully added on " + date + ". Would you like to create a Google calendar event?")){
-                    addToGoogle(date, start, end, date);
+                if(response.result === "success"){
+                    if(confirm("Marketing successfully added on " + date + ". Would you like to create a Google calendar event?")){
+                        addToGoogle(date, start, end, date);
+                    }
+                    // Update 
+                    getMembers(dateIndex);
+                    // Start Spinner
+                    document.getElementById("topSpinner").style.visibility = "visible";
                 }
-                // Update 
-                getMembers(dateIndex);
-                // Start Spinner
-                document.getElementById("topSpinner").style.visibility = "visible";
+                else{
+                    alert("Marketing signup unsuccessful");
+                }
             });
         }
     }
@@ -108,10 +111,11 @@ function addToGoogle(date, startTime, endTime, dateIndex){
 
     let link = 
         'https://calendar.google.com/calendar/r/eventedit?text=' + name +'&dates=' +dateTime 
-        +'&location=' + 'Purdue Memorial Union, 101 Grant St, West Lafayette, IN 47906, USA' 
+        // +'&location=' + 'Purdue Memorial Union, 101 Grant St, West Lafayette, IN 47906, USA' 
+        + '&location=' + locationInfo[dateIndex].location
         +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/marketing/marketing.html' 
         + '&details='+ locationDesc +'&sf=true&output=xml'
-    window.open(link, '_blank', 'location=yes,height=750,width=750,scrollbars=yes,status=yes');
+    window.open(link, '_blank');
 }
 
 function getMembers(dateIndex){
