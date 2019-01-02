@@ -30,71 +30,71 @@ function load(){
         loadMembers();
     }   
 }
-function loadAttendance() {
-    var committeeListed = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
-        var committee = 0;
+// function loadAttendance() {
+//     var committeeListed = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
+//         var committee = 0;
         
-        console.log(currentCommittee);
-        for(var x = 0; x < committeeListed.length; x++) {
-            if(currentCommittee == committeeListed[x]) {
-                console.log("found committee %s", x+1);
-                committee = x+1;
-            }
-        }
-        console.log("commitee %s", committeeListed[committee-1]);
+//         console.log(currentCommittee);
+//         for(var x = 0; x < committeeListed.length; x++) {
+//             if(currentCommittee == committeeListed[x]) {
+//                 console.log("found committee %s", x+1);
+//                 committee = x+1;
+//             }
+//         }
+//         console.log("commitee %s", committeeListed[committee-1]);
         
         
-        var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1xHh-igylkYXPXMEArgNJISWYgsJPMqo9ijUM72gmy58/' + committee + '/public/full?alt=json';
-        $.getJSON(sheetUrl, function(data){
-          var entry = data.feed.entry;
-          console.log(entry);
+//         var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1xHh-igylkYXPXMEArgNJISWYgsJPMqo9ijUM72gmy58/' + committee + '/public/full?alt=json';
+//         $.getJSON(sheetUrl, function(data){
+//           var entry = data.feed.entry;
+//           console.log(entry);
             
-            var columns = entry[entry.length-1].gs$cell.col
-            console.log("columns: %s", columns);
+//             var columns = entry[entry.length-1].gs$cell.col
+//             console.log("columns: %s", columns);
             
-            var eventNames = []; // array of events
-            var dates = []; // array of dates
-            var attendanceArray = []; // array of attendance
-            var row = 0; // row of found row
+//             var eventNames = []; // array of events
+//             var dates = []; // array of dates
+//             var attendanceArray = []; // array of attendance
+//             var row = 0; // row of found row
                         
-            //parses member and its attendance values
-            for(var x = 0; x < entry.length; x++){
-                if(entry[x].gs$cell.row == 1 && entry[x].gs$cell.col != "1") {
-                    eventNames.push(entry[x].content.$t);
-                }
-                if(entry[x].gs$cell.row == 2 && entry[x].gs$cell.col != "1") {
-                    dates.push(entry[x].content.$t);
-                }
-                if(entry[x].gs$cell.col == "1" && entry[x].content.$t == currentName) {
-                    row = (x)/columns+1;
-                }
-                if(entry[x].gs$cell.row == row && entry[x].gs$cell.col != "1"){
-                    attendanceArray.push(entry[x].content.$t);
-                }
-            }
-            console.log("dates: %s", dates.toString()); // array of all dates
-            console.log("events: %s", eventNames.toString()); // array of all events
-            console.log("attendance: %s", attendanceArray.toString()); // array of all attendance
-            console.log("row: %s", row); // row of current member
+//             //parses member and its attendance values
+//             for(var x = 0; x < entry.length; x++){
+//                 if(entry[x].gs$cell.row == 1 && entry[x].gs$cell.col != "1") {
+//                     eventNames.push(entry[x].content.$t);
+//                 }
+//                 if(entry[x].gs$cell.row == 2 && entry[x].gs$cell.col != "1") {
+//                     dates.push(entry[x].content.$t);
+//                 }
+//                 if(entry[x].gs$cell.col == "1" && entry[x].content.$t == currentName) {
+//                     row = (x)/columns+1;
+//                 }
+//                 if(entry[x].gs$cell.row == row && entry[x].gs$cell.col != "1"){
+//                     attendanceArray.push(entry[x].content.$t);
+//                 }
+//             }
+//             console.log("dates: %s", dates.toString()); // array of all dates
+//             console.log("events: %s", eventNames.toString()); // array of all events
+//             console.log("attendance: %s", attendanceArray.toString()); // array of all attendance
+//             console.log("row: %s", row); // row of current member
             
-            for(var x = 0; x < dates.length; x++) {
-                let tempTR = document.createElement("tr");
+//             for(var x = 0; x < dates.length; x++) {
+//                 let tempTR = document.createElement("tr");
 
-                    let date = document.createElement("td");
-                    date.innerHTML = dates[x];
-                    let event = document.createElement("td");
-                    event.innerHTML = eventNames[x];
-                    let attendance = document.createElement("td");
-                    attendance.innerHTML = attendanceArray[x];
+//                     let date = document.createElement("td");
+//                     date.innerHTML = dates[x];
+//                     let event = document.createElement("td");
+//                     event.innerHTML = eventNames[x];
+//                     let attendance = document.createElement("td");
+//                     attendance.innerHTML = attendanceArray[x];
 
-                    tempTR.appendChild(date);
-                    tempTR.appendChild(event);
-                    tempTR.appendChild(attendance);
+//                     tempTR.appendChild(date);
+//                     tempTR.appendChild(event);
+//                     tempTR.appendChild(attendance);
 
-                    document.getElementById("tableBody").appendChild(tempTR);
-            }
-        });
-}
+//                     document.getElementById("tableBody").appendChild(tempTR);
+//             }
+//         });
+// }
 
 var request;
 
@@ -102,38 +102,24 @@ function loadMembers() {
     var committeeListed = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
         var committee = 0;
         
-        console.log(currentCommittee);
-        for(var x = 0; x < committeeListed.length; x++) {
-            if(currentCommittee == committeeListed[x]) {
-                console.log("found committee %s", x+1);
-                committee = x+1;
-            }
-        }
-        console.log("commitee %s", committeeListed[committee-1]);
+        // Set index of sheet for currentCommittee
+        committee = committeeListed.indexOf(currentCommittee)+1;
         
         
-        var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1xHh-igylkYXPXMEArgNJISWYgsJPMqo9ijUM72gmy58/' + committee + '/public/full?alt=json';
+        var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1e43-KJ4R893szo_TzP4_TGv75bhec-spoTiZK_yfCS4/' + committee + '/public/full?alt=json';
         $.getJSON(sheetUrl, function(data){
-          var entry = data.feed.entry;
-          console.log(entry);
-            
-            var columns = entry[entry.length-1].gs$cell.col
-            console.log("columns: %s", columns);
-            
-            var attendanceArray = []; // array of attendance
-            var row = 0; // row of found row
-                        
-            //parses member and its attendance values
+            var entry = data.feed.entry;
+      
+            // Get Member Names
             for(var x = 0; x < entry.length; x++){
-                if(entry[x].gs$cell.col == "1"&& entry[x].gs$cell.row > 2) {
+                if(entry[x].gs$cell.row === "3" && entry[x].gs$cell.col !== "1"){
                     membersArray.push(entry[x].content.$t);
                 }
             }
-            console.log("members: %s", membersArray.toString()); // array of all attendance
-            console.log("row: %s", row); // row of current member
             
             var attendanceValues = ["Present", "Excused", "Unexcused"]
             
+            // Create table entries for each member (with dropdown)
             for(var x = 0; x < membersArray.length; x++) {
                 let tempTR = document.createElement("tr");
                 tempTR.setAttribute("class", "tableRow");
@@ -146,8 +132,6 @@ function loadMembers() {
                 let selectAttendance = document.createElement("select");
                 selectAttendance.id = membersArray[x] + "dropdown";
                 selectAttendance.setAttribute("class", "form-control dropdown")
-            
-                console.log("FSAFASFASFASF%s", selectAttendance.id);
                 
                 for(var y = 0; y < attendanceValues.length; y++) {
                     var option = document.createElement("option");
@@ -166,23 +150,38 @@ function loadMembers() {
 }
 
 function submitAttendance(){
-    console.log("submit Attendance");
-    var array = [];
-    
-    array.push(currentCommittee);
+    let dataObj = {};
+    dataObj["committee"] = currentCommittee;
+
+    let today = new Date();
+    today = "" + today.getMonth()+1 + "-" + ('0' + today.getDate()).slice(-2) + "-" + today.getFullYear();
+    dataObj["Date"] = today;
     
     for(x = 0; x < membersArray.length; x++){
-        console.log("submit Attendance");
-        
         var str = membersArray[x] + "dropdown";
         var val = document.getElementById(str).value;
-        array.push(val.toString());
+        dataObj[membersArray[x]] = val;
     }
-    console.log(array);
+    // console.log(dataObj);
     
     var settings = {
-            "url": "https://script.google.com/macros/s/AKfycbzKFVELOGvHYMPDzS21iaWYl0nIq0w-7WwgqnkNdD0JS_0ZyNE/exec",
-            "type": "POST",
-            "data": array.toString()
-            }
+        "url": "https://script.google.com/macros/s/AKfycbzmNXk4Y74JAk3Ozt8GgrUnn0rjV_wz1_Wrrm_AjA/exec",
+        "type": "POST",
+        "data": dataObj
+    }
+
+    $.ajax(settings).done(function (response) {
+       if(response.result === "success"){
+        alert("Attendance recorded for " + today);
+
+        // Reset Dropdowns
+        for(x = 0; x < membersArray.length; x++){
+            var str = membersArray[x] + "dropdown";
+            document.getElementById(str).selectedIndex = 0;
+        }   
+       }
+       else{
+        alert("Error recording attendance");
+       }
+    });
 }
