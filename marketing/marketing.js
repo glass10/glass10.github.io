@@ -110,7 +110,7 @@ function addToGoogle(date, startTime, endTime, dateIndex){
 
 
     let link = 
-        'https://calendar.google.com/calendar/r/eventedit?text=' + name +'&dates=' +dateTime 
+        'https://www.google.com/calendar/render?action=TEMPLATE&text=' + name +'&dates=' +dateTime 
         // +'&location=' + 'Purdue Memorial Union, 101 Grant St, West Lafayette, IN 47906, USA' 
         + '&location=' + locationInfo[dateIndex].location
         +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/marketing/marketing.html' 
