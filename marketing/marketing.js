@@ -115,6 +115,9 @@ function addToGoogle(date, startTime, endTime, dateIndex){
         + '&location=' + locationInfo[dateIndex].location
         +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/marketing/marketing.html' 
         + '&details='+ locationDesc +'&sf=true&output=xml'
+
+        document.getElementById("add to cal").innerHTML = 
+            '<a target="_blank" href="' + link + '">Add to google</a>';
     window.open(link, '_blank');
 }
 
