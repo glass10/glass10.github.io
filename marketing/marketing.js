@@ -121,6 +121,20 @@ function addToGoogle(date, startTime, endTime, dateIndex){
         //document.getElementById("modalBody").innerHTML = 
         //    '<a target="_blank" href="' + link + '">Add to google</a>';
     //window.open(link);
+    var href = encodeURI(
+        'data:text/calendar;charset=utf8,' + [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'BEGIN:VEVENT',
+          'URL:' + 'https://glass10.github.io/marketing/marketing.html',
+          'DTSTART:' + ((dateBeginStr + 'T' + timeBeginStr +'Z') || ''),
+          'DTEND:' + ((dateEndStr + 'T' + timeEndStr +'Z') || ''),
+          'SUMMARY:' + (name || ''),
+          'DESCRIPTION:' + (locationDesc || ''),
+          'LOCATION:' + ((locationInfo[dateIndex].location) || ''),
+          'END:VEVENT',
+          'END:VCALENDAR'].join('\n'));
+    document.getElementById("iCal").setAttribute('onclick', 'location.href=\'' + href + '\'');
     document.getElementById("google").setAttribute('onclick', 'location.href=\'' + link + '\'');
 }
 
