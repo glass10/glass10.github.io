@@ -77,6 +77,14 @@ function load(){
         for (var i = 0; i < committeeList.length; i++) {
             data(committeeList[i]);
         }
+
+        // Handle BOD
+        if(firstName === "Director"){
+            document.getElementById("hoursNav").remove();
+        }
+        else{
+            document.getElementById("attendanceNav").remove();
+        }
     }   
 }
 var request;

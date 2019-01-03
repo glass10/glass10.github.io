@@ -78,6 +78,14 @@ function load(){
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
         updateHoursSheet(storageObj, storageObj.committee);
+
+        // Handle BOD
+        if(firstName === "Director"){
+            document.getElementById("hoursNav").remove();
+        }
+        else{
+            document.getElementById("attendanceNav").remove();
+        }
     }
 }
 

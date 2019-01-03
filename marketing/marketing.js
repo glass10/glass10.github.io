@@ -31,7 +31,14 @@ function load(){
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
         //viewHoursForDate();
         getLocations();
-        /* todo initialize dates with view date signups and calendar */
+
+        // Handle BOD
+        if(firstName === "Director"){
+            document.getElementById("hoursNav").remove();
+        }
+        else{
+            document.getElementById("attendanceNav").remove();
+        }
     }
 }
 

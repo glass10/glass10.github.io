@@ -26,6 +26,14 @@ function load(){
         
         console.log("loading tables");
         loadData();
+
+        // Handle BOD
+        if(firstName === "Director"){
+            document.getElementById("hoursNav").remove();
+        }
+        else{
+            document.getElementById("attendanceNav").remove();
+        }
     }
 }
 

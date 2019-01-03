@@ -111,16 +111,29 @@ function committeeChange() {
     $("#memberSelect").empty();
     var select = document.getElementById("committeeSelect");
     var text = select.options[select.selectedIndex].text; //committee Text
-    text = text.substring(0, 1).toLowerCase() + text.substring(1, text.length);
-    text = text.replace(/\s/g, '') //Manipulation Done
 
-    var optionsAsString = "";
-    for (var i = 0; i < committees[text].length - 1; i++) {
-        optionsAsString += "<option value='" + committees[text][i].name + "'>" + committees[text][i].name + "</option>";
+    if(text !== "Board of Directors"){
+        text = text.substring(0, 1).toLowerCase() + text.substring(1, text.length);
+        text = text.replace(/\s/g, '') //Manipulation Done
+        
+        var optionsAsString = "";
+        for (var i = 0; i < committees[text].length - 1; i++) {
+            optionsAsString += "<option value='" + committees[text][i].name + "'>" + committees[text][i].name + "</option>";
+        }
+        $("#memberSelect").html(optionsAsString);
+        console.log("Members Updated");
     }
-    $("#memberSelect").html(optionsAsString);
-    console.log("Members Updated");
+    else{
+        let committees = ["After Dark", "Current Events", "Entertainment", "Fine Arts", "Publicity", "Spirit and Traditions"];
+        let committeeValues = ["purdueAfterDark", "currentEvents", "entertainment", "artsAndCulture", "publicity","spiritAndTraditions"];
 
+        var optionsAsString = "";
+        for(let i = 0; i < committees.length; i++){
+            optionsAsString += "<option value='" + committeeValues[i] + "'>" + committees[i] + "</option>";
+        }
+        $("#memberSelect").html(optionsAsString);
+        console.log("Members Updated");
+    }
 }
 
 document.getElementById('login-form').onkeydown = function(e){
@@ -148,18 +161,36 @@ function login() {
 
         var pinInput = document.getElementById("pinText").value;
 
-        console.log(committee + ", " + user + ", " + pinInput);
+        // console.log(committee + ", " + user + ", " + pinInput);
+        
+        if(committee !== "boardofDirectors"){
+            for (var i = 0; i < committees[committee].length; i++) {
+                if (committees[committee][i].name === user) {
+                    if (committees[committee][i].pin === pinInput) {
+                        console.log("Successful Login");
+                        successfulLogin(committees[committee][i], committee);
+                    }
+                    else {
+                        unsuccessfulLogin("Incorrect PIN");
+                    }
+                    i = committees[committee].length;
+                }
+            }
+        }
+        else{
+            let newCommittee = selectedUser.options[selectedUser.selectedIndex].value;
+            console.log(newCommittee);
+            console.log("BOD Login");
+            let dataObj = {
+                // "committee": newCommittee,
+                "name": "Director "
+            };
 
-        for (var i = 0; i < committees[committee].length; i++) {
-            if (committees[committee][i].name === user) {
-                if (committees[committee][i].pin === pinInput) {
-                    console.log("Successful Login");
-                    successfulLogin(committees[committee][i], committee);
-                }
-                else {
-                    unsuccessfulLogin("Incorrect PIN");
-                }
-                i = committees[committee].length;
+            if(pinInput === user){
+                successfulLogin(dataObj, newCommittee);
+            }
+            else{
+                unsuccessfulLogin("Incorrect PIN");
             }
         }
     }
