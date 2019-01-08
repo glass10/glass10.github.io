@@ -203,7 +203,13 @@ function successfulLogin(data, committee) {
     let storageObj = data;
     storageObj["committee"] = committee;
     localStorage.setItem("psubPortal", JSON.stringify(storageObj));
-    window.location.replace("hours/hours.html");
+
+    if(storageObj.name === "Director "){
+        window.location.replace("attendance/attendance.html");
+    }
+    else{
+        window.location.replace("hours/hours.html");
+    }
 }
 
 function unsuccessfulLogin(reason) {

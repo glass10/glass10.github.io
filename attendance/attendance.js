@@ -68,22 +68,23 @@ function load(){
         currentName = storageObj.name;
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
-        
-        console.log(currentCommittee);
-        loadMembers();
+
+        // Handle BOD
+        if(firstName === "Director"){
+            document.getElementById("hoursNav").remove();
+            console.log(currentCommittee);
+            loadMembers();
+        }
+        else{
+            document.getElementById("attendanceNav").remove();
+            window.location.replace("../hours/hours.html");
+        }
+    
 
         // Intercommittee
         heights = {};
         for (var i = 0; i < committeeList.length; i++) {
             data(committeeList[i]);
-        }
-
-        // Handle BOD
-        if(firstName === "Director"){
-            document.getElementById("hoursNav").remove();
-        }
-        else{
-            document.getElementById("attendanceNav").remove();
         }
     }   
 }
