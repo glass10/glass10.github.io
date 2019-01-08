@@ -202,11 +202,17 @@ function viewScheduleForDate(direction){
     document.getElementById("pageIndicator").innerHTML = `Page ${currentPage} / ${pageCount}`;
     if(currentPage === 1){
         document.getElementById("prevButton").classList.add("disable");
+        if(pageCount > 1){
+            document.getElementById("nextButton").classList.remove("disable");
+        }
     }
-    else if(currentPage === pageCount){
+    if(currentPage === pageCount){
+        if(pageCount > 1){
+            document.getElementById("prevButton").classList.remove("disable");
+        }
         document.getElementById("nextButton").classList.add("disable");
     }
-    else{
+    else if (currentPage !== 1){
         document.getElementById("prevButton").classList.remove("disable");
         document.getElementById("nextButton").classList.remove("disable");
     }
