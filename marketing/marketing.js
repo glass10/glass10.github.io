@@ -316,8 +316,10 @@ function getLocations(){
                 timeObj = timeObj.split("-");
                 timeObj[0] = "1/1/2000 " + timeObj[0].toUpperCase();
                 timeObj[0] = timeObj[0].replace("AM", " AM");
+                timeObj[0] = timeObj[0].replace("PM", " PM");
                 timeObj[1] = "1/1/2000 " + timeObj[1].toUpperCase();
                 timeObj[1] = timeObj[1].replace("PM", " PM");
+                timeObj[1] = timeObj[1].replace("AM", " AM");
                 
                 let startDate = new Date(timeObj[0]);
                 let endDate = new Date(timeObj[1]);
