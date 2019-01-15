@@ -59,7 +59,13 @@ function load() {
     }
     else{
         console.log("Local Storage Found. Redirecting");
-        window.location.replace("hours/hours.html")
+        let name = JSON.parse(localStorage.getItem("psubPortal")).name;
+        if(name !== "Director "){
+            window.location.replace("hours/hours.html");
+        }
+        else{
+            window.location.replace("attendance/attendance.html");
+        }
     }
 }
 
