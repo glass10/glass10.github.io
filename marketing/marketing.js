@@ -39,10 +39,10 @@ function load(){
         if(firstName === "Director"){
             document.getElementById("hoursNav").remove();
             currentName = firstName + " of " + committeeNames[committeeList.indexOf(currentCommittee)];
-            console.log("Director Name: " + currentName);
 
             if(committeeList.indexOf(currentCommittee) === -1){
                 document.getElementById("attendanceNav").remove();
+                currentName = currentCommittee;
             }
         }
         else{

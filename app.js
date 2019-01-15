@@ -220,8 +220,11 @@ function successfulLogin(data, committee) {
     storageObj["committee"] = committee;
     localStorage.setItem("psubPortal", JSON.stringify(storageObj));
 
-    if(storageObj.name === "Director "){
+    if(committeeList.indexOf(storageObj.committee) !== -1){
         window.location.replace("attendance/attendance.html");
+    }
+    else if(execList.indexOf(storageObj.committee) !== -1){
+        window.location.replace("marketing/marketing.html");
     }
     else{
         window.location.replace("hours/hours.html");
