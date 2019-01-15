@@ -24,6 +24,7 @@ var committees = {
 };
 
 var committeeList = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
+let execList = ["President", "Personnel", "Finance and Logistics", "Campus Relations"];
 
 //All Intercommittee Points
 var points = {
@@ -60,11 +61,17 @@ function load() {
     else{
         console.log("Local Storage Found. Redirecting");
         let name = JSON.parse(localStorage.getItem("psubPortal")).name;
+        let committee = JSON.parse(localStorage.getItem("psubPortal")).committee;
         if(name !== "Director "){
             window.location.replace("hours/hours.html");
         }
         else{
-            window.location.replace("attendance/attendance.html");
+            if(committeeList.indexOf(committee) !== -1){
+                window.location.replace("attendance/attendance.html");
+            }
+            else{
+                window.location.replace("marketing/marketing.html");
+            }
         }
     }
 }
@@ -136,6 +143,9 @@ function committeeChange() {
         var optionsAsString = "";
         for(let i = 0; i < committees.length; i++){
             optionsAsString += "<option value='" + committeeValues[i] + "'>" + committees[i] + "</option>";
+        }
+        for(let i = 0; i < execList.length; i++){
+            optionsAsString += "<option value='" + execList[i] + "'>" + execList[i] + "</option>";
         }
         $("#memberSelect").html(optionsAsString);
         console.log("Members Updated");

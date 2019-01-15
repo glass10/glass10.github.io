@@ -3,6 +3,7 @@ var API_KEY = 'AIzaSyAsC9gY5zRn5qS_bqTkZBJgsAITmMBpIAQ';
 
 var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+let committeeList = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
 
 function logout(){
     console.log("Logout Attempted");
@@ -30,6 +31,10 @@ function load(){
         // Handle BOD
         if(firstName === "Director"){
             document.getElementById("hoursNav").remove();
+
+            if(committeeList.indexOf(currentCommittee) === -1){
+                document.getElementById("attendanceNav").remove();
+            }
         }
         else{
             document.getElementById("attendanceNav").remove();
