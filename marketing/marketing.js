@@ -11,6 +11,9 @@ let allDates = [];
 let locationInfo = {};
 let locationIndex = 0;
 
+let committeeList = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
+let committeeNames = ["Fine Arts", "Current Events", "Entertainment", "Publicity", "After Dark", "Spirit and Traditions"];
+
 function logout(){
     console.log("Logout Attempted");
     localStorage.removeItem("psubPortal");
@@ -35,6 +38,12 @@ function load(){
         // Handle BOD
         if(firstName === "Director"){
             document.getElementById("hoursNav").remove();
+            currentName = firstName + " of " + committeeNames[committeeList.indexOf(currentCommittee)];
+
+            if(committeeList.indexOf(currentCommittee) === -1){
+                document.getElementById("attendanceNav").remove();
+                currentName = currentCommittee;
+            }
         }
         else{
             document.getElementById("attendanceNav").remove();

@@ -24,6 +24,7 @@ var committees = {
 };
 
 var committeeList = ["artsAndCulture", "currentEvents", "entertainment", "publicity", "purdueAfterDark", "spiritAndTraditions"];
+let execList = ["President", "Personnel", "Finance and Logistics", "Campus Relations"];
 
 //All Intercommittee Points
 var points = {
@@ -59,7 +60,19 @@ function load() {
     }
     else{
         console.log("Local Storage Found. Redirecting");
-        window.location.replace("hours/hours.html")
+        let name = JSON.parse(localStorage.getItem("psubPortal")).name;
+        let committee = JSON.parse(localStorage.getItem("psubPortal")).committee;
+        if(name !== "Director "){
+            window.location.replace("hours/hours.html");
+        }
+        else{
+            if(committeeList.indexOf(committee) !== -1){
+                window.location.replace("attendance/attendance.html");
+            }
+            else{
+                window.location.replace("marketing/marketing.html");
+            }
+        }
     }
 }
 
@@ -130,6 +143,9 @@ function committeeChange() {
         var optionsAsString = "";
         for(let i = 0; i < committees.length; i++){
             optionsAsString += "<option value='" + committeeValues[i] + "'>" + committees[i] + "</option>";
+        }
+        for(let i = 0; i < execList.length; i++){
+            optionsAsString += "<option value='" + execList[i] + "'>" + execList[i] + "</option>";
         }
         $("#memberSelect").html(optionsAsString);
         console.log("Members Updated");
@@ -204,8 +220,11 @@ function successfulLogin(data, committee) {
     storageObj["committee"] = committee;
     localStorage.setItem("psubPortal", JSON.stringify(storageObj));
 
-    if(storageObj.name === "Director "){
+    if(committeeList.indexOf(storageObj.committee) !== -1){
         window.location.replace("attendance/attendance.html");
+    }
+    else if(execList.indexOf(storageObj.committee) !== -1){
+        window.location.replace("marketing/marketing.html");
     }
     else{
         window.location.replace("hours/hours.html");
