@@ -249,7 +249,10 @@ function viewScheduleForDate(direction){
                 let memberTD = document.createElement("td");
                 memberTD.setAttribute("colspan", 2);
                 memberTD.setAttribute("id", dateInfo.date+"-"+dateInfo.allTimes[j]);
-                timeTD.innerHTML = dateInfo.allTimes[j];
+                let timeJth = dateInfo.allTimes[j];
+                let timeSTR = (timeJth.substring(0,timeJth.indexOf(":")) <= '12')?(timeJth + 'am')
+                                    :((timeJth.substring(0,timeJth.indexOf(":")) - 12)+(timeJth.substring(timeJth.indexOf(":"))) + 'pm');
+                timeTD.innerHTML = timeSTR;
                 memberTD.innerHTML = `Loading...`;
 
                 newRow.appendChild(timeTD);
@@ -263,7 +266,7 @@ function viewScheduleForDate(direction){
                 }
 
                 // Select options
-                let optionString = "<option value='" + dateInfo.allTimes[j] + "'>" + dateInfo.allTimes[j] + "</option>";
+                let optionString = "<option value='" + dateInfo.allTimes[j] + "'>" + timeSTR + "</option>";
                 if(j !== dateInfo.allTimes.length-1){
                     document.getElementById("startHour-"+(i-locationIndex)).innerHTML += (optionString);
                 }
