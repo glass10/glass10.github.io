@@ -230,6 +230,7 @@ function viewScheduleForDate(direction){
         let dateInfo = allData[dataKeys[i]];
         if(dateInfo !== undefined){
             let cardHTML = `<td>${dateInfo.date}</td>
+                            <td>${dateInfo.dayStr}</td>
                             <td>${dateInfo.location}</td>
                             <td>${dateInfo.timeStr}</td>`;
 
@@ -315,6 +316,7 @@ function getLocations(){
             var date = data.gsx$date.$t;
             var location = data.gsx$location.$t;
             var time = data.gsx$timerange.$t;
+            var day = data.gsx$day.$t;
             var dateStr = new Date( date.split("-")[0], date.split("-")[1]-1, date.split("-")[2],0,0,0,0);    
             
             let currentDate = new Date();
@@ -347,6 +349,7 @@ function getLocations(){
                     "date": date,
                     "location": location,
                     "timeStr": time,
+                    "dayStr": day,
                     "startTime": new Date(timeObj[0]),
                     "endTime": new Date(timeObj[1]),
                     "allTimes": allTimes
