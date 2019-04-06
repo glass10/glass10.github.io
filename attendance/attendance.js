@@ -146,7 +146,7 @@ function submitAttendance(){
     dataObj["committee"] = currentCommittee;
 
     let today = new Date();
-    today = "" + today.getMonth()+1 + "-" + ('0' + today.getDate()).slice(-2) + "-" + today.getFullYear();
+    today = "" + (today.getMonth()+1) + "-" + ('0' + today.getDate()).slice(-2) + "-" + today.getFullYear();
     dataObj["Date"] = today;
     
     for(x = 0; x < membersArray.length; x++){
