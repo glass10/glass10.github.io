@@ -49,6 +49,8 @@ var currentCommittee = "";
 var currentName = "";
 let heights = {};
 let dataCount = 0;
+const EVENTS_SHEET_ID = '1py0YY2fFxSNHxGVZcq4deaQspIDGOeyFU5R8_S9TK1s';
+var eventsData = []
 
 function logout(){
     console.log("Logout Attempted");
@@ -87,7 +89,107 @@ function load(){
         for (var i = 0; i < committeeList.length; i++) {
             data(committeeList[i]);
         }
-    }   
+
+        //calendar
+        getCalendarValues();
+    }
+    String.prototype.format = function() {
+        a = this;
+        for (k in arguments) {
+          a = a.replace("{" + k + "}", arguments[k])
+        }
+        return a
+      }
+}
+
+function pad0(i) {
+    return pad(i,2,0);
+
+}
+
+function pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
+function getCalendarValues(){
+    var calendarEl = document.getElementById('calendar');
+
+    //fetch events
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": 'http://spreadsheets.google.com/feeds/list/'+EVENTS_SHEET_ID+'/1/public/full?alt=json-in-script',
+        "method": "GET",
+        "headers": {
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        //console.log('resp',response);
+        response = response.substring(response.indexOf("{"), response.length - 2)
+        var response = JSON.parse(response);
+        //console.log(response);
+        for (var i = 0; i < response.feed.entry.length; i++) {
+            //console.log(response.feed.entry[i]);
+            var eventDate = response.feed.entry[i].gsx$date.$t;
+            var eventTimeStart =  response.feed.entry[i].gsx$time.$t;
+            if(eventDate!='' && eventTimeStart!=''){
+                var eventTimeEnd = eventTimeStart.substring(eventTimeStart.indexOf('- ') + 2)
+                eventTimeStart = eventTimeStart.substring(0,eventTimeStart.indexOf(' - '));
+                eventTimeEnd = eventTimeEnd.substring(eventTimeEnd.length-2)=='am'?
+                                    pad0((parseInt((eventTimeEnd.split(':')[0]))+12)) + ':'
+                                        +eventTimeEnd.split(':')[1].substring(0,eventTimeEnd.split(':')[1].length-2)
+                                            :pad(eventTimeEnd.substring(0,eventTimeEnd.length-2),5,0); //assuming start and end on everything
+                eventTimeStart = eventTimeStart.substring(eventTimeStart.length-2)=='am'?
+                                    pad0(parseInt((eventTimeStart.split(':')[0]))+12) + ':'
+                                        +eventTimeStart.split(':')[1].substring(0,eventTimeStart.split(':')[1].length-2)
+                                            :pad(eventTimeStart.substring(0,eventTimeStart.length-2),5,0); //assuming start and end on everything
+                eventDates = eventDate.split('-')
+                eventTimeStart += ':00'
+                eventTimeEnd += ':00'
+                var eventDateStart = (eventDate.split('-').length==1)?eventDate:eventDate.split('-')[0];
+                var eventDateEnd = (eventDate.split('-').length==1)?eventDate:eventDate.split('-')[1]
+                eventDateStart = eventDateStart.split('/')[2]+'-'+pad0(eventDateStart.split('/')[0])+'-'+pad0(eventDateStart.split('/')[1]);
+                eventDateEnd = eventDateEnd.split('/')[2]+'-'+pad0(eventDateEnd.split('/')[0])+'-'+pad0(eventDateEnd.split('/')[1]);
+                var startTime = eventDateStart+'T'+eventTimeStart;
+                var endTime = eventDateEnd+'T'+eventTimeEnd;
+                eventsData.push({
+                    title: response.feed.entry[i].gsx$event.$t,
+                    timeZone: 'local',
+                    start: startTime,
+                    end: endTime,
+                })
+            }
+
+        }
+
+        console.log(eventsData);
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: [ 'dayGrid', 'timeGrid', 'list' ],
+            events: /* [
+                { // this object will be "parsed" into an Event Object
+                title: 'The Test', // a property!
+                timeZone: 'local',
+                start: '2019-07-01', // a property!
+                end: '2019-07-02' // a property! ** see important note below about 'end' **
+                },
+                { // this object will be "parsed" into an Event Object
+                    title: 'The Test time', // a property!
+                    timeZone: 'local',
+                    start: '2019-07-01T12:30:00', // a property!
+                    end: '2019-07-01T16:30:00' // a property! ** see important note below about 'end' **
+                }
+            ] */eventsData,
+
+        });
+        calendar.render();
+        
+    });
+    
 }
 
 function data(committee) {

@@ -12,6 +12,25 @@
         <link href="../bootstrap.min.css" rel="stylesheet">
         <link href="calendar.css" rel="stylesheet" >
 
+        <link href='fullcalendar-4.2.0/packages/core/main.css' rel='stylesheet' />
+        <link href='fullcalendar-4.2.0/packages/daygrid/main.css' rel='stylesheet' />
+    
+        <script src='fullcalendar-4.2.0/packages/core/main.js'></script>
+        <script src='fullcalendar-4.2.0/packages/daygrid/main.js'></script>
+        <script>
+
+            /* document.addEventListener('DOMContentLoaded', function() {
+              var calendarEl = document.getElementById('calendar');
+      
+              var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: [ 'dayGrid' ]
+              });
+      
+              calendar.render();
+            }); */
+      
+          </script>
+
     </head>
     <body onLoad="load()">
         <!-- Nav Bar -->
@@ -96,6 +115,10 @@
         <script src="../jquery-3.2.1.min.js"></script>
         <script src="../bootstrap.bundle.min.js"></script>
         <script src="calendar.js"></script>
+
+
+        <div id='calendar'></div>
+
     </body>
        
 </html>
