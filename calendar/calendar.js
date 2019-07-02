@@ -121,7 +121,7 @@ function getCalendarValues(){
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": 'http://spreadsheets.google.com/feeds/list/'+EVENTS_SHEET_ID+'/1/public/full?alt=json-in-script',
+        "url": 'https://spreadsheets.google.com/feeds/list/'+EVENTS_SHEET_ID+'/1/public/full?alt=json-in-script',
         "method": "GET",
         "headers": {
         }
