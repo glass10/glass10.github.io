@@ -139,11 +139,11 @@ function getCalendarValues(){
             if(eventDate!='' && eventTimeStart!=''){
                 var eventTimeEnd = eventTimeStart.substring(eventTimeStart.indexOf('- ') + 2)
                 eventTimeStart = eventTimeStart.substring(0,eventTimeStart.indexOf(' - '));
-                eventTimeEnd = eventTimeEnd.substring(eventTimeEnd.length-2)=='am'?
+                eventTimeEnd = eventTimeEnd.substring(eventTimeEnd.length-2)=='pm'?
                                     pad0((parseInt((eventTimeEnd.split(':')[0]))+12)) + ':'
                                         +eventTimeEnd.split(':')[1].substring(0,eventTimeEnd.split(':')[1].length-2)
                                             :pad(eventTimeEnd.substring(0,eventTimeEnd.length-2),5,0); //assuming start and end on everything
-                eventTimeStart = eventTimeStart.substring(eventTimeStart.length-2)=='am'?
+                eventTimeStart = eventTimeStart.substring(eventTimeStart.length-2)=='pm'?
                                     pad0(parseInt((eventTimeStart.split(':')[0]))+12) + ':'
                                         +eventTimeStart.split(':')[1].substring(0,eventTimeStart.split(':')[1].length-2)
                                             :pad(eventTimeStart.substring(0,eventTimeStart.length-2),5,0); //assuming start and end on everything
@@ -161,6 +161,7 @@ function getCalendarValues(){
                     timeZone: 'local',
                     start: startTime,
                     end: endTime,
+                    //rendering: 'background',
                 })
             }
 
@@ -169,7 +170,7 @@ function getCalendarValues(){
         console.log(eventsData);
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: [ 'dayGrid', 'timeGrid', 'list' ],
+            plugins: [ 'dayGrid', 'timeGrid', 'list', 'bootstrap' ],
             events: /* [
                 { // this object will be "parsed" into an Event Object
                 title: 'The Test', // a property!
@@ -184,6 +185,10 @@ function getCalendarValues(){
                     end: '2019-07-01T16:30:00' // a property! ** see important note below about 'end' **
                 }
             ] */eventsData,
+            themeSystem: 'bootstrap',
+            handleWindowResize: false,
+            eventLimit: 3,
+            contentHeight: 'auto',
 
         });
         calendar.render();
