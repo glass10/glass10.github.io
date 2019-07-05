@@ -51,7 +51,7 @@
                         <a class="nav-link" href="../marketing/marketing.html">Marketing</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../databases/databases.html">Marketing</a>
+                        <a class="nav-link" href="../databases/databases.html">Databases</a>
                     </li>
                     <li class="nav-item" id="attendanceNav">
                         <a class="nav-link" href="../attendance/attendance.html">Attendance</a>
@@ -68,6 +68,10 @@
                 </div>
             </div>
         </nav>
+
+        <!-- Loading Spinner -->
+        <span class="spinner" id="topSpinner">Loading…</span>
+
 
         <!-- Intercommittee Section -->
         <div id="intercommitteeSection" class="container">
@@ -117,6 +121,27 @@
         <div class="calDiv mx-lg-5 px-lg-5">
             <div id='calendar'></div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div id="modalHeader" class="modal-header">
+                            <!--<button type="button" class="close" data-dismiss="modal"></button>-->
+                    </div>
+                    <div class="modal-body" id="modalBody">
+                    </div>
+                    <div class="modal-footer d-block text-truncate">
+                        <p class="h6">Add to calendar →</p>
+                        <button type="button" class="btn btn-primary" id="iCal" data-dismiss="modal">iCal</button>
+                        <button type="button" class="btn btn-primary" id="google" data-dismiss="modal">Google Calendar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            
+            </div>  
+      </div>
 
     </body>
        

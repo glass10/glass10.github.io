@@ -51,6 +51,8 @@ let heights = {};
 let dataCount = 0;
 const EVENTS_SHEET_ID = '1py0YY2fFxSNHxGVZcq4deaQspIDGOeyFU5R8_S9TK1s';
 var eventsData = []
+//time zone offset to be changed
+var offSet = 5;
 
 function logout(){
     console.log("Logout Attempted");
@@ -115,6 +117,8 @@ function pad(n, width, z) {
 
 function getCalendarValues(){
     var calendarEl = document.getElementById('calendar');
+    document.getElementById("topSpinner").style.visibility = "visible";
+
 
     //fetch events
 
@@ -152,15 +156,37 @@ function getCalendarValues(){
                 eventTimeEnd += ':00'
                 var eventDateStart = (eventDate.split('-').length==1)?eventDate:eventDate.split('-')[0];
                 var eventDateEnd = (eventDate.split('-').length==1)?eventDate:eventDate.split('-')[1]
+                var tomorrow = false;
+                var tomorrowDate = new Date();
+                tomorrowDate.setDate(eventDateEnd.split('/')[1])
+                tomorrowDate.setFullYear(eventDateEnd.split('/')[2])
+                tomorrowDate.setMonth(eventDateEnd.split('/')[0]-1)                
+
+                var endDateObject = new Date();
+                endDateObject.setHours(eventTimeEnd.split(":")[0]);
+                var startDateObject = new Date();
+                startDateObject.setHours(eventTimeStart.split(":")[0]);
+                if(eventTimeEnd=="12:00:00" && endDateObject.getTime() < startDateObject.getTime()){
+                    tomorrow = true;
+                    eventTimeEnd="00:00:00"
+                    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+                }
+
                 eventDateStart = eventDateStart.split('/')[2]+'-'+pad0(eventDateStart.split('/')[0])+'-'+pad0(eventDateStart.split('/')[1]);
-                eventDateEnd = eventDateEnd.split('/')[2]+'-'+pad0(eventDateEnd.split('/')[0])+'-'+pad0(eventDateEnd.split('/')[1]);
+                eventDateEnd = (tomorrow)?dateFormatDate(tomorrowDate):eventDateEnd.split('/')[2]+'-'+pad0(eventDateEnd.split('/')[0])+'-'+pad0(eventDateEnd.split('/')[1]);
                 var startTime = eventDateStart+'T'+eventTimeStart;
                 var endTime = eventDateEnd+'T'+eventTimeEnd;
+                var eventResources = []
+                eventResources.push({
+                    id: 'location',
+                    title: response.feed.entry[i].gsx$place.$t,
+                })
                 eventsData.push({
                     title: response.feed.entry[i].gsx$event.$t,
                     timeZone: 'local',
                     start: startTime,
                     end: endTime,
+                    resources: eventResources
                     //rendering: 'background',
                 })
             }
@@ -171,34 +197,23 @@ function getCalendarValues(){
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             plugins: [ 'dayGrid', 'timeGrid', 'list', 'bootstrap' ],
-            events: /* [
-                { // this object will be "parsed" into an Event Object
-                title: 'The Test', // a property!
-                timeZone: 'local',
-                start: '2019-07-01', // a property!
-                end: '2019-07-02' // a property! ** see important note below about 'end' **
-                },
-                { // this object will be "parsed" into an Event Object
-                    title: 'The Test time', // a property!
-                    timeZone: 'local',
-                    start: '2019-07-01T12:30:00', // a property!
-                    end: '2019-07-01T16:30:00' // a property! ** see important note below about 'end' **
-                }
-            ] */eventsData,
+            events: eventsData,
             themeSystem: 'bootstrap',
             handleWindowResize: false,
             eventLimit: 3,
             contentHeight: 'auto',
-
+            eventClick: eventClickHandler,
+            
         });
         calendar.render();
-        
+        document.getElementById("topSpinner").style.visibility = "hidden";        
     });
     
 }
 
 function data(committee) {
     console.log('Loading ' + committee + ' data');
+    document.getElementById("topSpinner").style.visibility = "visible";
     if (committees[committee].length !== 0) {
         committees[committee] = [];
     }
@@ -249,8 +264,11 @@ function data(committee) {
         if (dataCount === 6) {
             calculateHeight();
         }
+
     });
     console.log("Data Loaded Successfully");
+    document.getElementById("topSpinner").style.visibility = "hidden";
+
 }
 
 function calculateHeight() {
@@ -270,5 +288,96 @@ function calculateHeight() {
             document.getElementById(committeeList[i] + "LI").style = "height: " + heights[committeeList[i]] * factor + "%";
         }
     }
+}
+
+function dateFormat(d){
+    return dateFormatDate(d) + " " + dateFormatTime(d);
+}
+
+function dateFormatDate(d){
+    return d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2)
+}
+
+function dateFormatTime(d){
+    return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2)
+}
+
+function eventClickHandler(info) {
+    console.log(info);
+    eventName = info.event.title;
+    start = info.event.start;
+    end = info.event.end;
+    eventLocation = info.event.extendedProps.resources[0].title;
+    document.getElementById("modalHeader").innerHTML = ""
+    document.getElementById("modalBody").innerHTML = ""
+    
+    var eventCard = document.createElement("div");
+    eventCard.setAttribute("class","card");
+    
+    var eventCardBody = document.createElement("div");
+    eventCardBody.setAttribute("class","card-body");
+    eventCard.appendChild(eventCardBody)
+    
+    var eventCardTitle = document.createElement("div");
+    eventCardTitle.setAttribute("class","card-title");
+    eventCardTitle.append(eventLocation)
+    eventCardBody.appendChild(eventCardTitle)
+    
+    var eventCardText = document.createElement("div");
+    eventCardText.setAttribute("class","card-text");
+    eventCardText.append(dateFormat(start) + " - " + dateFormat(end))
+    eventCardBody.appendChild(eventCardText);
+    /*
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    */ 
+   document.getElementById("modalHeader").append(eventName)
+    document.getElementById("modalBody").appendChild(eventCard)
+    $('#myModal').modal('show');
+    //addToGoogle(date, start, end, date);
+}
+
+function addToGoogle(name, date, startTime, endTime, location){
+    //console.log(date, startTime, endTime, locationInfo[dateIndex].location);
+    let dateBeginStr = date.split("-")[0] + date.split("-")[1] + date.split("-")[2];
+    let dateEndStr = date.split("-")[0] + date.split("-")[1] + date.split("-")[2];
+    //console.log(parseInt(startTime.split(":")[0])+5);
+    let timeBeginStr = (parseInt(startTime.split(":")[0])+offSet)+ startTime.split(":")[1] + startTime.split(":")[2];
+    let timeEndStr = (parseInt(endTime.split(":")[0])+offSet) + endTime.split(":")[1] + endTime.split(":")[2];
+    let dateTime = dateBeginStr + 'T' + timeBeginStr +'Z/' +dateEndStr + 'T' + timeEndStr +'Z'
+    let locationDesc = 'Location is ' + location;
+    //let name = 'PSUB Marketing';
+
+
+    let link = 
+        'https://www.google.com/calendar/render?action=TEMPLATE&text=' + name +'&dates=' +dateTime 
+        // +'&location=' + 'Purdue Memorial Union, 101 Grant St, West Lafayette, IN 47906, USA' 
+        + '&location=' + locationInfo[dateIndex].location
+        +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/marketing/marketing.html' 
+        + '&details='+ locationDesc
+        //document.getElementById("modalBody").appendChild('<div id="add to cal">Google</div>')
+        //document.getElementById("modalBody").innerHTML = 
+        //    '<a target="_blank" href="' + link + '">Add to google</a>';
+    //window.open(link);
+    var href = encodeURI(
+        'data:text/calendar;charset=utf8,' + [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'BEGIN:VEVENT',
+          'URL:' + 'https://glass10.github.io/marketing/marketing.html',
+          'DTSTART:' + ((dateBeginStr + 'T' + timeBeginStr +'Z') || ''),
+          'DTEND:' + ((dateEndStr + 'T' + timeEndStr +'Z') || ''),
+          'SUMMARY:' + (name || ''),
+          'DESCRIPTION:' + (locationDesc || ''),
+          'LOCATION:' + ((locationInfo[dateIndex].location) || ''),
+          'END:VEVENT',
+          'END:VCALENDAR'].join('\n'));
+    document.getElementById("iCal").setAttribute('onclick', 'location.href=\'' + href + '\'');
+    document.getElementById("google").setAttribute('onclick', 'location.href=\'' + link + '\'');
 }
 
