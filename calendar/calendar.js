@@ -339,9 +339,12 @@ function eventClickHandler(info) {
     document.getElementById("modalBody").appendChild(eventCard)//year month date and military time
     $('#myModal').modal('show');
 
-
-
-    //addToGoogle(eventName, dateStart, startTime, dateEnd, endTime, eventLocation);
+    addToGoogle(eventName, 
+            info.event.extendedProps.resources[1].dateStart, 
+            info.event.extendedProps.resources[1].timeStart, 
+            info.event.extendedProps.resources[1].dateEnd, 
+            info.event.extendedProps.resources[1].timeEnd, 
+        eventLocation);
 }
 
 function addToGoogle(name, dateStart, startTime, dateEnd, endTime, location){
