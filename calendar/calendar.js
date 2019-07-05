@@ -180,6 +180,12 @@ function getCalendarValues(){
                 eventResources.push({
                     id: 'location',
                     title: response.feed.entry[i].gsx$place.$t,
+                },{
+                    id: 'date',
+                    dateStart: eventDateStart,
+                    dateEnd: eventDateEnd,
+                    timeStart: eventTimeStart,
+                    timeEnd: eventTimeEnd,
                 })
                 eventsData.push({
                     title: response.feed.entry[i].gsx$event.$t,
@@ -332,13 +338,16 @@ function eventClickHandler(info) {
    document.getElementById("modalHeader").append(eventName)
     document.getElementById("modalBody").appendChild(eventCard)//year month date and military time
     $('#myModal').modal('show');
-    //addToGoogle(date, start, end, date);
+
+
+
+    //addToGoogle(eventName, dateStart, startTime, dateEnd, endTime, eventLocation);
 }
 
-function addToGoogle(name, date, startTime, endTime, location){
+function addToGoogle(name, dateStart, startTime, dateEnd, endTime, location){
     //console.log(date, startTime, endTime, locationInfo[dateIndex].location);
-    let dateBeginStr = date.split("-")[0] + date.split("-")[1] + date.split("-")[2];
-    let dateEndStr = date.split("-")[0] + date.split("-")[1] + date.split("-")[2];
+    let dateBeginStr = dateStart.split("-")[0] + dateStart.split("-")[1] + dateStart.split("-")[2];
+    let dateEndStr = dateEnd.split("-")[0] + dateEnd.split("-")[1] + dateEnd.split("-")[2];
     //console.log(parseInt(startTime.split(":")[0])+5);
     let timeBeginStr = (parseInt(startTime.split(":")[0])+offSet)+ startTime.split(":")[1] + startTime.split(":")[2];
     let timeEndStr = (parseInt(endTime.split(":")[0])+offSet) + endTime.split(":")[1] + endTime.split(":")[2];
@@ -350,7 +359,7 @@ function addToGoogle(name, date, startTime, endTime, location){
     let link = 
         'https://www.google.com/calendar/render?action=TEMPLATE&text=' + name +'&dates=' +dateTime 
         // +'&location=' + 'Purdue Memorial Union, 101 Grant St, West Lafayette, IN 47906, USA' 
-        + '&location=' + locationInfo[dateIndex].location
+        + '&location=' + location
         +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/marketing/marketing.html' 
         + '&details='+ locationDesc
         //document.getElementById("modalBody").appendChild('<div id="add to cal">Google</div>')
@@ -367,7 +376,7 @@ function addToGoogle(name, date, startTime, endTime, location){
           'DTEND:' + ((dateEndStr + 'T' + timeEndStr +'Z') || ''),
           'SUMMARY:' + (name || ''),
           'DESCRIPTION:' + (locationDesc || ''),
-          'LOCATION:' + ((locationInfo[dateIndex].location) || ''),
+          'LOCATION:' + (location || ''),
           'END:VEVENT',
           'END:VCALENDAR'].join('\n'));
     document.getElementById("iCal").setAttribute('onclick', 'location.href=\'' + href + '\'');
