@@ -327,17 +327,10 @@ function eventClickHandler(info) {
     eventCardText.setAttribute("class","card-text");
     eventCardText.append(dateFormat(start) + " - " + dateFormat(end))
     eventCardBody.appendChild(eventCardText);
-    /*
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    */ 
+
+
    document.getElementById("modalHeader").append(eventName)
-    document.getElementById("modalBody").appendChild(eventCard)
+    document.getElementById("modalBody").appendChild(eventCard)//year month date and military time
     $('#myModal').modal('show');
     //addToGoogle(date, start, end, date);
 }
