@@ -251,8 +251,10 @@ function viewScheduleForDate(direction){
                 memberTD.setAttribute("colspan", 2);
                 memberTD.setAttribute("id", dateInfo.date+"-"+dateInfo.allTimes[j]);
                 let timeJth = dateInfo.allTimes[j];
-                let timeSTR = (timeJth.substring(0,timeJth.indexOf(":")) <= '12')?(timeJth + 'am')
-                                    :((timeJth.substring(0,timeJth.indexOf(":")) - 12)+(timeJth.substring(timeJth.indexOf(":"))) + 'pm');
+                let timeSTR = (timeJth.substring(0,timeJth.indexOf(":")) == '00')?((parseInt(timeJth.substring(0,timeJth.indexOf(":"))) + 12)+(timeJth.substring(timeJth.indexOf(":"))) + 'am')
+                                :(timeJth.substring(0,timeJth.indexOf(":")) == '12')?(timeJth + 'pm')
+                                    :(timeJth.substring(0,timeJth.indexOf(":")) < '12')?(timeJth + 'am')
+                                        :((timeJth.substring(0,timeJth.indexOf(":")) - 12)+(timeJth.substring(timeJth.indexOf(":"))) + 'pm');
                 timeTD.innerHTML = timeSTR;
                 memberTD.innerHTML = `Loading...`;
 
