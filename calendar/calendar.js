@@ -219,7 +219,7 @@ function getCalendarValues(){
             defaultView: 'dayGridMonth',
             handleWindowResize: false,
             fixedWeekCount: false,
-            eventLimit: 3,
+            eventLimit: 2,
             contentHeight: 'auto',
             eventClick: eventClickHandler,
             
