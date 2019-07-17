@@ -52,7 +52,7 @@ let dataCount = 0;
 const EVENTS_SHEET_ID = '1py0YY2fFxSNHxGVZcq4deaQspIDGOeyFU5R8_S9TK1s';
 var eventsData = []
 //time zone offset to be changed
-var offSet = 5;
+var offSet = 4;
 
 function logout(){
     console.log("Logout Attempted");
@@ -184,7 +184,12 @@ function getCalendarValues(){
                     var eventResources = []
                 }else{
                     startTime = eventDateStart.split('/')[2]+'-'+pad0(eventDateStart.split('/')[0])+'-'+pad0(eventDateStart.split('/')[1]);
+                    eventDateStart = startTime
+                    eventDateEnd = ''
+                    eventTimeStart = ''
+                    eventTimeEnd = ''
                     endTime = ''
+                    var eventResources = []
                 }
             }
 
@@ -344,19 +349,25 @@ function eventClickHandler(info) {
     
     var eventCardText = document.createElement("div");
     eventCardText.setAttribute("class","card-text");
-    eventCardText.append(dateFormat(start) + " - " + dateFormat(end))
+    eventCardText.append(dateFormat(start) + (end!=null? " - " + dateFormat(end):''))
     eventCardBody.appendChild(eventCardText);
-
 
    document.getElementById("modalHeader").append(eventName)
     document.getElementById("modalBody").appendChild(eventCard)//year month date and military time
     $('#myModal').modal('show');
 
+    tomorrowDate = new Date()
+    tomorrowDate.setMonth(start.getMonth())
+    tomorrowDate.setFullYear(start.getFullYear())
+    tomorrowDate.setDate(start.getDate()+1)
+
+    console.log(tomorrowDate)
+
     addToGoogle(eventName, 
             info.event.extendedProps.resources[1].dateStart, 
-            info.event.extendedProps.resources[1].timeStart, 
-            info.event.extendedProps.resources[1].dateEnd, 
-            info.event.extendedProps.resources[1].timeEnd, 
+            (end==null)?'00:00:00':info.event.extendedProps.resources[1].timeStart, 
+            (end==null)?dateFormatDate(tomorrowDate):info.event.extendedProps.resources[1].dateEnd, 
+            (end==null)?'00:00:00':info.event.extendedProps.resources[1].timeEnd, 
         eventLocation);
 }
 
@@ -365,8 +376,8 @@ function addToGoogle(name, dateStart, startTime, dateEnd, endTime, location){
     let dateBeginStr = dateStart.split("-")[0] + dateStart.split("-")[1] + dateStart.split("-")[2];
     let dateEndStr = dateEnd.split("-")[0] + dateEnd.split("-")[1] + dateEnd.split("-")[2];
     //console.log(parseInt(startTime.split(":")[0])+5);
-    let timeBeginStr = (parseInt(startTime.split(":")[0])+offSet)+ startTime.split(":")[1] + startTime.split(":")[2];
-    let timeEndStr = (parseInt(endTime.split(":")[0])+offSet) + endTime.split(":")[1] + endTime.split(":")[2];
+    let timeBeginStr = pad0(parseInt(startTime.split(":")[0])+offSet)+ startTime.split(":")[1] + startTime.split(":")[2];
+    let timeEndStr = pad0(parseInt(endTime.split(":")[0])+offSet) + endTime.split(":")[1] + endTime.split(":")[2];
     let dateTime = dateBeginStr + 'T' + timeBeginStr +'Z/' +dateEndStr + 'T' + timeEndStr +'Z'
     let locationDesc = 'Location is ' + location;
     //let name = 'PSUB Marketing';
@@ -376,7 +387,7 @@ function addToGoogle(name, dateStart, startTime, dateEnd, endTime, location){
         'https://www.google.com/calendar/render?action=TEMPLATE&text=' + name +'&dates=' +dateTime 
         // +'&location=' + 'Purdue Memorial Union, 101 Grant St, West Lafayette, IN 47906, USA' 
         + '&location=' + location
-        +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/marketing/marketing.html' 
+        +'&sprop=name:Name&sprop=website:'+ 'https://glass10.github.io/calendar/calendar.html' 
         + '&details='+ locationDesc
         //document.getElementById("modalBody").appendChild('<div id="add to cal">Google</div>')
         //document.getElementById("modalBody").innerHTML = 
