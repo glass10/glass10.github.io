@@ -140,72 +140,85 @@ function getCalendarValues(){
             //console.log(response.feed.entry[i]);
             var eventDate = response.feed.entry[i].gsx$date.$t;
             var eventTimeStart =  response.feed.entry[i].gsx$time.$t;
-            if(eventDate!='' && eventTimeStart!=''){
-                var eventTimeEnd = eventTimeStart.substring(eventTimeStart.indexOf('- ') + 2)
-                eventTimeStart = eventTimeStart.substring(0,eventTimeStart.indexOf(' - '));
-                eventTimeEnd = eventTimeEnd.substring(eventTimeEnd.length-2)=='pm'?
-                                    pad0((parseInt((eventTimeEnd.split(':')[0]))+12)) + ':'
-                                        +eventTimeEnd.split(':')[1].substring(0,eventTimeEnd.split(':')[1].length-2)
-                                            :pad(eventTimeEnd.substring(0,eventTimeEnd.length-2),5,0); //assuming start and end on everything
-                eventTimeStart = eventTimeStart.substring(eventTimeStart.length-2)=='pm'?
-                                    pad0(parseInt((eventTimeStart.split(':')[0]))+12) + ':'
-                                        +eventTimeStart.split(':')[1].substring(0,eventTimeStart.split(':')[1].length-2)
-                                            :pad(eventTimeStart.substring(0,eventTimeStart.length-2),5,0); //assuming start and end on everything
+            if(eventDate!=''){
                 eventDates = eventDate.split('-')
-                eventTimeStart += ':00'
-                eventTimeEnd += ':00'
                 var eventDateStart = (eventDate.split('-').length==1)?eventDate:eventDate.split('-')[0];
                 var eventDateEnd = (eventDate.split('-').length==1)?eventDate:eventDate.split('-')[1]
-                var tomorrow = false;
-                var tomorrowDate = new Date();
-                tomorrowDate.setDate(eventDateEnd.split('/')[1])
-                tomorrowDate.setFullYear(eventDateEnd.split('/')[2])
-                tomorrowDate.setMonth(eventDateEnd.split('/')[0]-1)                
+                if(eventTimeStart.replace(/[^0-9]/g,"").length > 5){
+                    var eventTimeEnd = eventTimeStart.substring(eventTimeStart.indexOf('- ') + 2)
+                    eventTimeStart = eventTimeStart.substring(0,eventTimeStart.indexOf(' - '));
+                    eventTimeEnd = eventTimeEnd.substring(eventTimeEnd.length-2)=='pm'?
+                                        (eventTimeEnd.split(':')[0]=='12')?'00:00'
+                                            :pad0((parseInt((eventTimeEnd.split(':')[0]))+12)) + ':'
+                                                +eventTimeEnd.split(':')[1].substring(0,eventTimeEnd.split(':')[1].length-2)
+                                                    :pad(eventTimeEnd.substring(0,eventTimeEnd.length-2),5,0); //assuming start and end on everything
+                    eventTimeStart = eventTimeStart.substring(eventTimeStart.length-2)=='pm'?
+                                        (eventTimeStart.split(':')[0]=='12')?'00:00'
+                                            :pad0(parseInt((eventTimeStart.split(':')[0]))+12) + ':'
+                                                +eventTimeStart.split(':')[1].substring(0,eventTimeStart.split(':')[1].length-2)
+                                                    :pad(eventTimeStart.substring(0,eventTimeStart.length-2),5,0); //assuming start and end on everything
+                    
+                    eventTimeStart += ':00'
+                    eventTimeEnd += ':00'
+                    
+                    var tomorrow = false;
+                    var tomorrowDate = new Date();
+                    tomorrowDate.setDate(eventDateEnd.split('/')[1])
+                    tomorrowDate.setFullYear(eventDateEnd.split('/')[2])
+                    tomorrowDate.setMonth(eventDateEnd.split('/')[0]-1)                
 
-                var endDateObject = new Date();
-                endDateObject.setHours(eventTimeEnd.split(":")[0]);
-                var startDateObject = new Date();
-                startDateObject.setHours(eventTimeStart.split(":")[0]);
-                if(eventTimeEnd=="12:00:00" && endDateObject.getTime() < startDateObject.getTime()){
-                    tomorrow = true;
-                    eventTimeEnd="00:00:00"
-                    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+                    var endDateObject = new Date();
+                    endDateObject.setHours(eventTimeEnd.split(":")[0]);
+                    var startDateObject = new Date();
+                    startDateObject.setHours(eventTimeStart.split(":")[0]);
+                    if(eventTimeEnd=="12:00:00" && endDateObject.getTime() < startDateObject.getTime()){
+                        tomorrow = true;
+                        eventTimeEnd="00:00:00"
+                        tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+                    }
+
+                    eventDateStart = eventDateStart.split('/')[2]+'-'+pad0(eventDateStart.split('/')[0])+'-'+pad0(eventDateStart.split('/')[1]);
+                    eventDateEnd = (tomorrow)?dateFormatDate(tomorrowDate):eventDateEnd.split('/')[2]+'-'+pad0(eventDateEnd.split('/')[0])+'-'+pad0(eventDateEnd.split('/')[1]);
+                    var startTime = eventDateStart+'T'+eventTimeStart;
+                    var endTime = eventDateEnd+'T'+eventTimeEnd;
+                    var eventResources = []
+                }else{
+                    startTime = eventDateStart.split('/')[2]+'-'+pad0(eventDateStart.split('/')[0])+'-'+pad0(eventDateStart.split('/')[1]);
+                    endTime = ''
                 }
-
-                eventDateStart = eventDateStart.split('/')[2]+'-'+pad0(eventDateStart.split('/')[0])+'-'+pad0(eventDateStart.split('/')[1]);
-                eventDateEnd = (tomorrow)?dateFormatDate(tomorrowDate):eventDateEnd.split('/')[2]+'-'+pad0(eventDateEnd.split('/')[0])+'-'+pad0(eventDateEnd.split('/')[1]);
-                var startTime = eventDateStart+'T'+eventTimeStart;
-                var endTime = eventDateEnd+'T'+eventTimeEnd;
-                var eventResources = []
-                eventResources.push({
-                    id: 'location',
-                    title: response.feed.entry[i].gsx$place.$t,
-                },{
-                    id: 'date',
-                    dateStart: eventDateStart,
-                    dateEnd: eventDateEnd,
-                    timeStart: eventTimeStart,
-                    timeEnd: eventTimeEnd,
-                })
-                eventsData.push({
-                    title: response.feed.entry[i].gsx$event.$t,
-                    timeZone: 'local',
-                    start: startTime,
-                    end: endTime,
-                    resources: eventResources
-                    //rendering: 'background',
-                })
             }
 
+            eventResources.push({
+                id: 'location',
+                title: response.feed.entry[i].gsx$place.$t,
+            },{
+                id: 'date',
+                dateStart: eventDateStart,
+                dateEnd: eventDateEnd,
+                timeStart: eventTimeStart,
+                timeEnd: eventTimeEnd,
+            })
+            eventsData.push({
+                title: response.feed.entry[i].gsx$event.$t,
+                timeZone: 'local',
+                start: startTime,
+                end: endTime,
+                resources: eventResources
+                //rendering: 'background',
+            })
         }
+
+        
 
         console.log(eventsData);
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: [ 'dayGrid', 'timeGrid', 'list', 'bootstrap' ],
+            plugins: [ 'dayGrid', 'bootstrap' ],
             events: eventsData,
             themeSystem: 'bootstrap',
+            defaultView: 'dayGridMonth',
             handleWindowResize: false,
+            fixedWeekCount: false,
             eventLimit: 3,
             contentHeight: 'auto',
             eventClick: eventClickHandler,
