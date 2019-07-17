@@ -19,9 +19,16 @@ Docs & License: https://fullcalendar.io/
   font-size: 20px;
   color: #fff; }
 
-  @media (max-width: 1325px) {
+  @media (max-width: 768px) {
     .fc-bootstrap a.fc-event:not([href]):not([tabindex])  {
       font-size: unset;
+    }
+    
+  }
+
+  @media (max-width: 1325px) and (min-width: 768px) {
+    .fc-bootstrap a.fc-event:not([href]):not([tabindex])  {
+      font-size: 18px;
     }
     
   }
