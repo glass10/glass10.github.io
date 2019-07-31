@@ -77,6 +77,7 @@ function load(){
         }
         else{
             document.getElementById("attendanceNav").remove();
+            document.getElementById("timeNav").remove();
             window.location.replace("../hours/hours.html");
         }
     

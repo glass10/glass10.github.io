@@ -47,6 +47,7 @@ function load(){
         }
         else{
             document.getElementById("attendanceNav").remove();
+            document.getElementById("timeNav").remove();
         }
     }
 }
