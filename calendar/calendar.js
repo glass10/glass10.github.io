@@ -83,6 +83,7 @@ function load(){
         }
         else{
             document.getElementById("attendanceNav").remove();
+            document.getElementById("timeNav").remove();
         }
     
 
@@ -196,6 +197,7 @@ function getCalendarValues(){
             eventResources.push({
                 id: 'location',
                 title: response.feed.entry[i].gsx$place.$t,
+                rLocation: response.feed.entry[i].gsx$rainlocation.$t
             },{
                 id: 'date',
                 dateStart: eventDateStart,
@@ -344,7 +346,7 @@ function eventClickHandler(info) {
     
     var eventCardTitle = document.createElement("div");
     eventCardTitle.setAttribute("class","card-title");
-    eventCardTitle.append(eventLocation)
+    eventCardTitle.append(eventLocation + ', Rain location: ' + info.event.extendedProps.resources[0].rLocation)
     eventCardBody.appendChild(eventCardTitle)
     
     var eventCardText = document.createElement("div");
