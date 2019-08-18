@@ -175,7 +175,7 @@ function getMembers(dateIndex){
         for(let j = 0; j < locationInfo[dateChosen].allTimes.length-1; j++){
             let time = locationInfo[dateChosen].allTimes[j];
             let allMembers = "";
-            for (var i = 0; i < response.feed.entry.length; i++) {
+            for (var i = 0; response.feed.entry != null && i < response.feed.entry.length; i++) {
                 let data = response.feed.entry[i];
                 let name = data.gsx$member.$t;
                 let committee = data.gsx$committee.$t;
