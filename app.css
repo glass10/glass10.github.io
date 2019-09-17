@@ -1,5 +1,6 @@
 canvas{ 
-    display: block; 
+    /* display: block;  */
+    display: none;
     vertical-align: bottom;
     position: absolute;
     z-index: -1;
