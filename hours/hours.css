@@ -143,14 +143,6 @@ ul {
     cursor: pointer;
 }
 
-#titleCard{
-  padding: 0px;
-  margin-top: 41px;
-  cursor: pointer;
-  position: relative;
-  margin-bottom: 15px;
-}
-
 
 .barText{
     letter-spacing: -3px;
