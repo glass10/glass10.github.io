@@ -169,7 +169,7 @@ function updateHoursSheet(data, committee) {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/' + data.number + '/public/full?alt=json-in-script',
+        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/' + (data.number+1) + '/public/full?alt=json-in-script',
         "method": "GET",
         "headers": {
             // "id": CLIENT_ID,
@@ -180,13 +180,14 @@ function updateHoursSheet(data, committee) {
     $.ajax(settings).done(function (response) {
         response = response.substring(response.indexOf("{"), response.length - 2)
         var response = JSON.parse(response);
-        console.log(response);
-
+        console.log("got hours");
+        
         var totalHours = 0;
         var totalPoints = 0;
 
         for (var i = 0; i < response.feed.entry.length; i++) {
             var data = response.feed.entry[i];
+            console.log(data);
             if (i == 0) {
                 totalHours = data.gsx$hourstotal.$t;
                 totalPoints = data.gsx$pointstotal.$t;
