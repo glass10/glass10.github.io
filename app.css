@@ -18,6 +18,12 @@ h1{
 h3{
     text-align: left;
 }
+h6{
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 h3.hidden{
     visibility: hidden;
 }

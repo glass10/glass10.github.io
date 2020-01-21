@@ -72,26 +72,22 @@ function load(){
         currentName = storageObj.name;
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
-
+        
         // Handle BOD
-        if(firstName === "Director"){
-            document.getElementById("hoursNav").remove();
-
-            if(committeeList.indexOf(currentCommittee) === -1){
-                document.getElementById("attendanceNav").remove();
-            }
+        //alumni
+        if(currentCommittee.localeCompare("alumni") == 0){
+            window.location.replace("../hours/hours.html");
+            document.getElementById("marketingNav").remove();
         }
-        else{
+        //inactive
+        else if(currentCommittee.localeCompare("inactive") == 0){
+            document.getElementById("marketingNav").remove();
+        }
+        //general member
+        if(currentCommittee.localeCompare("boardofDirectors") != 0){
             document.getElementById("attendanceNav").remove();
         }
-    
-
-        // Intercommittee
-        heights = {};
-        for (var i = 0; i < committeeList.length; i++) {
-            data(committeeList[i]);
-        }
-
+        
         //calendar
         getCalendarValues();
     }
@@ -236,65 +232,6 @@ function getCalendarValues(){
     
 }
 
-function data(committee) {
-    console.log('Loading ' + committee + ' data');
-    document.getElementById("topSpinner").style.visibility = "visible";
-    if (committees[committee].length !== 0) {
-        committees[committee] = [];
-    }
-
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": 'https://spreadsheets.google.com/feeds/list/' + sheetIDS[committee] + '/1/public/full?alt=json-in-script',
-        "method": "GET",
-        "headers": {
-        }
-    }
-
-    $.ajax(settings).done(function (response) {
-        //console.log(response);
-        response = response.substring(response.indexOf("{"), response.length - 2)
-        var response = JSON.parse(response);
-        console.log(response);
-        for (var i = 0; i < response.feed.entry.length; i++) {
-            if (i !== response.feed.entry.length - 1) {
-                var tempName = response.feed.entry[i].gsx$name.$t;
-                var tempPin = response.feed.entry[i].gsx$pin.$t;
-                var tempID = response.feed.entry[i].gsx$sheetid.$t;
-                var tempHours = response.feed.entry[i].gsx$hours.$t;
-                var tempPoints = response.feed.entry[i].gsx$points.$t;
-
-                committees[committee].push({ name: tempName, pin: tempPin, id: tempID, number: i + 2, hours: tempHours, points: tempPoints });
-
-            }
-            else {
-                var tempHours = response.feed.entry[i].gsx$committeehours.$t
-                var tempPoints = response.feed.entry[i].gsx$committeepoints.$t
-
-                committees[committee].push({ totalHours: tempHours, totalPoints: tempPoints });
-
-                var height = tempPoints;
-
-                points[committee] = tempPoints; //for intercommittee points
-                document.getElementById(committee + "LI").style = "height: " + height + "%";
-                heights[committee] = height;
-                document.getElementById(committee + "LI").title = tempPoints;
-                document.getElementById(committee + "TXT").textContent = tempPoints;
-            }
-        }
-        console.log(committees[committee]);
-
-        dataCount++;
-        if (dataCount === 6) {
-            calculateHeight();
-        }
-
-    });
-    console.log("Data Loaded Successfully");
-    document.getElementById("topSpinner").style.visibility = "hidden";
-
-}
 
 function calculateHeight() {
     // Dynamic Height

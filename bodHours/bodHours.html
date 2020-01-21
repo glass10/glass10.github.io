@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Hours</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.5.1/css/foundation.min.css"> -->
+        <link href="https://fonts.googleapis.com/css?family=Oswald|Permanent+Marker" rel="stylesheet">
+
+        <link href="../bootstrap.min.css" rel="stylesheet">
+        <link href="bodHours.css" rel="stylesheet" >
+
+    </head>
+    <body onLoad="load()">
+        <!-- Nav Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container">
+                <li class="navbar-brand">
+                    <img src="../Logo.png" alt="" id="navLogo">
+                </li>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="navNameLI"><a class="nav-link" id="navName">Hi!</a></li>
+
+                    <li class="nav-item" id="hoursNav">
+                        <a class="nav-link" href="../goalsandinitiatives/goals.html">Goals and Initiatives</a>
+                    </li>
+                    <li class="nav-item" id="calendarNav">
+                        <a class="nav-link" href="../calendar/calendar.html">Calendar</a>
+                    </li>
+                    <li class="nav-item active" id="hoursNav">
+                        <a class="nav-link" href="../hours/hours.html">Hours</a>
+                    </li>
+                    <li class="nav-item" id="marketingNav">
+                        <a class="nav-link" href="../marketing/marketing.html">Physical Marketing</a>
+                    </li>
+                    <li class="nav-item" id="attendanceNav">
+                        <a class="nav-link" href="/attendance/attendance.html">Attendance
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="helpNav">
+                        <a class="nav-link" href="/help/help.html">Help</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-primary" onclick="logout()">Logout</button>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <br><br><br><br>
+        <!-- Title Card -->
+        <div id="titleCard" class="container">
+            <div class="card">
+                <div class="card-header" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    <h5 class="mb-0">
+                        Hours
+                    </h5>
+                </div>
+            
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#titleCard">
+                    <div class="card-body" id="bodMember">
+                        <p>
+                            Here's where you will record your office hours.
+                            <br><br>
+                            "Required Events" are used to record your events or events that you are required to go to.
+                            <br><br>
+                            "Office Hours" are used to record hours spent during office hours.
+                            <br><br>
+                            "Meetings" are used to record hours for meetings. Examples include: committee meetings, meetings w/ President, meetings w/ Advisor. 
+
+                            <br><br>
+                            If you have any questions, feel free to ask the President.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Member Hour Section -->
+        <div class="container">
+            <div class="row" id="memberArea">
+                <div class="memberStats col-12">
+                    <form id="hours-form" class="form-inline col-12">
+                            <div class="col-sm-14 col-md-4">
+                                <input type="text" class="form-control formInput" name="Event" placeholder="Event Name" id="eventInput">
+                            </div>
+                        
+                            <div class="col-sm-12 col-md-4">
+                                <input type="date" class="form-control formInput" name="eventDate" id="dateInput">
+                            </div>
+                            <div class="col-sm-12 col-md-2">
+                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="setToday()">TODAY</button>
+                            </div>
+                            
+                            <div class="col-sm-12 col-md-2">
+                                <input type="number" class="form-control formInput" name="Hours" placeholder="Hours" id="hoursInput">
+                            </div>
+                            
+                            <div class="col-md-8 col-md-2">
+                                <input type="text" class="form-control formInput" name="Event" placeholder="Description" id="descriptionInput">
+                            </div>
+                        
+                            <div class="col-sm-12 col-md-4">
+                                <select name="eventType" class="form-control formInput" id="eventType">
+                                        <option value="0">Required Event</option>
+                                        <option value="1">Office Hours</option>
+                                        <option value="2">Meeting</option>
+                                        <option value="3">Other</option>
+                                </select>
+                            </div>
+                        
+                            <div class="col-sm-12 col-lg">
+                                    <button type="button" class="btn btn-outline-primary formInput" id="hoursButton" onclick="addHours()">ADD HOURS</button>
+                            </div>
+                    </form>
+                </div>
+                
+                
+                <div class="col-12" id="confirmArea">
+                    <h5 id="confirmMessage"></h5>
+                </div>
+                <table class="table" id="hoursTable">
+                    <thead id="tableHead">
+                        <tr>
+                            <th width="150">Date</th>
+                            <th width="150">Name</th>
+                            <th width="100">Hours</th>
+                            <th width="150">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>   
+            </div>
+        </div>
+
+        <script src="../jquery-3.2.1.min.js"></script>
+        <script src="../bootstrap.bundle.min.js"></script>
+        <script src="bodHours.js"></script>
+    </body>
+       
+</html>
