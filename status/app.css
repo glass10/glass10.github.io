@@ -9,7 +9,6 @@ canvas{
 
 body{
     height: 100%;
-    background-color: #4169E1;
 }
 
 h1{
@@ -18,7 +17,6 @@ h1{
 }
 h3{
     text-align: left;
-    color: white;
 }
 h6{
     color: white;

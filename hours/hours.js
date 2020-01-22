@@ -61,6 +61,7 @@ function logout(){
 }
 
 function load(){
+    checkStatus();
     //Safety Check
     if(localStorage.getItem("psubPortal") === null){
         window.location.replace("../index.html");
@@ -107,6 +108,30 @@ function load(){
         
         loadPrizePyramid();
     }
+}
+
+function checkStatus() {
+     var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": 'https://spreadsheets.google.com/feeds/list/1V8-Yur6lbmkFeJLCI7dlEWiXOnwKPMd36wSgpV4q7u8/1/public/full?alt=json-in-script',
+        "method": "GET",
+        "headers": {
+        }
+    }
+     
+    var status;
+    $.ajax(settings).done(function (response) {
+        response = response.substring(response.indexOf("{"), response.length - 2)
+        var response = JSON.parse(response);
+                
+        status = response.feed.entry[0].gsx$status.$t;
+        console.log("Status: " + status);
+        
+        if(status.localeCompare("OFFLINE") == 0){
+            window.location.replace("../status.html");
+        } 
+    });
 }
 
 function calculateHeight() {

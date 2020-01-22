@@ -61,8 +61,6 @@ var currentData = {};
 let dataCount = 0;
 
 function load() {
-    checkStatus();
-    
     if(localStorage.getItem("psubPortal") == null){
         console.log("Local Storage Empty");
         for (var i = 0; i < committeeList.length; i++) {
@@ -92,30 +90,6 @@ function load() {
     loadBOD();
 }
 
-function checkStatus() {
-     var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": 'https://spreadsheets.google.com/feeds/list/1V8-Yur6lbmkFeJLCI7dlEWiXOnwKPMd36wSgpV4q7u8/1/public/full?alt=json-in-script',
-        "method": "GET",
-        "headers": {
-        }
-    }
-     
-    var status;
-    $.ajax(settings).done(function (response) {
-        response = response.substring(response.indexOf("{"), response.length - 2)
-        var response = JSON.parse(response);
-                
-        status = response.feed.entry[0].gsx$status.$t;
-        console.log("Status: " + status);
-        
-        if(status.localeCompare("OFFLINE") == 0){
-            window.location.replace("../status.html");
-        } 
-    });
-}
-
 function loadBOD() {
     var settings = {
         "async": true,
@@ -127,11 +101,10 @@ function loadBOD() {
     }
 
     $.ajax(settings).done(function (response) {
-        console.log("loading now");
         //console.log(response);
         response = response.substring(response.indexOf("{"), response.length - 2)
         var response = JSON.parse(response);
-        //console.log(response);
+        console.log(response);
                 
         for (var i = 0; i < response.feed.entry.length; i++) {
             if (i !== response.feed.entry.length - 1) {
@@ -143,8 +116,7 @@ function loadBOD() {
 
             }
         }
-        //console.log("position:");
-        //console.log(positionArray);
+        console.log(positionArray);
     });
     console.log("BOD Data Loaded Successfully");
 }
@@ -168,7 +140,7 @@ function data(committee) {
         //console.log(response);
         response = response.substring(response.indexOf("{"), response.length - 2)
         var response = JSON.parse(response);
-        console.log("response: " + response);
+        //console.log(response);
                 
         for (var i = 0; i < response.feed.entry.length; i++) {
             if (i !== response.feed.entry.length - 1) {
@@ -188,7 +160,6 @@ function data(committee) {
                 committees[committee].push({ totalHours: tempHours, totalPoints: tempPoints });
             }
         }
-        //console.log(committees);
         //console.log(committees[committee]);
     });
     console.log("Data Loaded Successfully");
