@@ -12,7 +12,7 @@
         <link href="bootstrap.min.css" rel="stylesheet">
         <link href="app.css" rel="stylesheet">
     </head>
-    <body>
+    <body onLoad="loadStatus()">
     <!--<body>-->
         <!--
         <button id="themeToggle" onclick="adjustTheme()" class="btn btn-outline-light">Turn Off Theme</button>
@@ -22,12 +22,13 @@
         <h6>Created by Cameron Glass and Shafay Haq. Maintained by Derek Lee.</h6>
         <div class="row justify-content-md-center" id="loginArea">
             <div class="col-md-10">
-                <h3>Sorry the PSUB Portal is currently undergoing maitenance. Please check back later!</h3>
+                <h3>Sorry, the PSUB Portal is currently undergoing maitenance. Please check back later!</h3>
             </div>
         </div>
         
         <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib --> 
         <script src="jquery-3.2.1.min.js"></script>
         <script src="bootstrap.bundle.min.js"></script>
+        <script src="app.js"></script>
     </body>
 </html>

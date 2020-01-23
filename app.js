@@ -73,6 +73,10 @@ function load() {
         console.log("Local Storage Found. Redirecting");
         let name = JSON.parse(localStorage.getItem("psubPortal")).name;
         let committee = JSON.parse(localStorage.getItem("psubPortal")).committee;
+        let version = JSON.parse(localStorage.getItem("psubPortal")).version;
+        if(version == null || parseInt(version, 10) < 2) {
+            logout();
+        }
         if (currentCommittee.localeCompare("boardofDirectors") != 0) {
             window.location.replace("hours/hours.html");
         }
@@ -92,6 +96,38 @@ function load() {
     loadBOD();
 }
 
+function loadStatus() {
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": 'https://spreadsheets.google.com/feeds/list/1V8-Yur6lbmkFeJLCI7dlEWiXOnwKPMd36wSgpV4q7u8/1/public/full?alt=json-in-script',
+        "method": "GET",
+        "headers": {
+        }
+    }
+     
+    var status;
+    $.ajax(settings).done(function (response) {
+        response = response.substring(response.indexOf("{"), response.length - 2)
+        var response = JSON.parse(response);
+                
+        status = response.feed.entry[0].gsx$status.$t;
+        console.log("Status: " + status);
+        console.log(window.location.href);
+        
+        if(status.localeCompare("ONLINE") == 0){
+            window.location.replace("../index.html");
+        }
+    });
+}
+
+function logout(){
+    console.log("Logout Attempted");
+    localStorage.removeItem("psubPortal");
+    window.location.replace("../index.html")
+}
+
+
 function checkStatus() {
      var settings = {
         "async": true,
@@ -109,10 +145,11 @@ function checkStatus() {
                 
         status = response.feed.entry[0].gsx$status.$t;
         console.log("Status: " + status);
+        console.log(window.location.href);
         
         if(status.localeCompare("OFFLINE") == 0){
             window.location.replace("../status.html");
-        } 
+        }
     });
 }
 
@@ -304,6 +341,7 @@ function successfulLogin(data, committee) {
     
     let storageObj = data;
     storageObj["committee"] = committee;
+    storageObj["version"] = "2.0";
     localStorage.setItem("psubPortal", JSON.stringify(storageObj));
     //console.log(committee);
 

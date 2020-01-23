@@ -71,12 +71,19 @@ function load(){
         let storageObj = JSON.parse(localStorage.getItem("psubPortal"));
         currentCommittee = storageObj.committee;
         currentName = storageObj.name;
+        let version = JSON.parse(localStorage.getItem("psubPortal")).version;
+        if(version == null || parseInt(version, 10) < 2) {
+            logout();
+        }
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
         
         // Handle BOD
         if(currentCommittee.localeCompare("boardofDirectors") != 0){
             window.location.replace("../hours/hours.html");
+        }
+        else {
+            loadBOD();
         }
     
 
@@ -85,14 +92,11 @@ function load(){
         for (var i = 0; i < committeeList.length; i++) {
             data(committeeList[i]);
         }
-    } 
-    loadBOD();
+        console.log("Current Committee: " + currentCommittee);
+        console.log("Current Name: " + currentName);
+    }
 }
 var request;
-
-function loadCurrentCommittee(){
-    var committeeListed = ["afterDark", "currentEvents", "entertainment", "fineArts", "publicity", "spiritAndTraditions"];
-}
 
 function checkStatus() {
      var settings = {
@@ -198,7 +202,7 @@ function loadBOD() {
         //console.log(response);
         response = response.substring(response.indexOf("{"), response.length - 2)
         var response = JSON.parse(response);
-        console.log(response);
+        console.log("Finding BOD committee");
                 
         for (var i = 0; i < response.feed.entry.length; i++) {
             if (i !== response.feed.entry.length - 1) {
@@ -207,19 +211,32 @@ function loadBOD() {
                 var tempCommittee = response.feed.entry[i].gsx$previouscommittee.$t;
 
                 positionArray.push({ position: tempPosition, person: tempPerson, previousCommittee: tempCommittee });
+                console.log(tempPosition);
+                
+                var text =  tempPosition.substring(0, 1).toLowerCase() + tempPosition.substring(1, tempPosition.length);
+                text = text.replace(/\s/g, '') //Manipulation Done
+                if(currentName.localeCompare(tempPerson) == 0){
+                    console.log("Changed currentCommittee from" + currentCommittee + "  to " + text);
+                    currentCommittee = text;
+                }
 
             }
         }
+        console.log("LOADING");
         console.log(positionArray);
         loadMembers();
     });
     console.log("BOD Data Loaded Successfully");
+    
+    
 }
 
 function submitAttendance(){
     console.log("loading committees");
     let dataObj = {};
-    dataObj["committee"] = "fineArts";
+    console.log(currentCommittee);
+    console.log(currentName);
+    dataObj["committee"] = currentCommittee;
     console.log(dataObj["committee"]);
     
     let today = new Date();
@@ -234,7 +251,7 @@ function submitAttendance(){
     console.log(dataObj);
     
     var settings = {
-        "url": "https://script.google.com/macros/s/AKfycbw-JIH4HGCPKMRFwyRliNQRty9bnf0XTOPTBf0c/exec",
+        "url": "https://script.google.com/macros/s/AKfycbwtaxyiDAzDyVwyilGID7UAW117l8iAJkC3d_Lh4MWQa4-XyFE/exec",
         "type": "POST",
         "data": dataObj
     }

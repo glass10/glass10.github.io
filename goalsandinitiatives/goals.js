@@ -34,6 +34,10 @@ function load(){
         let storageObj = JSON.parse(localStorage.getItem("psubPortal"));
         currentCommittee = storageObj.committee;
         currentName = storageObj.name;
+        let version = JSON.parse(localStorage.getItem("psubPortal")).version;
+        if(version == null || parseInt(version, 10) < 2) {
+            logout();
+        }
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
 
