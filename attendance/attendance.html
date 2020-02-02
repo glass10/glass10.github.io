@@ -14,7 +14,7 @@
         <script src="https://www.google.com/jsapi" type="text/javascript"></script>
 
     </head>
-    <body onLoad="load()">
+    <body>
         <!-- Nav Bar -->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
             <div class="container">
@@ -66,34 +66,13 @@
                     </h5>
                 </div>
             
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#titleCard">
-                    <div class="card-body">
-                        <p>
-                            Here are our goals and initiatives for the next semester! Each of the goals were agreed upon by the Execs as vision for the next semester.
-                            <br><br>
-                            Defined below, "goals" are points that we hope to achieve as an organization over the next year. On the other hand, "initiatives" are the specific ways that we aim to fufill in order to reach our goals.
-                            <br><br>
-                            If you have any questions, feel free to ask the President or the corresponding Vice Presidents.
-                        </p>
-                    </div>
+                <div class="card-body">
+                    <a class="nav-link" href="slack://user?team=psub-team&id=thoma688@purdue.edu">Please slack your attendance to Sarah Thomas.
+                        <span class="sr-only">(current)</span>
+                    </a>
                 </div>
             </div>
         </div>
-                
-        <form class="container" id="headerBox">
-            <!-- <h1>Attendance</h1> -->
-            <table class="AttendanceTable table" style="width:100%;">
-                <thead id="tableHead">
-                    <tr>
-                        <th>Member</th>
-                        <th width = "200">Attendance</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-            
-            <button type="button" id="submit" class="btn btn-primary" onclick="submitAttendance();">Submit</button>
-        </form>
 
         <script src="../jquery-3.2.1.min.js"></script>
         <script src="../bootstrap.bundle.min.js"></script>
