@@ -39,12 +39,12 @@ var points = {
 }
 
 var scripts = {
-    "fineArts": "https://script.google.com/macros/s/AKfycby7cPB-Xog6aXM4U7zBsQxtLGXsG8SOtRkuMhfOGg/exec",
+    "fineArts": "https://script.google.com/macros/s/AKfycbz4ys6q32r1oQrsja3cYBOLoLZS3dUSxOKsm9VDxnRz2Rk_PtlM/exec",
     "currentEvents": "https://script.google.com/macros/s/AKfycbytsq24BPvQDRetgTETcsZsErVM49uRb4CYJMznxw/exec",
     "entertainment": "https://script.google.com/macros/s/AKfycbz2CtJnyyvrG2iOL9kTMBTfMkn2k0W09wMUC-u_Jw/exec",
     "publicity": "https://script.google.com/macros/s/AKfycbxqDxJCW9kvaeljvpWi6hg3TD9rtGAYUS46DW3gIBn2ymF_94g/exec",
     "afterDark": "https://script.google.com/macros/s/AKfycbx24jPoHIZWISV3ZSNg2KMyR2-HaCD_YSYZIgC8/exec",
-    "spiritAndTraditions": "https://script.google.com/macros/s/AKfycbydul38GMepC4HTyekwy8HX3TMhOd8diWZk_uNq/exec"
+    "spiritAndTraditions": "https://script.google.com/macros/s/AKfycbxdAOc96InLwq_eABhGSJ8HKg368fjGc91W1GMvTy5ZS7pmJd4/exec"
 }
 
 //Current Information

@@ -112,6 +112,7 @@ function loadStatus() {
         var response = JSON.parse(response);
                 
         status = response.feed.entry[0].gsx$status.$t;
+        debug_status = response.feed.entry[1].gsx$status.$t;
         console.log("Status: " + status);
         console.log(window.location.href);
         

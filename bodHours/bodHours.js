@@ -25,6 +25,8 @@ var points = {
     "spiritAndTraditions": 0
 }
 
+var currentData;
+
 var position = "";
 
 var positionID = '1Fw1q1b4g7BZOsbKChoaWLf2QlETS9cxO15omLKBqUXs';
@@ -63,6 +65,7 @@ function load(){
         let firstName = currentName.substring(0, currentName.indexOf(" "));
         document.getElementById("navName").innerHTML = `Hi, ${firstName}!`;
         updateHoursSheet(storageObj, storageObj.committee);
+        currentData = storageObj;
         
         // Handle BOD
         if(currentCommittee.localeCompare("boardofDirectors") != 0){
@@ -70,6 +73,7 @@ function load(){
         }
         
         console.log("loading BOD names");
+        console.log("currentName: " + currentName);
         loadBOD();
     }
 }
@@ -187,20 +191,22 @@ function updateHoursSheet(data, committee) {
 }
 
 function loadBOD() {
+    console.log("TEST LOADBOD");
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": 'https://spreadsheets.google.com/feeds/list/1qbhzwZuGyq7iwM6RhdtBaJGvXnlZBij-A0bu0EqN3y4/1/public/full?alt=json-in-script',
+        "url": 'https://spreadsheets.google.com/feeds/list/1Fw1q1b4g7BZOsbKChoaWLf2QlETS9cxO15omLKBqUXs/1/public/full?alt=json-in-script',
         "method": "GET",
         "headers": {
         }
     }
 
     $.ajax(settings).done(function (response) {
-        //console.log(response);
         response = response.substring(response.indexOf("{"), response.length - 2)
         var response = JSON.parse(response);
         console.log(response);
+        console.log("HI");
+        
                 
         for (var i = 0; i < response.feed.entry.length; i++) {
             if (i !== response.feed.entry.length - 1) {
@@ -212,17 +218,20 @@ function loadBOD() {
 
             }
         }
-        console.log(positionArray);
+        console.log("POSSITION ARRAY");
+        console.log("currentName: " + currentName);
         
         for(var z = 0; z < positionArray.length; z++) {
             console.log(positionArray[z].person);
             if(currentName.localeCompare(positionArray[z].person) == 0){
+                console.log("match!");
+                console.log(positionArray[z].position);
                 position = positionArray[z].position;
                 break;
             }
         }
+        console.log("Position for current BOD Member: " + position);
     });
-    console.log("Position for current BOD Member: " + position);
 }
 
 function setToday() {
@@ -256,10 +265,10 @@ function addHours() {
         var intercommittee = intercommitteeOptions[multiplier];
         var points = hours * multiplier;
 
-        console.log("https://script.google.com/macros/s/AKfycbzrC5pep9PO0qCrXRS7dOylTt9nl2aGEchtHl1fEA/exec");
-
+        console.log("https://script.google.com/macros/s/AKfycbyPsj1RKE1FoMlUhW7uqFsvYnXGkuCJ8FK2QyuzoYW0FfDPDJ0s/exec");
+        
         var settings = {
-            "url": "https://script.google.com/macros/s/AKfycbzrC5pep9PO0qCrXRS7dOylTt9nl2aGEchtHl1fEA/exec",
+            "url": "https://script.google.com/macros/s/AKfycbyPsj1RKE1FoMlUhW7uqFsvYnXGkuCJ8FK2QyuzoYW0FfDPDJ0s/exec",
             "type": "POST",
             //"dataType": "json",
             "data": {
@@ -271,6 +280,7 @@ function addHours() {
                 "Description": description
             }
         }
+        console.log(settings);
 
         $.ajax(settings).done(function (response) {
             //document.getElementById("dateInput").value = "";
@@ -281,7 +291,9 @@ function addHours() {
 
             document.getElementById("confirmMessage").innerHTML = "Hours Added Successfully";
 
-            updateHoursSheet(currentData, currentCommittee); //called after POST made successfully
+            console.log(currentData);
+            console.log(currentCommittee);
+            updateHoursSheet(currentData, currentData.committee); //called after POST made successfully
             
             console.log("worked");
         });
