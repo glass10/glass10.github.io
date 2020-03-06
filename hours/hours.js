@@ -396,6 +396,7 @@ function loadPrizePyramid(){
 
 function removeHours(rowInfo) {
     let verify = confirm("Are you sure you want to remove " + rowInfo.event + "?");
+    console.log(rowInfo);
 
     if (verify) {
         var settings2 = {

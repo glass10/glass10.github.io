@@ -50,6 +50,45 @@ function load(){
             document.getElementById("attendanceNav").remove();
         }
     }
+    
+    //load member
+    console.log("getting members");
+    
+    var all_date_Array = [];
+    
+    for(var i = 1; i < 6; i++){
+        var member_Array = [];
+    document.getElementById("topSpinner").style.visibility = "visible";
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": 'https://spreadsheets.google.com/feeds/list/1ajRM2YBX8iefvHCeZcATzDLdbXn0P1QeMpQiVBzuQJk/' + i + '/public/full?alt=json-in-script',
+        "method": "GET",
+        "headers": {
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        response = response.substring(response.indexOf("{"), response.length - 2);
+        var response = JSON.parse(response);
+        console.log(response);
+
+        for (var i = 0; i < response.feed.entry.length; i++) {
+            if (i !== response.feed.entry.length - 1) {
+                let data = response.feed.entry[i];
+                let time = data.gsx$time.$t;
+                let members = data.gsx$members.$t;
+                
+                console.log(time + ", " + members)
+
+                member_Array.push({ time: time, members: members });
+            }
+        }
+    });
+    console.log(member_Array);
+    all_date_Array.push(member_Array);
+    console.log(all_date_Array);
+    }
 }
 
 function checkStatus() {
@@ -180,6 +219,8 @@ function addToGoogle(date, startTime, endTime, dateIndex){
 }
 
 function getMembers(dateIndex){
+    
+    //load tables
     document.getElementById("topSpinner").style.visibility = "visible";
     var settings = {
         "async": true,
@@ -260,10 +301,12 @@ function viewScheduleForDate(direction){
                             <td>${dateInfo.timeStr}</td>`;
 
             // Reset Values
+            /*
             document.getElementById("date-" + (i-locationIndex)).style.visibility = "visible";
             document.getElementById("startHour-"+(i-locationIndex)).innerHTML = "";
             document.getElementById("endHour-"+(i-locationIndex)).innerHTML = "";
             document.getElementById("date-"+ (i-locationIndex) + "-sub-tab").innerHTML = document.getElementById("date-"+ (i-locationIndex) + "-sub-tab").parentElement.rows[0].innerHTML;
+            */
 
             // Set main table
             document.getElementById("date-" + (i-locationIndex)).innerHTML = cardHTML;
@@ -285,6 +328,7 @@ function viewScheduleForDate(direction){
 
                 newRow.appendChild(timeTD);
                 newRow.appendChild(memberTD);
+                                
                 if(j !== dateInfo.allTimes.length-1){
                     //Call to update
                     // getMembers(dateInfo.date, dateInfo.allTimes[j]);

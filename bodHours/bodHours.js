@@ -34,7 +34,7 @@ var positionArray = [];
 
 var bodHours = '1qbhzwZuGyq7iwM6RhdtBaJGvXnlZBij-A0bu0EqN3y4';
 
-var eventTypes = ["Required Event", "Office Hours", "Meeting", "Other"];
+var eventTypes = ["Required Event", "Events", "Office Hours", "Outside Office Hours", "Meeting", "Other"];
 
 //Current Information
 var currentCommittee = "";
@@ -137,6 +137,7 @@ function updateHoursSheet(data, committee) {
                     "type": type,
                     "name": name,
                     "hours": hours,
+                    "description": description
                 };
 
                 let tempTR = document.createElement("tr");
@@ -283,11 +284,11 @@ function addHours() {
         console.log(settings);
 
         $.ajax(settings).done(function (response) {
-            //document.getElementById("dateInput").value = "";
-            //document.getElementById("eventInput").value = "";
-            //document.getElementById("eventType").selectedIndex = 0;
-            //document.getElementById("hoursInput").value = "";
-            //document.getElementById("descriptionInput").value = "";
+            document.getElementById("dateInput").value = "";
+            document.getElementById("eventInput").value = "";
+            document.getElementById("eventType").selectedIndex = 0;
+            document.getElementById("hoursInput").value = "";
+            document.getElementById("descriptionInput").value = "";
 
             document.getElementById("confirmMessage").innerHTML = "Hours Added Successfully";
 
@@ -301,19 +302,22 @@ function addHours() {
 }
 
 function removeHours(rowInfo) {
-    let verify = confirm("Are you sure you want to remove " + rowInfo.event + "?");
+    console.log(rowInfo);
+    let verify = confirm("Are you sure you want to remove " + rowInfo.name + "?");
+    
+    console.log(rowInfo);
 
     if (verify) {
         var settings2 = {
-            "url": "https://script.google.com/macros/s/AKfycbzrC5pep9PO0qCrXRS7dOylTt9nl2aGEchtHl1fEA/exec",
+            "url": "https://script.google.com/macros/s/AKfycbxLtDMiUv2DOy3eHtuEPtqV_SvzG-VhC8i6NgWR2Q/exec",
             "type": "GET", // not actual GET
             "data": {
                 "Member": currentName,
                 "Date": rowInfo.date,
-                "Event": rowInfo.event,
+                "Type": rowInfo.type,
+                "Name": rowInfo.name,
                 "Hours": rowInfo.hours,
-                // "Intercommittee": intercommittee,
-                "Points": rowInfo.points
+                "Description": rowInfo.description,
             }
         }
 

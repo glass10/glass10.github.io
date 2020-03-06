@@ -116,7 +116,6 @@ table thead th{
 
 #hours-form{
     text-align: center;
-    margin-bottom: 10px;
 }
 
 #hoursButton{
@@ -184,6 +183,8 @@ ul {
 
 .signupRow{
     background-color:lightgray !important;
+    visibility: hidden;
+    display: block;
 }
 
 .mainTD{
